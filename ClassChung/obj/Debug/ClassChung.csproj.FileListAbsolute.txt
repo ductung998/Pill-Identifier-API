@@ -1,0 +1,6 @@
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\ClassChung\bin\Debug\ClassChung.dll.config
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\ClassChung\bin\Debug\ClassChung.dll
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\ClassChung\bin\Debug\ClassChung.pdb
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\ClassChung\obj\Debug\ClassChung.csprojResolveAssemblyReference.cache
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\ClassChung\obj\Debug\ClassChung.dll
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\ClassChung\obj\Debug\ClassChung.pdb

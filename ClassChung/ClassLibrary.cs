@@ -420,87 +420,713 @@ namespace ClassChung
                 }
             }
 
-            /// Lọc theo màu, hình dạng, dạng thuốc
-            public List<w_NhanDangThuoc> GetNhanDangByBasicFeatures(int? idMauSac = null, int? idHinhDang = null, int? idDangThuoc = null)
+            public List<Thuoc> GetNhanDangThuoc(string imprint, int? idMausac1 = null, int? idMausac2 = null,
+                int? idHinhdang = null, int? idDangthuoc = null, int? idLoaiVi = null, int? idLoaiRanh = null)
             {
-                var query = from nd in db.w_NhanDangThuocs
-                            join t in db.d_Thuocs on nd.IDThuoc equals t.IDThuoc
-                            select nd;
-
-                if (idHinhDang.HasValue)
-                    query = query.Where(x => x.IDHinhDang == idHinhDang.Value);
-
-                if (idDangThuoc.HasValue)
-                    query = query.Where(x => x.IDDangThuoc == idDangThuoc.Value);
-
-                if (idMauSac.HasValue)
-                    query = from nd in query
-                            join r in db.r_Thuoc_MauSacs on nd.IDThuoc equals r.IDThuoc
-                            where r.IDMauSac == idMauSac.Value
-                            select nd;
-
-                return query.Distinct().ToList();
-            }
-
-            /// <summary>
-            /// Lọc theo chữ khắc trên viên (imprint)
-            /// </summary>
-            public List<w_NhanDangThuoc> GetNhanDangByImprint(string imprint)
-            {
-                return db.w_NhanDangThuocs.Where(nd => nd.KhacDauMatTruoc.Contains(imprint)
-                                   || nd.KhacDauMatSau.Contains(imprint)).ToList();
-            }
-
-            /// <summary>
-            /// Lọc kết hợp nhiều tiêu chí: màu, hình, chữ khắc, loại vỉ, loại rãnh
-            /// </summary>
-            public List<w_NhanDangThuoc> GetNhanDangByMultipleFilters(
-                string imprint = null,
-                int? idMauSac = null,
-                int? idHinhDang = null,
-                int? idDangThuoc = null,
-                int? idLoaiVi = null,
-                int? idLoaiRanh = null)
-            {
-                var query = db.w_NhanDangThuocs.AsQueryable();
-
-                if (!string.IsNullOrEmpty(imprint))
-                    query = query.Where(x => x.KhacDauMatTruoc.Contains(imprint) || x.KhacDauMatSau.Contains(imprint));
-
-                if (idHinhDang.HasValue)
-                    query = query.Where(x => x.IDHinhDang == idHinhDang.Value);
-
-                if (idDangThuoc.HasValue)
-                    query = query.Where(x => x.IDDangThuoc == idDangThuoc.Value);
-
-                if (idLoaiVi.HasValue)
-                    query = query.Where(x => x.IDLoaiViThuoc == idLoaiVi.Value);
-
-                if (idLoaiRanh.HasValue)
-                    query = query.Where(x => x.IDLoaiRanh == idLoaiRanh.Value);
-
-                if (idMauSac.HasValue)
+                List<Thuoc> kq = new List<Thuoc>();
+                try
                 {
-                    query = from nd in query
-                            join r in db.r_Thuoc_MauSacs on nd.IDThuoc equals r.IDThuoc
-                            where r.IDMauSac == idMauSac.Value
-                            select nd;
+                    List<int> dsIDThuoc = new List<int>();
+
+                    IQueryable<r_Thuoc_MauSac> query1 = from data in db.r_Thuoc_MauSacs
+                                                        select data;
+
+                    if (idMausac1 != null && idMausac2 != null)
+                    {
+                        List<int> thuocWithColor1 = query1.Where(x => x.IDMauSac == idMausac1).Select(x => x.IDThuoc).ToList();
+                        List<int> thuocWithColor2 = query1.Where(x => x.IDMauSac == idMausac2).Select(x => x.IDThuoc).ToList();
+                        List<int> thuocWithBothColors = thuocWithColor1.Intersect(thuocWithColor2).ToList();
+                        dsIDThuoc.AddRange(thuocWithBothColors);
+                    }
+                    else if (idMausac1 != null)
+                    {
+                        dsIDThuoc.AddRange(query1.Where(x => x.IDMauSac == idMausac1).Select(x => x.IDThuoc).ToList());
+                    }
+                    else if (idMausac2 != null)
+                    {
+                        dsIDThuoc.AddRange(query1.Where(x => x.IDMauSac == idMausac2).Select(x => x.IDThuoc).ToList());
+                    }
+
+                    IQueryable<w_NhanDangThuoc> query2 = from data in db.w_NhanDangThuocs
+                                                         select data;
+                    if (idHinhdang != null)
+                        query2 = query2.Where(x => x.IDHinhDang == idHinhdang);
+                    if (idDangthuoc != null)
+                        query2 = query2.Where(x => x.IDDangThuoc == idDangthuoc);
+                    if (idLoaiVi != null)
+                        query2 = query2.Where(x => x.IDLoaiViThuoc == idLoaiVi);
+                    if (idLoaiRanh != null)
+                        query2 = query2.Where(x => x.IDLoaiRanh == idLoaiRanh);
+                    if (!string.IsNullOrEmpty(imprint))
+                        query2 = query2.Where(x => x.KhacDauMatTruoc.Contains(imprint) || x.KhacDauMatSau.Contains(imprint));
+
+                    foreach (w_NhanDangThuoc i in query2)
+                    {
+                        dsIDThuoc.Add(i.IDThuoc);
+                    }
+
+                    dsIDThuoc = dsIDThuoc.Distinct().ToList();
+
+                    kq = GetDSThuoc().Where(x => dsIDThuoc.Contains(x.IDThuoc)).ToList();
+
+                    return kq;
                 }
-
-                return query.Distinct().ToList();
-            }
-
-            /// <summary>
-            /// Truy xuất thuốc từ mã hình (MaHinh) – để hiển thị chi tiết khi click vào ảnh
-            /// </summary>
-            public w_NhanDangThuoc GetNhanDangByMaHinh(string maHinh)
-            {
-                return db.w_NhanDangThuocs.FirstOrDefault(nd => nd.MaHinh == maHinh);
+                catch
+                {
+                    return kq;
+                }
             }
         }
         #endregion
+        #region Update dữ liệu
+        public class UpdateData
+        {
+            public bool UpdateChiDinh(int idChiDinh, string chiDinh, string moTa)
+            {
+                try
+                {
+                    d_ChiDinh cd = db.d_ChiDinhs.SingleOrDefault(x => x.IDChiDinh == idChiDinh);
+                    if (cd != null)
+                    {
+                        cd.TenChiDinh = chiDinh;
+                        cd.MoTa = moTa;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
 
+            public bool UpdateDangThuoc(int idDangThuoc, string tenDangThuoc)
+            {
+                try
+                {
+                    d_DangThuoc dt = db.d_DangThuocs.SingleOrDefault(x => x.IDDangThuoc == idDangThuoc);
+                    if (dt != null)
+                    {
+                        dt.TenDangThuoc = tenDangThuoc;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
 
+            public bool UpdateHinhAnhThuocChiTiet(int idHinhAnh, int idNhanDang, string duongDanHinh, string moTa)
+            {
+                try
+                {
+                    d_HinhAnhThuocChiTiet ha = db.d_HinhAnhThuocChiTiets.SingleOrDefault(x => x.IDHinhAnh == idHinhAnh);
+                    if (ha != null)
+                    {
+                        ha.IDNhanDang = idNhanDang;
+                        ha.DuongDanHinh = duongDanHinh;
+                        ha.MoTa = moTa;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateHinhDang(int idHinhDang, string tenHinhDang)
+            {
+                try
+                {
+                    d_HinhDang hd = db.d_HinhDangs.SingleOrDefault(x => x.IDHinhDang == idHinhDang);
+                    if (hd != null)
+                    {
+                        hd.TenHinhDang = tenHinhDang;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateHoatChat(int idHoatChat, string tenHoatChat, string loaiHoatChat)
+            {
+                try
+                {
+                    d_HoatChat hc = db.d_HoatChats.SingleOrDefault(x => x.IDHoatChat == idHoatChat);
+                    if (hc != null)
+                    {
+                        hc.TenHoatChat = tenHoatChat;
+                        hc.LoaiHoatChat = loaiHoatChat;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateHoatChatGoc(int idHoatChatGoc, string tenHoatChat, string ghiChu)
+            {
+                try
+                {
+                    d_HoatChatGoc hcg = db.d_HoatChatGocs.SingleOrDefault(x => x.IDHoatChatGoc == idHoatChatGoc);
+                    if (hcg != null)
+                    {
+                        hcg.TenHoatChat = tenHoatChat;
+                        hcg.GhiChu = ghiChu;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateLoaiRanh(int idLoaiRanh, string tenLoaiRanh)
+            {
+                try
+                {
+                    d_LoaiRanh lr = db.d_LoaiRanhs.SingleOrDefault(x => x.IDLoaiRanh == idLoaiRanh);
+                    if (lr != null)
+                    {
+                        lr.TenLoaiRanh = tenLoaiRanh;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateLoaiViThuoc(int idLoaiViThuoc, string tenLoaiVi)
+            {
+                try
+                {
+                    d_LoaiViThuoc lvt = db.d_LoaiViThuocs.SingleOrDefault(x => x.IDLoaiViThuoc == idLoaiViThuoc);
+                    if (lvt != null)
+                    {
+                        lvt.TenLoaiVi = tenLoaiVi;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateMauSac(int idMauSac, string tenMauSac)
+            {
+                try
+                {
+                    d_MauSac ms = db.d_MauSacs.SingleOrDefault(x => x.IDMauSac == idMauSac);
+                    if (ms != null)
+                    {
+                        ms.TenMauSac = tenMauSac;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateThuoc(int idThuoc, string tenThuoc, string sdk, int? idHoatChat,
+                            string hamLuong, string dangBaoChe, string nhaSX, string ghiChu)
+            {
+                try
+                {
+                    d_Thuoc t = db.d_Thuocs.SingleOrDefault(x => x.IDThuoc == idThuoc);
+                    if (t != null)
+                    {
+                        t.TenThuoc = tenThuoc;
+                        t.SDK = sdk;
+                        t.IDHoatChat = idHoatChat;
+                        t.HamLuong = hamLuong;
+                        t.DangBaoChe = dangBaoChe;
+                        t.NhaSX = nhaSX;
+                        t.GhiChu = ghiChu;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateHoatChat_HoatChatGoc(int idHoatChat, int idHoatChatGocOld, int idHoatChatGocNew)
+            {
+                try
+                {
+                    r_HoatChat_HoatChatGoc link = db.r_HoatChat_HoatChatGocs.SingleOrDefault(x =>
+                        x.IDHoatChat == idHoatChat && x.IDHoatChatGoc == idHoatChatGocOld);
+                    if (link != null)
+                    {
+                        link.IDHoatChatGoc = idHoatChatGocNew;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateHoatChatGoc_ChiDinh(int idHoatChatGoc, int idChiDinhOld, int idChiDinhNew)
+            {
+                try
+                {
+                    r_HoatChatGoc_ChiDinh link = db.r_HoatChatGoc_ChiDinhs.SingleOrDefault(x =>
+                        x.IDHoatChatGoc == idHoatChatGoc && x.IDChiDinh == idChiDinhOld);
+                    if (link != null)
+                    {
+                        link.IDChiDinh = idChiDinhNew;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateThuoc_MauSac(int idThuoc, int idMauSacOld, int idMauSacNew)
+            {
+                try
+                {
+                    r_Thuoc_MauSac link = db.r_Thuoc_MauSacs.SingleOrDefault(x =>
+                        x.IDThuoc == idThuoc && x.IDMauSac == idMauSacOld);
+                    if (link != null)
+                    {
+                        link.IDMauSac = idMauSacNew;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool UpdateNhanDangThuoc(int idNhanDang, int idThuoc, bool coKhacDau,
+                                    string khacDauMatTruoc, string khacDauMatSau,
+                                    int idHinhDang, int idDangThuoc,
+                                    int? idLoaiViThuoc, int? idLoaiRanh, string maHinh)
+            {
+                try
+                {
+                    w_NhanDangThuoc nd = db.w_NhanDangThuocs.SingleOrDefault(x => x.IDNhanDang == idNhanDang);
+                    if (nd != null)
+                    {
+                        nd.IDThuoc = idThuoc;
+                        nd.CoKhacDau = coKhacDau;
+                        nd.KhacDauMatTruoc = khacDauMatTruoc;
+                        nd.KhacDauMatSau = khacDauMatSau;
+                        nd.IDHinhDang = idHinhDang;
+                        nd.IDDangThuoc = idDangThuoc;
+                        nd.IDLoaiViThuoc = idLoaiViThuoc;
+                        nd.IDLoaiRanh = idLoaiRanh;
+                        nd.MaHinh = maHinh;
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
+        #region Xóa dữ liệu
+        public class DeleteData
+        {
+            public bool DeleteChiDinh(int idChiDinh)
+            {
+                try
+                {
+                    // Delete related records in r_HoatChatGoc_ChiDinh first
+                    IQueryable<r_HoatChatGoc_ChiDinh> relatedLinks = db.r_HoatChatGoc_ChiDinhs.Where(x => x.IDChiDinh == idChiDinh);
+                    db.r_HoatChatGoc_ChiDinhs.DeleteAllOnSubmit(relatedLinks);
+
+                    // Delete the main record
+                    d_ChiDinh cd = db.d_ChiDinhs.SingleOrDefault(x => x.IDChiDinh == idChiDinh);
+                    if (cd != null)
+                    {
+                        db.d_ChiDinhs.DeleteOnSubmit(cd);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteDangThuoc(int idDangThuoc)
+            {
+                try
+                {
+                    // Check if there are related records in w_NhanDangThuoc
+                    IQueryable<w_NhanDangThuoc> relatedRecords = db.w_NhanDangThuocs.Where(x => x.IDDangThuoc == idDangThuoc);
+                    if (relatedRecords.Any())
+                    {
+                        // Cannot delete if there are related drug identification records
+                        return false;
+                    }
+
+                    d_DangThuoc dt = db.d_DangThuocs.SingleOrDefault(x => x.IDDangThuoc == idDangThuoc);
+                    if (dt != null)
+                    {
+                        db.d_DangThuocs.DeleteOnSubmit(dt);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteHinhAnhThuocChiTiet(int idHinhAnh)
+            {
+                try
+                {
+                    d_HinhAnhThuocChiTiet ha = db.d_HinhAnhThuocChiTiets.SingleOrDefault(x => x.IDHinhAnh == idHinhAnh);
+                    if (ha != null)
+                    {
+                        db.d_HinhAnhThuocChiTiets.DeleteOnSubmit(ha);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteHinhDang(int idHinhDang)
+            {
+                try
+                {
+                    // Check if there are related records in w_NhanDangThuoc
+                    IQueryable<w_NhanDangThuoc> relatedRecords = db.w_NhanDangThuocs.Where(x => x.IDHinhDang == idHinhDang);
+                    if (relatedRecords.Any())
+                    {
+                        return false;
+                    }
+
+                    d_HinhDang hd = db.d_HinhDangs.SingleOrDefault(x => x.IDHinhDang == idHinhDang);
+                    if (hd != null)
+                    {
+                        db.d_HinhDangs.DeleteOnSubmit(hd);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteHoatChat(int idHoatChat)
+            {
+                try
+                {
+                    // Check if there are related records in d_Thuoc
+                    IQueryable<d_Thuoc> relatedThuoc = db.d_Thuocs.Where(x => x.IDHoatChat == idHoatChat);
+                    if (relatedThuoc.Any())
+                    {
+                        return false;
+                    }
+
+                    // Delete related records in r_HoatChat_HoatChatGoc
+                    IQueryable<r_HoatChat_HoatChatGoc> relatedLinks = db.r_HoatChat_HoatChatGocs.Where(x => x.IDHoatChat == idHoatChat);
+                    db.r_HoatChat_HoatChatGocs.DeleteAllOnSubmit(relatedLinks);
+
+                    // Delete the main record
+                    d_HoatChat hc = db.d_HoatChats.SingleOrDefault(x => x.IDHoatChat == idHoatChat);
+                    if (hc != null)
+                    {
+                        db.d_HoatChats.DeleteOnSubmit(hc);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteHoatChatGoc(int idHoatChatGoc)
+            {
+                try
+                {
+                    // Delete related records in r_HoatChat_HoatChatGoc
+                    IQueryable<r_HoatChat_HoatChatGoc> relatedHoatChat = db.r_HoatChat_HoatChatGocs.Where(x => x.IDHoatChatGoc == idHoatChatGoc);
+                    db.r_HoatChat_HoatChatGocs.DeleteAllOnSubmit(relatedHoatChat);
+
+                    // Delete related records in r_HoatChatGoc_ChiDinh
+                    IQueryable<r_HoatChatGoc_ChiDinh> relatedChiDinh = db.r_HoatChatGoc_ChiDinhs.Where(x => x.IDHoatChatGoc == idHoatChatGoc);
+                    db.r_HoatChatGoc_ChiDinhs.DeleteAllOnSubmit(relatedChiDinh);
+
+                    // Delete the main record
+                    d_HoatChatGoc hcg = db.d_HoatChatGocs.SingleOrDefault(x => x.IDHoatChatGoc == idHoatChatGoc);
+                    if (hcg != null)
+                    {
+                        db.d_HoatChatGocs.DeleteOnSubmit(hcg);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteLoaiRanh(int idLoaiRanh)
+            {
+                try
+                {
+                    // Check if there are related records in w_NhanDangThuoc
+                    IQueryable<w_NhanDangThuoc> relatedRecords = db.w_NhanDangThuocs.Where(x => x.IDLoaiRanh == idLoaiRanh);
+                    if (relatedRecords.Any())
+                    {
+                        return false;
+                    }
+
+                    d_LoaiRanh lr = db.d_LoaiRanhs.SingleOrDefault(x => x.IDLoaiRanh == idLoaiRanh);
+                    if (lr != null)
+                    {
+                        db.d_LoaiRanhs.DeleteOnSubmit(lr);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteLoaiViThuoc(int idLoaiViThuoc)
+            {
+                try
+                {
+                    // Check if there are related records in w_NhanDangThuoc
+                    IQueryable<w_NhanDangThuoc> relatedRecords = db.w_NhanDangThuocs.Where(x => x.IDLoaiViThuoc == idLoaiViThuoc);
+                    if (relatedRecords.Any())
+                    {
+                        return false;
+                    }
+
+                    d_LoaiViThuoc lvt = db.d_LoaiViThuocs.SingleOrDefault(x => x.IDLoaiViThuoc == idLoaiViThuoc);
+                    if (lvt != null)
+                    {
+                        db.d_LoaiViThuocs.DeleteOnSubmit(lvt);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteMauSac(int idMauSac)
+            {
+                try
+                {
+                    // Delete related records in r_Thuoc_MauSac first
+                    IQueryable<r_Thuoc_MauSac> relatedLinks = db.r_Thuoc_MauSacs.Where(x => x.IDMauSac == idMauSac);
+                    db.r_Thuoc_MauSacs.DeleteAllOnSubmit(relatedLinks);
+
+                    // Delete the main record
+                    d_MauSac ms = db.d_MauSacs.SingleOrDefault(x => x.IDMauSac == idMauSac);
+                    if (ms != null)
+                    {
+                        db.d_MauSacs.DeleteOnSubmit(ms);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteThuoc(int idThuoc)
+            {
+                try
+                {
+                    // Delete related records in w_NhanDangThuoc
+                    IQueryable<w_NhanDangThuoc> relatedNhanDang = db.w_NhanDangThuocs.Where(x => x.IDThuoc == idThuoc);
+                    foreach (w_NhanDangThuoc nd in relatedNhanDang)
+                    {
+                        // Delete related images first
+                        IQueryable<d_HinhAnhThuocChiTiet> relatedImages = db.d_HinhAnhThuocChiTiets.Where(x => x.IDNhanDang == nd.IDNhanDang);
+                        db.d_HinhAnhThuocChiTiets.DeleteAllOnSubmit(relatedImages);
+                    }
+                    db.w_NhanDangThuocs.DeleteAllOnSubmit(relatedNhanDang);
+
+                    // Delete related records in r_Thuoc_MauSac
+                    IQueryable<r_Thuoc_MauSac> relatedMauSac = db.r_Thuoc_MauSacs.Where(x => x.IDThuoc == idThuoc);
+                    db.r_Thuoc_MauSacs.DeleteAllOnSubmit(relatedMauSac);
+
+                    // Delete the main record
+                    d_Thuoc t = db.d_Thuocs.SingleOrDefault(x => x.IDThuoc == idThuoc);
+                    if (t != null)
+                    {
+                        db.d_Thuocs.DeleteOnSubmit(t);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteHoatChat_HoatChatGoc(int idHoatChat, int idHoatChatGoc)
+            {
+                try
+                {
+                    r_HoatChat_HoatChatGoc link = db.r_HoatChat_HoatChatGocs.SingleOrDefault(x =>
+                        x.IDHoatChat == idHoatChat && x.IDHoatChatGoc == idHoatChatGoc);
+                    if (link != null)
+                    {
+                        db.r_HoatChat_HoatChatGocs.DeleteOnSubmit(link);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteHoatChatGoc_ChiDinh(int idHoatChatGoc, int idChiDinh)
+            {
+                try
+                {
+                    r_HoatChatGoc_ChiDinh link = db.r_HoatChatGoc_ChiDinhs.SingleOrDefault(x =>
+                        x.IDHoatChatGoc == idHoatChatGoc && x.IDChiDinh == idChiDinh);
+                    if (link != null)
+                    {
+                        db.r_HoatChatGoc_ChiDinhs.DeleteOnSubmit(link);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteThuoc_MauSac(int idThuoc, int idMauSac)
+            {
+                try
+                {
+                    r_Thuoc_MauSac link = db.r_Thuoc_MauSacs.SingleOrDefault(x =>
+                        x.IDThuoc == idThuoc && x.IDMauSac == idMauSac);
+                    if (link != null)
+                    {
+                        db.r_Thuoc_MauSacs.DeleteOnSubmit(link);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteNhanDangThuoc(int idNhanDang)
+            {
+                try
+                {
+                    // Delete related images first
+                    IQueryable<d_HinhAnhThuocChiTiet> relatedImages = db.d_HinhAnhThuocChiTiets.Where(x => x.IDNhanDang == idNhanDang);
+                    db.d_HinhAnhThuocChiTiets.DeleteAllOnSubmit(relatedImages);
+
+                    // Delete the main record
+                    w_NhanDangThuoc nd = db.w_NhanDangThuocs.SingleOrDefault(x => x.IDNhanDang == idNhanDang);
+                    if (nd != null)
+                    {
+                        db.w_NhanDangThuocs.DeleteOnSubmit(nd);
+                        db.SubmitChanges();
+                        return true;
+                    }
+                    return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
     }
     #endregion
     #region Class hứng data
