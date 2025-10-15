@@ -1,0 +1,12 @@
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\bin\Debug\PillIdentifierForm.exe.config
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\bin\Debug\PillIdentifierForm.exe
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\bin\Debug\PillIdentifierForm.pdb
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\bin\Debug\ClassChung.dll
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\bin\Debug\ClassChung.pdb
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.csprojResolveAssemblyReference.cache
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucChidinh.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Giaodienchinh.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Properties.Resources.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.csproj.GenerateResource.Cache
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.exe
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.pdb

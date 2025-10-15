@@ -10,7 +10,7 @@ namespace ClassChung
     public class KetnoiDB
     {
         protected static DataClassesDataContext db = new DataClassesDataContext();
-        #region Nhập liệu
+        #region Nhập liệu đơn
         public class InsertData
         {
             public bool InsertChiDinh(string chiDinh, string moTa)
@@ -256,6 +256,327 @@ namespace ClassChung
                     nd.MaHinh = maHinh;
 
                     db.w_NhanDangThuocs.InsertOnSubmit(nd);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+        }
+        #endregion
+        #region Nhập liệu hàng loạt
+        public class BulkInsertData
+        {
+            public bool BulkInsertChiDinh(List<ChiDinh> listChiDinh)
+            {
+                try
+                {
+                    List<d_ChiDinh> dsimport = new List<d_ChiDinh>();
+                    foreach (ChiDinh i in listChiDinh)
+                    {
+                        d_ChiDinh a = new d_ChiDinh();
+                        a.TenChiDinh = i.TenChiDinh;
+                        a.MoTa = i.MoTa;
+                        dsimport.Add(a);
+                    }
+                    db.d_ChiDinhs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertDangThuoc(List<DangThuoc> listDangThuoc)
+            {
+                try
+                {
+                    List<d_DangThuoc> dsimport = new List<d_DangThuoc>();
+                    foreach (DangThuoc i in listDangThuoc)
+                    {
+                        d_DangThuoc a = new d_DangThuoc();
+                        a.TenDangThuoc = i.TenDangThuoc;
+                        dsimport.Add(a);
+                    }
+                    db.d_DangThuocs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertHinhAnhThuocChiTiet(List<HinhAnhThuocChiTiet> listHinhAnh)
+            {
+                try
+                {
+                    List<d_HinhAnhThuocChiTiet> dsimport = new List<d_HinhAnhThuocChiTiet>();
+                    foreach (HinhAnhThuocChiTiet i in listHinhAnh)
+                    {
+                        d_HinhAnhThuocChiTiet a = new d_HinhAnhThuocChiTiet();
+                        a.IDNhanDang = i.IDNhanDang;
+                        a.DuongDanHinh = i.DuongDanHinh;
+                        a.MoTa = i.MoTa;
+                        dsimport.Add(a);
+                    }
+                    db.d_HinhAnhThuocChiTiets.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertHinhDang(List<HinhDang> listHinhDang)
+            {
+                try
+                {
+                    List<d_HinhDang> dsimport = new List<d_HinhDang>();
+                    foreach (HinhDang i in listHinhDang)
+                    {
+                        d_HinhDang a = new d_HinhDang();
+                        a.TenHinhDang = i.TenHinhDang;
+                        dsimport.Add(a);
+                    }
+                    db.d_HinhDangs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertHoatChat(List<HoatChat> listHoatChat)
+            {
+                try
+                {
+                    List<d_HoatChat> dsimport = new List<d_HoatChat>();
+                    foreach (HoatChat i in listHoatChat)
+                    {
+                        d_HoatChat a = new d_HoatChat();
+                        a.TenHoatChat = i.TenHoatChat;
+                        a.LoaiHoatChat = i.LoaiHoatChat;
+                        dsimport.Add(a);
+                    }
+                    db.d_HoatChats.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertHoatChatGoc(List<HoatChatGoc> listHoatChatGoc)
+            {
+                try
+                {
+                    List<d_HoatChatGoc> dsimport = new List<d_HoatChatGoc>();
+                    foreach (HoatChatGoc i in listHoatChatGoc)
+                    {
+                        d_HoatChatGoc a = new d_HoatChatGoc();
+                        a.TenHoatChat = i.TenHoatChat;
+                        a.GhiChu = i.GhiChu;
+                        dsimport.Add(a);
+                    }
+                    db.d_HoatChatGocs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertLoaiRanh(List<LoaiRanh> listLoaiRanh)
+            {
+                try
+                {
+                    List<d_LoaiRanh> dsimport = new List<d_LoaiRanh>();
+                    foreach (LoaiRanh i in listLoaiRanh)
+                    {
+                        d_LoaiRanh a = new d_LoaiRanh();
+                        a.TenLoaiRanh = i.TenLoaiRanh;
+                        dsimport.Add(a);
+                    }
+                    db.d_LoaiRanhs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertLoaiViThuoc(List<LoaiViThuoc> listLoaiViThuoc)
+            {
+                try
+                {
+                    List<d_LoaiViThuoc> dsimport = new List<d_LoaiViThuoc>();
+                    foreach (LoaiViThuoc i in listLoaiViThuoc)
+                    {
+                        d_LoaiViThuoc a = new d_LoaiViThuoc();
+                        a.TenLoaiVi = i.TenLoaiVi;
+                        dsimport.Add(a);
+                    }
+                    db.d_LoaiViThuocs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertMauSac(List<MauSac> listMauSac)
+            {
+                try
+                {
+                    List<d_MauSac> dsimport = new List<d_MauSac>();
+                    foreach (MauSac i in listMauSac)
+                    {
+                        d_MauSac a = new d_MauSac();
+                        a.TenMauSac = i.TenMauSac;
+                        dsimport.Add(a);
+                    }
+                    db.d_MauSacs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertThuoc(List<Thuoc> listThuoc)
+            {
+                try
+                {
+                    List<d_Thuoc> dsimport = new List<d_Thuoc>();
+                    foreach (Thuoc i in listThuoc)
+                    {
+                        d_Thuoc a = new d_Thuoc();
+                        a.TenThuoc = i.TenThuoc;
+                        a.SDK = i.SDK;
+                        a.IDHoatChat = i.IDHoatChat;
+                        a.HamLuong = i.HamLuong;
+                        a.DangBaoChe = i.DangBaoChe;
+                        a.NhaSX = i.NhaSX;
+                        a.GhiChu = i.GhiChu;
+                        dsimport.Add(a);
+                    }
+                    db.d_Thuocs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertNhanDangThuoc(List<NhanDangThuoc> listNhanDang)
+            {
+                try
+                {
+                    List<w_NhanDangThuoc> dsimport = new List<w_NhanDangThuoc>();
+                    foreach (NhanDangThuoc i in listNhanDang)
+                    {
+                        w_NhanDangThuoc a = new w_NhanDangThuoc();
+                        a.IDThuoc = i.IDThuoc;
+                        a.CoKhacDau = i.CoKhacDau;
+                        a.KhacDauMatTruoc = i.KhacDauMatTruoc;
+                        a.KhacDauMatSau = i.KhacDauMatSau;
+                        a.IDHinhDang = i.IDHinhDang;
+                        a.IDDangThuoc = i.IDDangThuoc;
+                        a.IDLoaiViThuoc = i.IDLoaiViThuoc;
+                        a.IDLoaiRanh = i.IDLoaiRanh;
+                        a.MaHinh = i.MaHinh;
+                        dsimport.Add(a);
+                    }
+                    db.w_NhanDangThuocs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            // Relationship tables
+            public bool BulkInsertHoatChat_HoatChatGoc(List<HoatChat_HoatChatGoc> listLinks)
+            {
+                try
+                {
+                    List<r_HoatChat_HoatChatGoc> dsimport = new List<r_HoatChat_HoatChatGoc>();
+                    foreach (HoatChat_HoatChatGoc i in listLinks)
+                    {
+                        r_HoatChat_HoatChatGoc a = new r_HoatChat_HoatChatGoc();
+                        a.IDHoatChat = i.IDHoatChat;
+                        a.IDHoatChatGoc = i.IDHoatChatGoc;
+                        dsimport.Add(a);
+                    }
+                    db.r_HoatChat_HoatChatGocs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertHoatChatGoc_ChiDinh(List<HoatChatGoc_ChiDinh> listLinks)
+            {
+                try
+                {
+                    List<r_HoatChatGoc_ChiDinh> dsimport = new List<r_HoatChatGoc_ChiDinh>();
+                    foreach (HoatChatGoc_ChiDinh i in listLinks)
+                    {
+                        r_HoatChatGoc_ChiDinh a = new r_HoatChatGoc_ChiDinh();
+                        a.IDHoatChatGoc = i.IDHoatChatGoc;
+                        a.IDChiDinh = i.IDChiDinh;
+                        dsimport.Add(a);
+                    }
+                    db.r_HoatChatGoc_ChiDinhs.InsertAllOnSubmit(dsimport);
+                    db.SubmitChanges();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool BulkInsertThuoc_MauSac(List<Thuoc_MauSac> listLinks)
+            {
+                try
+                {
+                    List<r_Thuoc_MauSac> dsimport = new List<r_Thuoc_MauSac>();
+                    foreach (Thuoc_MauSac i in listLinks)
+                    {
+                        r_Thuoc_MauSac a = new r_Thuoc_MauSac();
+                        a.IDThuoc = i.IDThuoc;
+                        a.IDMauSac = i.IDMauSac;
+                        dsimport.Add(a);
+                    }
+                    db.r_Thuoc_MauSacs.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
                 }
@@ -1135,32 +1456,49 @@ namespace ClassChung
         public int IDChiDinh { get; set; }
         public string TenChiDinh { get; set; }
         public string MoTa { get; set; }
+        public List<HoatChatGoc> dsHCG { get; set; }
+        public ChiDinh()
+        {
 
+        }
         public ChiDinh(int _IDChiDinh, string _TenChiDinh, string _MoTa)
         {
             IDChiDinh = _IDChiDinh;
             TenChiDinh = _TenChiDinh;
             MoTa = _MoTa;
         }
+        public ChiDinh(int _IDChiDinh, string _TenChiDinh, string _MoTa, List<HoatChatGoc> _dsHCG)
+        {
+            IDChiDinh = _IDChiDinh;
+            TenChiDinh = _TenChiDinh;
+            MoTa = _MoTa;
+            dsHCG = _dsHCG;
+        }
     }
-
     public class DangThuoc
     {
         public int IDDangThuoc { get; set; }
         public string TenDangThuoc { get; set; }
+        public DangThuoc()
+        {
+
+        }
         public DangThuoc(int _IDDangThuoc, string _TenDangThuoc)
         {
             IDDangThuoc = _IDDangThuoc;
             TenDangThuoc = _TenDangThuoc;
         }
     }
-
     public class HinhAnhThuocChiTiet
     {
         public int IDHinhAnh { get; set; }
         public int IDNhanDang { get; set; }
         public string DuongDanHinh { get; set; }
         public string MoTa { get; set; }
+        public HinhAnhThuocChiTiet()
+        {
+
+        }
         public HinhAnhThuocChiTiet(int _IDHinhAnh, int _IDNhanDang, string _DuongDanHinh, string _MoTa)
         {
             IDHinhAnh = _IDHinhAnh;
@@ -1173,34 +1511,49 @@ namespace ClassChung
     {
         public int IDHinhDang { get; set; }
         public string TenHinhDang { get; set; }
+        public HinhDang()
+        {
 
+        }
         public HinhDang(int _IDHinhDang, string _TenHinhDang)
         {
             IDHinhDang = _IDHinhDang;
             TenHinhDang = _TenHinhDang;
         }
     }
-
     public class HoatChat
     {
         public int IDHoatChat { get; set; }
         public string TenHoatChat { get; set; }
         public string LoaiHoatChat { get; set; }
+        public List<HoatChatGoc> dsHCG { get; set; }
+        public HoatChat()
+        {
 
+        }
         public HoatChat(int _IDHoatChat, string _TenHoatChat, string _LoaiHoatChat)
         {
             IDHoatChat = _IDHoatChat;
             TenHoatChat = _TenHoatChat;
             LoaiHoatChat = _LoaiHoatChat;
         }
+        public HoatChat(int _IDHoatChat, string _TenHoatChat, string _LoaiHoatChat, List<HoatChatGoc> _dsHCG)
+        {
+            IDHoatChat = _IDHoatChat;
+            TenHoatChat = _TenHoatChat;
+            LoaiHoatChat = _LoaiHoatChat;
+            dsHCG = _dsHCG;
+        }
     }
-
     public class HoatChatGoc
     {
         public int IDHoatChatGoc { get; set; }
         public string TenHoatChat { get; set; }
         public string GhiChu { get; set; }
+        public HoatChatGoc()
+        {
 
+        }
         public HoatChatGoc(int _IDHoatChatGoc, string _TenHoatChat, string _GhiChu)
         {
             IDHoatChatGoc = _IDHoatChatGoc;
@@ -1208,43 +1561,48 @@ namespace ClassChung
             GhiChu = _GhiChu;
         }
     }
-
     public class LoaiRanh
     {
         public int IDLoaiRanh { get; set; }
         public string TenLoaiRanh { get; set; }
+        public LoaiRanh()
+        {
 
+        }
         public LoaiRanh(int _IDLoaiRanh, string _TenLoaiRanh)
         {
             IDLoaiRanh = _IDLoaiRanh;
             TenLoaiRanh = _TenLoaiRanh;
         }
     }
-
     public class LoaiViThuoc
     {
         public int IDLoaiViThuoc { get; set; }
         public string TenLoaiVi { get; set; }
+        public LoaiViThuoc()
+        {
 
+        }
         public LoaiViThuoc(int _IDLoaiViThuoc, string _TenLoaiVi)
         {
             IDLoaiViThuoc = _IDLoaiViThuoc;
             TenLoaiVi = _TenLoaiVi;
         }
     }
-
     public class MauSac
     {
         public int IDMauSac { get; set; }
         public string TenMauSac { get; set; }
+        public MauSac()
+        {
 
+        }
         public MauSac(int _IDMauSac, string _TenMauSac)
         {
             IDMauSac = _IDMauSac;
             TenMauSac = _TenMauSac;
         }
     }
-
     public class Thuoc
     {
         public int IDThuoc { get; set; }
@@ -1256,6 +1614,10 @@ namespace ClassChung
         public string NhaSX { get; set; }
         public string GhiChu { get; set; }
 
+        public Thuoc()
+        {
+
+        }
         public Thuoc(int _IDThuoc, string _TenThuoc, string _SDK, int? _IDHoatChat, string _HamLuong, string _DangBaoChe, string _NhaSX, string _GhiChu)
         {
             IDThuoc = _IDThuoc;
@@ -1268,43 +1630,48 @@ namespace ClassChung
             GhiChu = _GhiChu;
         }
     }
-
     public class HoatChat_HoatChatGoc
     {
         public int IDHoatChat { get; set; }
         public int IDHoatChatGoc { get; set; }
+        public HoatChat_HoatChatGoc()
+        {
 
+        }
         public HoatChat_HoatChatGoc(int _IDHoatChat, int _IDHoatChatGoc)
         {
             IDHoatChat = _IDHoatChat;
             IDHoatChatGoc = _IDHoatChatGoc;
         }
     }
-
     public class HoatChatGoc_ChiDinh
     {
         public int IDHoatChatGoc { get; set; }
         public int IDChiDinh { get; set; }
+        public HoatChatGoc_ChiDinh()
+        {
 
+        }
         public HoatChatGoc_ChiDinh(int _IDHoatChatGoc, int _IDChiDinh)
         {
             IDHoatChatGoc = _IDHoatChatGoc;
             IDChiDinh = _IDChiDinh;
         }
     }
-
     public class Thuoc_MauSac
     {
         public int IDThuoc { get; set; }
         public int IDMauSac { get; set; }
+        public Thuoc_MauSac()
+        {
 
+        }
         public Thuoc_MauSac(int _IDThuoc, int _IDMauSac)
         {
             IDThuoc = _IDThuoc;
             IDMauSac = _IDMauSac;
         }
     }
-
     public class NhanDangThuoc
     {
         public int IDNhanDang { get; set; }
@@ -1317,7 +1684,10 @@ namespace ClassChung
         public int? IDLoaiViThuoc { get; set; }
         public int? IDLoaiRanh { get; set; }
         public string MaHinh { get; set; }
+        public NhanDangThuoc()
+        {
 
+        }
         public NhanDangThuoc(int _IDNhanDang, int _IDThuoc, bool _CoKhacDau, string _KhacDauMatTruoc, string _KhacDauMatSau, int _IDHinhDang, int _IDDangThuoc, int? _IDLoaiViThuoc, int? _IDLoaiRanh, string _MaHinh)
         {
             IDNhanDang = _IDNhanDang;
