@@ -25,7 +25,7 @@ namespace PillIdentifierForm
 
         private void danhMụcChỉĐịnhToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Forms.DanhmucChidinh DMChidinh = new Forms.DanhmucChidinh();
+            Forms.DanhmucChiDinh DMChidinh = new Forms.DanhmucChiDinh();
             openChildForm(DMChidinh);
         }
 
@@ -48,6 +48,54 @@ namespace PillIdentifierForm
             panelContainer.Tag = childForm;
             childForm.BringToFront();
             childForm.Show();
+        }
+
+        private void danhMụcDạngThuốcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.DanhmucDangThuoc DMDangThuoc = new Forms.DanhmucDangThuoc();
+            openChildForm(DMDangThuoc);
+        }
+
+        private void danhMụcHoạtChấtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.DanhmucHoatChat DMHoatChat = new Forms.DanhmucHoatChat();
+            openChildForm(DMHoatChat);
+        }
+
+        private void danhMụcThuốcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.DanhmucThuoc DMThuoc = new Forms.DanhmucThuoc();
+            openChildForm(DMThuoc);
+        }
+
+        private void danhMụcMàuSắcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.DanhmucMauSac DMMauSac = new Forms.DanhmucMauSac();
+            openChildForm(DMMauSac);
+        }
+
+        private void danhMụcHìnhDạngToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.DanhmucHinhDang DMHinhDang = new Forms.DanhmucHinhDang();
+            openChildForm(DMHinhDang);
+        }
+
+        private void danhMụcLoạiRãnhToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.DanhmucLoaiRanh DMLoaiRanh = new Forms.DanhmucLoaiRanh();
+            openChildForm(DMLoaiRanh);
+        }
+
+        private void danhMụcLoạiVỉToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.DanhmucLoaiViThuoc DMLoaiViThuoc = new Forms.DanhmucLoaiViThuoc();
+            openChildForm(DMLoaiViThuoc);
+        }
+
+        private void thiếtLậpHoạtChấtToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.FormHoatChat_HoatChatGoc FormHoatChat_HoatChatGoc = new Forms.FormHoatChat_HoatChatGoc();
+            openChildForm(FormHoatChat_HoatChatGoc);
         }
     }
 }

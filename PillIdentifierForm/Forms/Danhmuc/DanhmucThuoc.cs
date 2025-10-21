@@ -12,7 +12,7 @@ using ClassChung;
 
 namespace PillIdentifierForm.Forms
 {
-    public partial class DanhmucChidinh : Form
+    public partial class DanhmucThuoc : Form
     {
         BindingSource grid1 = new BindingSource();
         KetnoiDB.GetData getdata = new KetnoiDB.GetData();
@@ -20,17 +20,19 @@ namespace PillIdentifierForm.Forms
         KetnoiDB.UpdateData updatedata = new KetnoiDB.UpdateData();
         KetnoiDB.DeleteData deletedata = new KetnoiDB.DeleteData();
         KetnoiDB.BulkInsertData bulkInsert = new KetnoiDB.BulkInsertData();
-        public DanhmucChidinh()
+        public DanhmucThuoc()
         {
             InitializeComponent();
         }
 
-        private void DanhmucChidinh_Load(object sender, EventArgs e)
+        private void DanhmucThuoc_Load(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
             buttonThem.Enabled = false;
             buttonXoa.Enabled = false;
             buttonSua.Enabled = false;
+            LoadHoatChat();
+
             dataGridView1.DataSource = grid1;
             refreshDatagrid();
         }
@@ -48,9 +50,8 @@ namespace PillIdentifierForm.Forms
                 DataGridViewRow row = dataGridView1.Rows[e.RowIndex];
 
                 // Populate textboxes with selected row data
-                textBoxIDChiDinh.Text = row.Cells["IDChiDinh"].Value.ToString();
-                textBoxChiDinh.Text = row.Cells["TenChiDinh"].Value.ToString();
-                textBoxMoTa.Text = row.Cells["MoTa"].Value.ToString();
+                textBoxIDThuoc.Text = row.Cells["IDThuoc"].Value.ToString();
+                textBoxThuoc.Text = row.Cells["TenThuoc"].Value.ToString();
 
                 // Enable buttons after selection
                 buttonXoa.Enabled = true;
@@ -63,16 +64,17 @@ namespace PillIdentifierForm.Forms
             try
             {
                 // Validate input
-                if (string.IsNullOrWhiteSpace(textBoxChiDinh.Text))
+                if (string.IsNullOrWhiteSpace(textBoxThuoc.Text))
                 {
                     MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    textBoxChiDinh.Focus();
+                    textBoxThuoc.Focus();
                     return;
                 }
 
                 // Insert new record using KetnoiDB.InsertData
-                if (insertdata.InsertChiDinh(textBoxChiDinh.Text.Trim(), textBoxMoTa.Text.Trim()))
+                if (insertdata.InsertThuoc(textBoxThuoc.Text.Trim(), textBoxSDK.Text.Trim(), 1, textBoxHamluong.Text.Trim(),
+                    textBoxDBC.Text.Trim(), textBoxNSX.Text.Trim(), textBoxGhichu.Text.Trim()))
                 {
                     MessageBox.Show("Thêm mới thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -97,7 +99,7 @@ namespace PillIdentifierForm.Forms
             try
             {
                 // Validate ID
-                if (string.IsNullOrWhiteSpace(textBoxIDChiDinh.Text))
+                if (string.IsNullOrWhiteSpace(textBoxIDThuoc.Text))
                 {
                     MessageBox.Show("Vui lòng chọn chỉ định cần xóa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -113,9 +115,9 @@ namespace PillIdentifierForm.Forms
 
                 if (result == DialogResult.Yes)
                 {
-                    int idChiDinh = int.Parse(textBoxIDChiDinh.Text);
+                    int idThuoc = int.Parse(textBoxIDThuoc.Text);
 
-                    if (deletedata.DeleteChiDinh(idChiDinh))
+                    if (deletedata.DeleteThuoc(idThuoc))
                     {
                         MessageBox.Show("Xóa thành công!", "Thông báo",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -143,7 +145,7 @@ namespace PillIdentifierForm.Forms
             try
             {
                 // Validate ID
-                if (string.IsNullOrWhiteSpace(textBoxIDChiDinh.Text))
+                if (string.IsNullOrWhiteSpace(textBoxIDThuoc.Text))
                 {
                     MessageBox.Show("Vui lòng chọn chỉ định cần sửa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -151,18 +153,19 @@ namespace PillIdentifierForm.Forms
                 }
 
                 // Validate input
-                if (string.IsNullOrWhiteSpace(textBoxChiDinh.Text))
+                if (string.IsNullOrWhiteSpace(textBoxThuoc.Text))
                 {
                     MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    textBoxChiDinh.Focus();
+                    textBoxThuoc.Focus();
                     return;
                 }
 
                 // Update record using KetnoiDB.UpdateData
-                int idChiDinh = int.Parse(textBoxIDChiDinh.Text);
+                int idThuoc = int.Parse(textBoxIDThuoc.Text);
 
-                if (updatedata.UpdateChiDinh(idChiDinh, textBoxChiDinh.Text.Trim(), textBoxMoTa.Text.Trim()))
+                if (updatedata.UpdateThuoc(idThuoc, textBoxThuoc.Text.Trim(), textBoxSDK.Text.Trim(), 1, textBoxHamluong.Text.Trim(),
+                    textBoxDBC.Text.Trim(), textBoxNSX.Text.Trim(), textBoxGhichu.Text.Trim()))
                 {
                     MessageBox.Show("Cập nhật thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -191,7 +194,7 @@ namespace PillIdentifierForm.Forms
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     Filter = "CSV Files|*.csv",
-                    Title = "Chọn file để import (Cột 1: TenChiDinh, Cột 2: MoTa)"
+                    Title = "Chọn file để import (Cột 1: TenThuoc, Cột 2: MoTa)"
                 };
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
@@ -199,23 +202,23 @@ namespace PillIdentifierForm.Forms
                     string filePath = openFileDialog.FileName;
                     string extension = Path.GetExtension(filePath).ToLower();
 
-                    List<ChiDinh> listChiDinh = new List<ChiDinh>();
-                    
-                    ImportFromCSV(filePath, listChiDinh);
+                    List<Thuoc> listThuoc = new List<Thuoc>();
 
-                    if (listChiDinh.Count > 0)
+                    ImportFromCSV(filePath, listThuoc);
+
+                    if (listThuoc.Count > 0)
                     {
                         DialogResult result = MessageBox.Show(
-                            "Tìm thấy " + listChiDinh.Count.ToString() + " dòng dữ liệu. Bạn có muốn import?",
+                            "Tìm thấy " + listThuoc.Count.ToString() + " dòng dữ liệu. Bạn có muốn import?",
                             "Xác nhận import",
                             MessageBoxButtons.YesNo,
                             MessageBoxIcon.Question);
 
                         if (result == DialogResult.Yes)
                         {
-                            if (bulkInsert.BulkInsertChiDinh(listChiDinh))
+                            if (bulkInsert.BulkInsertThuoc(listThuoc))
                             {
-                                MessageBox.Show("Import thành công " + listChiDinh.Count.ToString() + " bản ghi!", "Thông báo",
+                                MessageBox.Show("Import thành công " + listThuoc.Count.ToString() + " bản ghi!", "Thông báo",
                                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                                 refreshDatagrid();
                             }
@@ -249,18 +252,23 @@ namespace PillIdentifierForm.Forms
 
         private void refreshDatagrid()
         {
-            grid1.DataSource = getdata.GetDSChiDinh();
+            grid1.DataSource = getdata.GetDSThuoc();
             dataGridView1.AutoResizeColumns();
         }
 
         private void ClearTextBoxes()
         {
-            textBoxIDChiDinh.Clear();
-            textBoxChiDinh.Clear();
-            textBoxMoTa.Clear();
-            textBoxChiDinh.Focus();
+            textBoxIDThuoc.Clear();
+            textBoxThuoc.Clear();
+            textBoxSDK.Clear();
+
+            textBoxHamluong.Clear();
+            textBoxDBC.Clear();
+            textBoxNSX.Clear();
+            textBoxGhichu.Clear();
+            textBoxThuoc.Focus();
         }
-        private void ImportFromCSV(string filePath, List<ChiDinh> listChiDinh)
+        private void ImportFromCSV(string filePath, List<Thuoc> listThuoc)
         {
             using (StreamReader sr = new StreamReader(filePath, Encoding.UTF8))
             {
@@ -280,17 +288,34 @@ namespace PillIdentifierForm.Forms
 
                     if (values.Length >= 1 && !string.IsNullOrWhiteSpace(values[0]))
                     {
-                        ChiDinh cd = new ChiDinh();
-                        cd.TenChiDinh = values[0].Trim().Trim('"');
-                        cd.MoTa = values.Length > 1 ? values[1].Trim().Trim('"') : "";
-                        listChiDinh.Add(cd);
+                        Thuoc cd = new Thuoc();
+                        cd.TenThuoc = values[0].Trim().Trim('"');
+                        cd.GhiChu = values.Length > 1 ? values[1].Trim().Trim('"') : "";
+                        listThuoc.Add(cd);
                     }
                 }
             }
         }
-        private void textBoxChiDinh_TextChanged(object sender, EventArgs e)
+        private void textBoxThuoc_TextChanged(object sender, EventArgs e)
         {
-            buttonThem.Enabled = !string.IsNullOrWhiteSpace(textBoxChiDinh.Text);
+            buttonThem.Enabled = !string.IsNullOrWhiteSpace(textBoxThuoc.Text);
         }
+
+        private void buttonGDHoatChat_Click(object sender, EventArgs e)
+        {
+            using (DanhmucHoatChat formcon = new DanhmucHoatChat())
+            {
+                formcon.ShowDialog();
+                LoadHoatChat();
+            }
+        }
+        private void LoadHoatChat()
+        {
+            List<HoatChat> ds = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
+            comboBoxHC.DataSource = ds;
+            comboBoxHC.DisplayMember = "TenHoatChat";
+            comboBoxHC.ValueMember = "IDHoatChat";
+        }
+
     }
 }

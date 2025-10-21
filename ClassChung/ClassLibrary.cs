@@ -163,7 +163,7 @@ namespace ClassChung
                     return false;
                 }
             }
-            public bool InsertThuoc(string tenThuoc, string sdk, int? idHoatChat,
+            public bool InsertThuoc(string tenThuoc, string sdk, int idHoatChat,
                             string hamLuong, string dangBaoChe, string nhaSX, string ghiChu)
             {
                 try
@@ -468,6 +468,7 @@ namespace ClassChung
                 try
                 {
                     List<d_Thuoc> dsimport = new List<d_Thuoc>();
+
                     foreach (Thuoc i in listThuoc)
                     {
                         d_Thuoc a = new d_Thuoc();
@@ -627,7 +628,7 @@ namespace ClassChung
 
                 List<d_HoatChat> ds = db.d_HoatChats.ToList();
                 foreach (d_HoatChat i in ds)
-                    kq.Add(new HoatChat(i.IDHoatChat, i.TenHoatChat, i.LoaiHoatChat));
+                    kq.Add(GetHC(i.IDHoatChat));
 
                 return kq;
             }
@@ -679,7 +680,9 @@ namespace ClassChung
             {
                 List<Thuoc> kq = new List<Thuoc>();
 
-                List<d_Thuoc> ds = db.d_Thuocs.ToList();
+                List<d_Thuoc> ds = (from data in db.d_Thuocs
+                                    select data).ToList();
+
                 foreach (d_Thuoc i in ds)
                     kq.Add(new Thuoc(i.IDThuoc, i.TenThuoc, i.SDK, i.IDHoatChat, i.HamLuong, i.DangBaoChe, i.NhaSX, i.GhiChu));
                 return kq;
@@ -694,6 +697,44 @@ namespace ClassChung
 
                     foreach (d_ChiDinh i in ds)
                         kq.Add(new ChiDinh(i.IDChiDinh, i.TenChiDinh, i.MoTa));
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+            public HoatChat GetHC(int idHoatChat)
+            {
+                HoatChat kq = new HoatChat();
+                try
+                {
+                    d_HoatChat d_hc = (from data in db.d_HoatChats
+                                     where data.IDHoatChat == idHoatChat
+                                     select data).FirstOrDefault();
+                    kq.IDHoatChat = d_hc.IDHoatChat;
+                    kq.TenHoatChat = d_hc.TenHoatChat;
+                    kq.LoaiHoatChat = d_hc.LoaiHoatChat;
+                    kq.dsHCG = GetHCGbyidHC(kq.IDHoatChat);
+
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+            public List<HoatChatGoc> GetHCGbyidHC(int idHoatChat)
+            {
+                List<HoatChatGoc> kq = new List<HoatChatGoc>();
+                try
+                {
+                    List<d_HoatChatGoc> ds = (from data in db.d_HoatChatGocs
+                                              join s1 in db.r_HoatChat_HoatChatGocs on data.IDHoatChatGoc equals s1.IDHoatChatGoc
+                                              where s1.IDHoatChat == idHoatChat
+                                              select data).ToList();
+                    foreach (d_HoatChatGoc i in ds)
+                        kq.Add(new HoatChatGoc(i.IDHoatChatGoc, i.TenHoatChat, i.GhiChu));
                     return kq;
                 }
                 catch
@@ -978,7 +1019,7 @@ namespace ClassChung
                 }
             }
 
-            public bool UpdateThuoc(int idThuoc, string tenThuoc, string sdk, int? idHoatChat,
+            public bool UpdateThuoc(int idThuoc, string tenThuoc, string sdk, int idHoatChat,
                             string hamLuong, string dangBaoChe, string nhaSX, string ghiChu)
             {
                 try
@@ -1363,15 +1404,16 @@ namespace ClassChung
                 }
             }
 
-            public bool DeleteHoatChat_HoatChatGoc(int idHoatChat, int idHoatChatGoc)
+            public bool DeleteHoatChat_HoatChatGoc(int idHoatChat)
             {
                 try
                 {
-                    r_HoatChat_HoatChatGoc link = db.r_HoatChat_HoatChatGocs.SingleOrDefault(x =>
-                        x.IDHoatChat == idHoatChat && x.IDHoatChatGoc == idHoatChatGoc);
+                    List<r_HoatChat_HoatChatGoc> link = (from data in db.r_HoatChat_HoatChatGocs
+                                                         where data.IDHoatChat == idHoatChat
+                                                         select data).ToList();
                     if (link != null)
                     {
-                        db.r_HoatChat_HoatChatGocs.DeleteOnSubmit(link);
+                        db.r_HoatChat_HoatChatGocs.DeleteAllOnSubmit(link);
                         db.SubmitChanges();
                         return true;
                     }
@@ -1506,7 +1548,7 @@ namespace ClassChung
             DuongDanHinh = _DuongDanHinh;
             MoTa = _MoTa;
         }
-    }
+    } //chua
     public class HinhDang
     {
         public int IDHinhDang { get; set; }
@@ -1608,7 +1650,7 @@ namespace ClassChung
         public int IDThuoc { get; set; }
         public string TenThuoc { get; set; }
         public string SDK { get; set; }
-        public int? IDHoatChat { get; set; }
+        public int IDHoatChat { get; set; }
         public string HamLuong { get; set; }
         public string DangBaoChe { get; set; }
         public string NhaSX { get; set; }
@@ -1618,7 +1660,7 @@ namespace ClassChung
         {
 
         }
-        public Thuoc(int _IDThuoc, string _TenThuoc, string _SDK, int? _IDHoatChat, string _HamLuong, string _DangBaoChe, string _NhaSX, string _GhiChu)
+        public Thuoc(int _IDThuoc, string _TenThuoc, string _SDK, int _IDHoatChat, string _HamLuong, string _DangBaoChe, string _NhaSX, string _GhiChu)
         {
             IDThuoc = _IDThuoc;
             TenThuoc = _TenThuoc;
@@ -1643,7 +1685,7 @@ namespace ClassChung
             IDHoatChat = _IDHoatChat;
             IDHoatChatGoc = _IDHoatChatGoc;
         }
-    }
+    } //chua
     public class HoatChatGoc_ChiDinh
     {
         public int IDHoatChatGoc { get; set; }
@@ -1657,7 +1699,7 @@ namespace ClassChung
             IDHoatChatGoc = _IDHoatChatGoc;
             IDChiDinh = _IDChiDinh;
         }
-    }
+    } //chua
     public class Thuoc_MauSac
     {
         public int IDThuoc { get; set; }
@@ -1671,7 +1713,7 @@ namespace ClassChung
             IDThuoc = _IDThuoc;
             IDMauSac = _IDMauSac;
         }
-    }
+    } //chua
     public class NhanDangThuoc
     {
         public int IDNhanDang { get; set; }
@@ -1701,7 +1743,7 @@ namespace ClassChung
             IDLoaiRanh = _IDLoaiRanh;
             MaHinh = _MaHinh;
         }
-    }
+    } //chua
     #endregion
 
     #region API

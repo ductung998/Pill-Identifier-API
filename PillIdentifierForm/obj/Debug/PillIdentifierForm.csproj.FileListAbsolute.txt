@@ -10,3 +10,12 @@ C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdent
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.csproj.GenerateResource.Cache
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.exe
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.pdb
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucDangthuoc.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucThuoc.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucHoatChat.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucLoaiViThuoc.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucMauSac.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucLoaiRanh.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucHoatChatGoc.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucHinhDang.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.FormHoatChat_HoatChatGoc.resources

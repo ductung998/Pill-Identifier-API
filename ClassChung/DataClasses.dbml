@@ -56,8 +56,8 @@
       <Column Name="IDHoatChat" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="TenHoatChat" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
       <Column Name="LoaiHoatChat" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
-      <Association Name="d_HoatChat_d_Thuoc" Member="d_Thuocs" ThisKey="IDHoatChat" OtherKey="IDHoatChat" Type="d_Thuoc" />
       <Association Name="d_HoatChat_r_HoatChat_HoatChatGoc" Member="r_HoatChat_HoatChatGocs" ThisKey="IDHoatChat" OtherKey="IDHoatChat" Type="r_HoatChat_HoatChatGoc" />
+      <Association Name="d_HoatChat_d_Thuoc" Member="d_Thuocs" ThisKey="IDHoatChat" OtherKey="IDHoatChat" Type="d_Thuoc" />
     </Type>
   </Table>
   <Table Name="dbo.d_HoatChatGoc" Member="d_HoatChatGocs">
@@ -90,21 +90,6 @@
       <Association Name="d_MauSac_r_Thuoc_MauSac" Member="r_Thuoc_MauSacs" ThisKey="IDMauSac" OtherKey="IDMauSac" Type="r_Thuoc_MauSac" />
     </Type>
   </Table>
-  <Table Name="dbo.d_Thuoc" Member="d_Thuocs">
-    <Type Name="d_Thuoc">
-      <Column Name="IDThuoc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="TenThuoc" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
-      <Column Name="SDK" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
-      <Column Name="IDHoatChat" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="HamLuong" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="DangBaoChe" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="NhaSX" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
-      <Column Name="GhiChu" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Association Name="d_Thuoc_w_NhanDangThuoc" Member="w_NhanDangThuocs" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="w_NhanDangThuoc" />
-      <Association Name="d_Thuoc_r_Thuoc_MauSac" Member="r_Thuoc_MauSacs" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="r_Thuoc_MauSac" />
-      <Association Name="d_HoatChat_d_Thuoc" Member="d_HoatChat" ThisKey="IDHoatChat" OtherKey="IDHoatChat" Type="d_HoatChat" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.r_HoatChat_HoatChatGoc" Member="r_HoatChat_HoatChatGocs">
     <Type Name="r_HoatChat_HoatChatGoc">
       <Column Name="IDHoatChat" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -127,6 +112,21 @@
       <Column Name="IDMauSac" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Association Name="d_MauSac_r_Thuoc_MauSac" Member="d_MauSac" ThisKey="IDMauSac" OtherKey="IDMauSac" Type="d_MauSac" IsForeignKey="true" />
       <Association Name="d_Thuoc_r_Thuoc_MauSac" Member="d_Thuoc" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="d_Thuoc" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.d_Thuoc" Member="d_Thuocs">
+    <Type Name="d_Thuoc">
+      <Column Name="IDThuoc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="TenThuoc" Type="System.String" DbType="NVarChar(200) NOT NULL" CanBeNull="false" />
+      <Column Name="SDK" Type="System.String" DbType="NVarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="IDHoatChat" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="HamLuong" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="DangBaoChe" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="NhaSX" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="GhiChu" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Association Name="d_Thuoc_w_NhanDangThuoc" Member="w_NhanDangThuocs" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="w_NhanDangThuoc" />
+      <Association Name="d_Thuoc_r_Thuoc_MauSac" Member="r_Thuoc_MauSacs" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="r_Thuoc_MauSac" />
+      <Association Name="d_HoatChat_d_Thuoc" Member="d_HoatChat" ThisKey="IDHoatChat" OtherKey="IDHoatChat" Type="d_HoatChat" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

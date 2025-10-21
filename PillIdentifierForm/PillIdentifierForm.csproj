@@ -44,11 +44,65 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Forms\DanhmucChidinh.cs">
+    <Compile Include="Forms\Danhmuc\DanhmucThuoc.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\DanhmucChidinh.Designer.cs">
-      <DependentUpon>DanhmucChidinh.cs</DependentUpon>
+    <Compile Include="Forms\Danhmuc\DanhmucThuoc.Designer.cs">
+      <DependentUpon>DanhmucThuoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucHoatChat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucHoatChat.Designer.cs">
+      <DependentUpon>DanhmucHoatChat.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucLoaiViThuoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucLoaiViThuoc.Designer.cs">
+      <DependentUpon>DanhmucLoaiViThuoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucMauSac.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucMauSac.Designer.cs">
+      <DependentUpon>DanhmucMauSac.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucLoaiRanh.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucLoaiRanh.Designer.cs">
+      <DependentUpon>DanhmucLoaiRanh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucHoatChatGoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucHoatChatGoc.Designer.cs">
+      <DependentUpon>DanhmucHoatChatGoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucHinhDang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucHinhDang.Designer.cs">
+      <DependentUpon>DanhmucHinhDang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucDangThuoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucDangThuoc.Designer.cs">
+      <DependentUpon>DanhmucDangThuoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucChiDinh.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Danhmuc\DanhmucChiDinh.Designer.cs">
+      <DependentUpon>DanhmucChiDinh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Thietlap\Form_HoatChat_HoatChatGoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Thietlap\Form_HoatChat_HoatChatGoc.Designer.cs">
+      <DependentUpon>Form_HoatChat_HoatChatGoc.cs</DependentUpon>
     </Compile>
     <Compile Include="Giaodienchinh.cs">
       <SubType>Form</SubType>
@@ -58,8 +112,35 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Forms\DanhmucChidinh.resx">
-      <DependentUpon>DanhmucChidinh.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucThuoc.resx">
+      <DependentUpon>DanhmucThuoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucHoatChat.resx">
+      <DependentUpon>DanhmucHoatChat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucLoaiViThuoc.resx">
+      <DependentUpon>DanhmucLoaiViThuoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucMauSac.resx">
+      <DependentUpon>DanhmucMauSac.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucLoaiRanh.resx">
+      <DependentUpon>DanhmucLoaiRanh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucHoatChatGoc.resx">
+      <DependentUpon>DanhmucHoatChatGoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucHinhDang.resx">
+      <DependentUpon>DanhmucHinhDang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucDangThuoc.resx">
+      <DependentUpon>DanhmucDangThuoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Danhmuc\DanhmucChiDinh.resx">
+      <DependentUpon>DanhmucChiDinh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Thietlap\Form_HoatChat_HoatChatGoc.resx">
+      <DependentUpon>Form_HoatChat_HoatChatGoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Giaodienchinh.resx">
       <DependentUpon>Giaodienchinh.cs</DependentUpon>
