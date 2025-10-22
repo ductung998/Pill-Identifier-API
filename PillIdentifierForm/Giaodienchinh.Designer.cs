@@ -44,9 +44,9 @@
             this.thiếtLậpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpHoạtChấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.traCứuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelContainer = new System.Windows.Forms.Panel();
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -180,6 +180,13 @@
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem.Name = "thiếtLậpNhậnDạngThuốcToolStripMenuItem";
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem.Text = "Thiết lập nhận dạng thuốc";
+            this.thiếtLậpNhậnDạngThuốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpNhậnDạngThuốcToolStripMenuItem_Click);
+            // 
+            // thiếtLậpHìnhẢnhThuốcToolStripMenuItem
+            // 
+            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Name = "thiếtLậpHìnhẢnhThuốcToolStripMenuItem";
+            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
+            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Text = "Thiết lập hình ảnh thuốc";
             // 
             // traCứuToolStripMenuItem
             // 
@@ -196,12 +203,6 @@
             this.panelContainer.Name = "panelContainer";
             this.panelContainer.Size = new System.Drawing.Size(1032, 525);
             this.panelContainer.TabIndex = 1;
-            // 
-            // thiếtLậpHìnhẢnhThuốcToolStripMenuItem
-            // 
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Name = "thiếtLậpHìnhẢnhThuốcToolStripMenuItem";
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Text = "Thiết lập hình ảnh thuốc";
             // 
             // Giaodienchinh
             // 

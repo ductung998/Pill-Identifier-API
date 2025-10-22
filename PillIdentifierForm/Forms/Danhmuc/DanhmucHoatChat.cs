@@ -190,7 +190,7 @@ namespace PillIdentifierForm.Forms
                 OpenFileDialog openFileDialog = new OpenFileDialog
                 {
                     Filter = "CSV Files|*.csv",
-                    Title = "Chọn file để import (Cột 1: TenHoatChat, Cột 2: MoTa)"
+                    Title = "Chọn file để import (Cột 1: TenHoatChat, Cột 2: LoaiHoatChat)"
                 };
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)

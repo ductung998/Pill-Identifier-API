@@ -687,7 +687,18 @@ namespace ClassChung
                     kq.Add(new Thuoc(i.IDThuoc, i.TenThuoc, i.SDK, i.IDHoatChat, i.HamLuong, i.DangBaoChe, i.NhaSX, i.GhiChu));
                 return kq;
             }
+            // Lấy toàn bộ Nhận dạng thuốc
+            public List<NhanDangThuoc> GetDSNhanDangThuoc()
+            {
+                List<NhanDangThuoc> kq = new List<NhanDangThuoc>();
 
+                List<w_NhanDangThuoc> ds = (from data in db.w_NhanDangThuocs
+                                            select data).ToList();
+
+                foreach (w_NhanDangThuoc i in ds)
+                    kq.Add(new NhanDangThuoc(i.IDNhanDang, i.IDThuoc, i.CoKhacDau, i.KhacDauMatTruoc, i.KhacDauMatSau, i.IDHinhDang, i.IDDangThuoc, i.IDLoaiViThuoc, i.IDLoaiRanh, i.MaHinh));
+                return kq;
+            }
             public List<ChiDinh> SearchChiDinh(string keyword)
             {
                 List<ChiDinh> kq = new List<ChiDinh>();
@@ -710,8 +721,8 @@ namespace ClassChung
                 try
                 {
                     d_HoatChat d_hc = (from data in db.d_HoatChats
-                                     where data.IDHoatChat == idHoatChat
-                                     select data).FirstOrDefault();
+                                       where data.IDHoatChat == idHoatChat
+                                       select data).FirstOrDefault();
                     kq.IDHoatChat = d_hc.IDHoatChat;
                     kq.TenHoatChat = d_hc.TenHoatChat;
                     kq.LoaiHoatChat = d_hc.LoaiHoatChat;
@@ -735,6 +746,50 @@ namespace ClassChung
                                               select data).ToList();
                     foreach (d_HoatChatGoc i in ds)
                         kq.Add(new HoatChatGoc(i.IDHoatChatGoc, i.TenHoatChat, i.GhiChu));
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+            public Thuoc GetThuoc(int idThuoc)
+            {
+                Thuoc kq = new Thuoc();
+                try
+                {
+                    d_Thuoc d_hc = (from data in db.d_Thuocs
+                                       where data.IDThuoc == idThuoc
+                                       select data).FirstOrDefault();
+                    kq.IDThuoc = d_hc.IDThuoc;
+                    kq.TenThuoc = d_hc.TenThuoc;
+                    kq.SDK = d_hc.SDK;
+                    kq.IDHoatChat = d_hc.IDHoatChat;
+                    kq.HamLuong = d_hc.HamLuong;
+                    kq.DangBaoChe = d_hc.DangBaoChe;
+                    kq.NhaSX = d_hc.NhaSX;
+                    kq.GhiChu = d_hc.GhiChu;
+                    kq.Mausac = GetMauSacbyIDThuoc(idThuoc);
+                    kq.HinhAnhChiTiet = GetDSHinhAnhbyThuoc(idThuoc);
+
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+            public List<MauSac> GetMauSacbyIDThuoc(int idThuoc)
+            {
+                List<MauSac> kq = new List<MauSac>();
+                try
+                {
+                    List<d_MauSac> ds = (from data in db.d_MauSacs
+                                              join s1 in db.r_Thuoc_MauSacs on data.IDMauSac equals s1.IDMauSac
+                                              where s1.IDThuoc == idThuoc
+                                              select data).ToList();
+                    foreach (d_MauSac i in ds)
+                        kq.Add(new MauSac(i.IDMauSac, i.TenMauSac));
                     return kq;
                 }
                 catch
@@ -1445,12 +1500,12 @@ namespace ClassChung
                 }
             }
 
-            public bool DeleteThuoc_MauSac(int idThuoc, int idMauSac)
+            public bool DeleteThuoc_MauSac(int idThuoc)
             {
                 try
                 {
                     r_Thuoc_MauSac link = db.r_Thuoc_MauSacs.SingleOrDefault(x =>
-                        x.IDThuoc == idThuoc && x.IDMauSac == idMauSac);
+                        x.IDThuoc == idThuoc);
                     if (link != null)
                     {
                         db.r_Thuoc_MauSacs.DeleteOnSubmit(link);
@@ -1655,6 +1710,8 @@ namespace ClassChung
         public string DangBaoChe { get; set; }
         public string NhaSX { get; set; }
         public string GhiChu { get; set; }
+        public List<MauSac> Mausac { get; set; }
+        public List<HinhAnhThuocChiTiet> HinhAnhChiTiet { get; set; }
 
         public Thuoc()
         {
@@ -1743,7 +1800,7 @@ namespace ClassChung
             IDLoaiRanh = _IDLoaiRanh;
             MaHinh = _MaHinh;
         }
-    } //chua
+    }
     #endregion
 
     #region API

@@ -1,6 +1,6 @@
 ﻿namespace PillIdentifierForm.Forms
 {
-    partial class FormHoatChat_HoatChatGoc
+    partial class FormMauSacThuoc
     {
         /// <summary>
         /// Required designer variable.
@@ -40,9 +40,9 @@
             this.label5 = new System.Windows.Forms.Label();
             this.comboBoxHC = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.buttonImport = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -54,9 +54,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(104, 17);
+            this.label2.Size = new System.Drawing.Size(98, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Chọn hoạt chất";
+            this.label2.Text = "Chọn IDThuoc";
             // 
             // label4
             // 
@@ -133,7 +133,7 @@
             this.button1.TabIndex = 11;
             this.button1.Text = "...";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.buttonGDHoatChat_Click);
+            this.button1.Click += new System.EventHandler(this.buttonGDThuoc_Click);
             // 
             // comboBoxHCG
             // 
@@ -148,9 +148,9 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(498, 9);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(96, 17);
+            this.label5.Size = new System.Drawing.Size(61, 17);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Hoạt chất gốc";
+            this.label5.Text = "Màu sắc";
             // 
             // comboBoxHC
             // 
@@ -172,6 +172,17 @@
             this.panel2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.panel2.Size = new System.Drawing.Size(1034, 55);
             this.panel2.TabIndex = 14;
+            // 
+            // buttonImport
+            // 
+            this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonImport.Location = new System.Drawing.Point(581, 9);
+            this.buttonImport.Name = "buttonImport";
+            this.buttonImport.Size = new System.Drawing.Size(143, 43);
+            this.buttonImport.TabIndex = 13;
+            this.buttonImport.Text = "Import...";
+            this.buttonImport.UseVisualStyleBackColor = true;
+            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
             // 
             // panel3
             // 
@@ -200,18 +211,7 @@
             this.dataGridView1.Size = new System.Drawing.Size(1010, 359);
             this.dataGridView1.TabIndex = 8;
             // 
-            // buttonImport
-            // 
-            this.buttonImport.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonImport.Location = new System.Drawing.Point(581, 9);
-            this.buttonImport.Name = "buttonImport";
-            this.buttonImport.Size = new System.Drawing.Size(143, 43);
-            this.buttonImport.TabIndex = 13;
-            this.buttonImport.Text = "Import...";
-            this.buttonImport.UseVisualStyleBackColor = true;
-            this.buttonImport.Click += new System.EventHandler(this.buttonImport_Click);
-            // 
-            // FormHoatChat_HoatChatGoc
+            // FormMauSacThuoc
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSize = true;
@@ -221,11 +221,11 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label4);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "FormHoatChat_HoatChatGoc";
+            this.Name = "FormMauSacThuoc";
             this.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "FormHoatChat_HoatChatGoc";
-            this.Load += new System.EventHandler(this.FormHoatChat_HoatChatGoc_Load);
+            this.Text = "FormMauSacThuoc";
+            this.Load += new System.EventHandler(this.FormMauSacThuoc_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

@@ -12,12 +12,12 @@ using ClassChung;
 
 namespace PillIdentifierForm.Forms
 {
-    public partial class FormHoatChat_HoatChatGoc : Form
+    public partial class FormMauSacThuoc : Form
     {
-        private List<HoatChat> _listHoatChat;
-        private List<HoatChatGoc> _listHoatChatGoc;
-        private List<HoatChat_HoatChatGoc> _listLienKet;
-        HoatChat workingHC;
+        private List<Thuoc> _listThuoc;
+        private List<MauSac> _listMauSac;
+        private List<Thuoc_MauSac> _listLienKet;
+        Thuoc workingThuoc;
 
         BindingSource grid1 = new BindingSource();
 
@@ -26,17 +26,17 @@ namespace PillIdentifierForm.Forms
         KetnoiDB.UpdateData updatedata = new KetnoiDB.UpdateData();
         KetnoiDB.DeleteData deletedata = new KetnoiDB.DeleteData();
         KetnoiDB.BulkInsertData bulkInsert = new KetnoiDB.BulkInsertData();
-        public FormHoatChat_HoatChatGoc()
+        public FormMauSacThuoc()
         {
             InitializeComponent();
         }
 
-        private void FormHoatChat_HoatChatGoc_Load(object sender, EventArgs e)
+        private void FormMauSacThuoc_Load(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
 
-            LoadHoatChat();
-            LoadHoatChatGoc();
+            LoadThuoc();
+            LoadMauSac();
 
             dataGridView1.DataSource = grid1;
         }
@@ -50,11 +50,11 @@ namespace PillIdentifierForm.Forms
         {
             try
             {
-                deletedata.DeleteHoatChat_HoatChatGoc(workingHC.IDHoatChat);
+                deletedata.DeleteThuoc_MauSac(workingThuoc.IDThuoc);
 
-                foreach (HoatChat_HoatChatGoc i in _listLienKet)
+                foreach (Thuoc_MauSac i in _listLienKet)
                 {
-                    insertdata.InsertHoatChat_HoatChatGoc(i.IDHoatChat, i.IDHoatChatGoc);
+                    insertdata.InsertThuoc_MauSac(i.IDThuoc, i.IDMauSac);
                 }
             }
             catch (Exception ex)
@@ -66,43 +66,43 @@ namespace PillIdentifierForm.Forms
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            using (ImportHoatChat_HoatChatGoc formcon = new ImportHoatChat_HoatChatGoc())
+            using (ImportThuoc_MauSac formcon = new ImportThuoc_MauSac())
             {
                 formcon.ShowDialog();
             }
         }
 
-        private void buttonGDHoatChat_Click(object sender, EventArgs e)
+        private void buttonGDThuoc_Click(object sender, EventArgs e)
         {
-            using (DanhmucHoatChat formcon = new DanhmucHoatChat())
+            using (DanhmucThuoc formcon = new DanhmucThuoc())
             {
                 formcon.ShowDialog();
-                LoadHoatChat();
+                LoadThuoc();
             }
         }
-        private void LoadHoatChat()
+        private void LoadThuoc()
         {
-            _listHoatChat = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
-            comboBoxHC.DataSource = _listHoatChat;
-            comboBoxHC.DisplayMember = "TenHoatChat";
-            comboBoxHC.ValueMember = "IDHoatChat";
+            _listThuoc = getdata.GetDSThuoc().OrderBy(h => h.TenThuoc).ToList();
+            comboBoxHC.DataSource = _listThuoc;
+            comboBoxHC.DisplayMember = "TenThuoc";
+            comboBoxHC.ValueMember = "IDThuoc";
         }
-        private void LoadHoatChatGoc()
+        private void LoadMauSac()
         {
-            _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChat).ToList();
-            comboBoxHCG.DataSource = _listHoatChatGoc;
-            comboBoxHCG.DisplayMember = "TenHoatChatGoc";
-            comboBoxHCG.ValueMember = "IDHoatChatGoc";
+            _listMauSac = getdata.GetDSMauSac().OrderBy(h => h.TenMauSac).ToList();
+            comboBoxHCG.DataSource = _listMauSac;
+            comboBoxHCG.DisplayMember = "TenMauSac";
+            comboBoxHCG.ValueMember = "IDMauSac";
         }
 
         private void comboBoxHC_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int idHoatChat = (int)comboBoxHC.SelectedValue;
+            int idThuoc = (int)comboBoxHC.SelectedValue;
 
-            workingHC = getdata.GetHC(idHoatChat);
+            workingThuoc = getdata.GetThuoc(idThuoc);
 
-            foreach (HoatChatGoc goc in workingHC.dsHCG)
-                _listLienKet.Add(new HoatChat_HoatChatGoc(idHoatChat, goc.IDHoatChatGoc));
+            foreach (MauSac mausac in workingThuoc.Mausac)
+                _listLienKet.Add(new Thuoc_MauSac(idThuoc, mausac.IDMauSac));
 
             LoadLinkedList();
         }
@@ -116,17 +116,17 @@ namespace PillIdentifierForm.Forms
         {
             if (comboBoxHC.SelectedValue == null || comboBoxHCG.SelectedValue == null) return;
 
-            int idHoatChat = (int)comboBoxHC.SelectedValue;
-            int idHoatChatGoc = (int)comboBoxHCG.SelectedValue;
+            int idThuoc = (int)comboBoxHC.SelectedValue;
+            int idMauSac = (int)comboBoxHCG.SelectedValue;
 
-            if (_listLienKet.Any(l => l.IDHoatChat == idHoatChat && l.IDHoatChatGoc == idHoatChatGoc))
+            if (_listLienKet.Any(l => l.IDThuoc == idThuoc && l.IDMauSac == idMauSac))
             {
                 MessageBox.Show("Liên kết này đã tồn tại.");
                 return;
             }
             else
             {
-                _listLienKet.Add(new HoatChat_HoatChatGoc { IDHoatChat = idHoatChat, IDHoatChatGoc = idHoatChatGoc });
+                _listLienKet.Add(new Thuoc_MauSac { IDThuoc = idThuoc, IDMauSac = idMauSac });
             }
             
             LoadLinkedList();

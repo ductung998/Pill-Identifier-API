@@ -98,6 +98,30 @@
     <Compile Include="Forms\Danhmuc\DanhmucChiDinh.Designer.cs">
       <DependentUpon>DanhmucChiDinh.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Thietlap\FormNhanDangThuoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Thietlap\FormNhanDangThuoc.Designer.cs">
+      <DependentUpon>FormNhanDangThuoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Thietlap\Form_MauSacThuoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Thietlap\Form_MauSacThuoc.Designer.cs">
+      <DependentUpon>Form_MauSacThuoc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Thietlap\ImportThuoc_MauSac.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Thietlap\ImportThuoc_MauSac.Designer.cs">
+      <DependentUpon>ImportThuoc_MauSac.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Thietlap\Import_HoatChat_HoatChatGoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\Thietlap\Import_HoatChat_HoatChatGoc.Designer.cs">
+      <DependentUpon>Import_HoatChat_HoatChatGoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Thietlap\Form_HoatChat_HoatChatGoc.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -138,6 +162,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Danhmuc\DanhmucChiDinh.resx">
       <DependentUpon>DanhmucChiDinh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Thietlap\FormNhanDangThuoc.resx">
+      <DependentUpon>FormNhanDangThuoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Thietlap\Form_MauSacThuoc.resx">
+      <DependentUpon>Form_MauSacThuoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Thietlap\ImportThuoc_MauSac.resx">
+      <DependentUpon>ImportThuoc_MauSac.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\Thietlap\Import_HoatChat_HoatChatGoc.resx">
+      <DependentUpon>Import_HoatChat_HoatChatGoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Thietlap\Form_HoatChat_HoatChatGoc.resx">
       <DependentUpon>Form_HoatChat_HoatChatGoc.cs</DependentUpon>
