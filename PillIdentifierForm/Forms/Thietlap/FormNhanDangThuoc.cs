@@ -14,18 +14,26 @@ namespace PillIdentifierForm.Forms
 {
     public partial class FormNhanDangThuoc : Form
     {
+        private List<Thuoc> _listThuoc;
+        private List<HoatChat> _listHoatChat;
+        private List<NhanDangThuoc> _listNhanDang;
+
         BindingSource grid1 = new BindingSource();
+        BindingSource gridThuoc = new BindingSource();
+
         KetnoiDB.GetData getdata = new KetnoiDB.GetData();
         KetnoiDB.InsertData insertdata = new KetnoiDB.InsertData();
         KetnoiDB.UpdateData updatedata = new KetnoiDB.UpdateData();
         KetnoiDB.DeleteData deletedata = new KetnoiDB.DeleteData();
         KetnoiDB.BulkInsertData bulkInsert = new KetnoiDB.BulkInsertData();
+
         public FormNhanDangThuoc()
         {
             InitializeComponent();
             LoadDropdowns();
             LoadData();
         }
+
         #region helper
 
         public class ComboBoxItem
@@ -38,39 +46,44 @@ namespace PillIdentifierForm.Forms
                 return Text;
             }
         }
+
         private void SetComboBoxValue(ComboBox cbo, object value)
         {
-            cbo.SelectedIndex = -1;
-
             if (value == null || value == DBNull.Value)
             {
-                // For nullable comboboxes, select the first item (empty option)
-                if (cbo == cboLoaiViThuoc || cbo == cboLoaiRanh)
-                {
-                    cbo.SelectedIndex = 0;
-                }
+                cbo.SelectedIndex = -1;
                 return;
             }
 
-            for (int i = 0; i < cbo.Items.Count; i++)
+            // For comboboxes with class objects as datasource
+            if (cbo.DataSource != null)
             {
-                ComboBoxItem item = cbo.Items[i] as ComboBoxItem;
-                if (item != null && item.Value != null)
+                for (int i = 0; i < cbo.Items.Count; i++)
                 {
-                    if (item.Value.ToString() == value.ToString())
+                    object item = cbo.Items[i];
+
+                    // Get the ValueMember property value
+                    var valueProperty = item.GetType().GetProperty(cbo.ValueMember);
+                    if (valueProperty != null)
                     {
-                        cbo.SelectedIndex = i;
-                        return;
+                        object itemValue = valueProperty.GetValue(item, null);
+                        if (itemValue != null && itemValue.ToString() == value.ToString())
+                        {
+                            cbo.SelectedIndex = i;
+                            return;
+                        }
                     }
                 }
             }
+
+            cbo.SelectedIndex = -1;
         }
+
         private bool ValidateInput()
         {
             if (string.IsNullOrWhiteSpace(textBoxIDThuoc.Text))
             {
-                MessageBox.Show("Vui lòng nhập ID Thuốc.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                textBoxIDThuoc.Focus();
+                MessageBox.Show("Vui lòng chọn Thuốc từ danh sách.", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
@@ -90,6 +103,7 @@ namespace PillIdentifierForm.Forms
 
             return true;
         }
+
         private NhanDangThuoc GetEntityFromForm()
         {
             NhanDangThuoc entity = new NhanDangThuoc();
@@ -98,31 +112,17 @@ namespace PillIdentifierForm.Forms
             entity.KhacDauMatTruoc = txtKhacDauMatTruoc.Text;
             entity.KhacDauMatSau = txtKhacDauMatSau.Text;
 
-            ComboBoxItem itemHinhDang = (ComboBoxItem)cboHinhDang.SelectedItem;
-            entity.IDHinhDang = Convert.ToInt32(itemHinhDang.Value);
+            // Get values from comboboxes with class object datasource
+            entity.IDHinhDang = Convert.ToInt32(cboHinhDang.SelectedValue);
+            entity.IDDangThuoc = Convert.ToInt32(cboDangThuoc.SelectedValue);
 
-            ComboBoxItem itemDangThuoc = (ComboBoxItem)cboDangThuoc.SelectedItem;
-            entity.IDDangThuoc = Convert.ToInt32(itemDangThuoc.Value);
+            entity.IDLoaiViThuoc = cboLoaiViThuoc.SelectedValue != null && cboLoaiViThuoc.SelectedIndex >= 0
+                ? (int?)Convert.ToInt32(cboLoaiViThuoc.SelectedValue)
+                : null;
 
-            if (cboLoaiViThuoc.SelectedIndex > 0)
-            {
-                ComboBoxItem itemViThuoc = (ComboBoxItem)cboLoaiViThuoc.SelectedItem;
-                entity.IDLoaiViThuoc = itemViThuoc.Value != null ? (int?)Convert.ToInt32(itemViThuoc.Value) : null;
-            }
-            else
-            {
-                entity.IDLoaiViThuoc = null;
-            }
-
-            if (cboLoaiRanh.SelectedIndex > 0)
-            {
-                ComboBoxItem itemRanh = (ComboBoxItem)cboLoaiRanh.SelectedItem;
-                entity.IDLoaiRanh = itemRanh.Value != null ? (int?)Convert.ToInt32(itemRanh.Value) : null;
-            }
-            else
-            {
-                entity.IDLoaiRanh = null;
-            }
+            entity.IDLoaiRanh = cboLoaiRanh.SelectedValue != null && cboLoaiRanh.SelectedIndex >= 0
+                ? (int?)Convert.ToInt32(cboLoaiRanh.SelectedValue)
+                : null;
 
             entity.MaHinh = txtMaHinh.Text;
 
@@ -141,55 +141,126 @@ namespace PillIdentifierForm.Forms
             cboDangThuoc.SelectedIndex = -1;
             cboLoaiViThuoc.SelectedIndex = -1;
             cboLoaiRanh.SelectedIndex = -1;
+
+            buttonXoa.Enabled = false;
+            buttonSua.Enabled = false;
+        }
+
+        private string GetTenHoatChat(int idHoatChat)
+        {
+            if (_listHoatChat == null || _listHoatChat.Count == 0)
+                return "";
+
+            HoatChat hc = _listHoatChat.FirstOrDefault(h => h.IDHoatChat == idHoatChat);
+            return hc != null ? hc.TenHoatChat : "";
         }
         #endregion
+
         private void FormNhanDangThuoc_Load(object sender, EventArgs e)
         {
-
+            ClearForm();
         }
 
         private void LoadDropdowns()
         {
-            // Add empty item for nullable fields
-            ComboBoxItem emptyItemVi = new ComboBoxItem();
-            emptyItemVi.Value = null;
-            emptyItemVi.Text = "(Không chọn)";
-            cboLoaiViThuoc.Items.Add(emptyItemVi);
+            try
+            {
+                // Load HinhDang
+                var dsHinhDang = getdata.GetDSHinhDang().OrderBy(h => h.TenHinhDang).ToList();
+                cboHinhDang.DataSource = dsHinhDang;
+                cboHinhDang.DisplayMember = "TenHinhDang";
+                cboHinhDang.ValueMember = "IDHinhDang";
+                cboHinhDang.SelectedIndex = -1;
 
-            ComboBoxItem emptyItemRanh = new ComboBoxItem();
-            emptyItemRanh.Value = null;
-            emptyItemRanh.Text = "(Không chọn)";
-            cboLoaiRanh.Items.Add(emptyItemRanh);
-            // TODO: Load actual data from database
-            // Example:
-            // var hinhDangs = dal.GetHinhDangs();
-            // foreach(var hd in hinhDangs)
-            //     cboHinhDang.Items.Add(new ComboBoxItem { Value = hd.ID, Text = hd.Ten });
-            cboHinhDang.DataSource = getdata.GetDSHinhDang();
-            cboDangThuoc.DataSource = getdata.GetDSDangThuoc();
-            cboLoaiViThuoc.DataSource = getdata.GetDSLoaiViThuoc();
-            cboLoaiRanh.DataSource = getdata.GetDSLoaiRanh();
+                // Load DangThuoc
+                var dsDangThuoc = getdata.GetDSDangThuoc().OrderBy(d => d.TenDangThuoc).ToList();
+                cboDangThuoc.DataSource = dsDangThuoc;
+                cboDangThuoc.DisplayMember = "TenDangThuoc";
+                cboDangThuoc.ValueMember = "IDDangThuoc";
+                cboDangThuoc.SelectedIndex = -1;
 
-            cboHinhDang.DisplayMember = "Text";
-            cboHinhDang.ValueMember = "Value";
-            cboDangThuoc.DisplayMember = "Text";
-            cboDangThuoc.ValueMember = "Value";
-            cboLoaiViThuoc.DisplayMember = "Text";
-            cboLoaiViThuoc.ValueMember = "Value";
-            cboLoaiRanh.DisplayMember = "Text";
-            cboLoaiRanh.ValueMember = "Value";
+                // Load LoaiViThuoc with empty option
+                var dsLoaiVi = getdata.GetDSLoaiViThuoc().OrderBy(v => v.TenLoaiVi).ToList();
+                cboLoaiViThuoc.DataSource = dsLoaiVi;
+                cboLoaiViThuoc.DisplayMember = "TenLoaiVi";
+                cboLoaiViThuoc.ValueMember = "IDLoaiViThuoc";
+                cboLoaiViThuoc.SelectedIndex = -1;
+
+                // Load LoaiRanh with empty option
+                var dsLoaiRanh = getdata.GetDSLoaiRanh().OrderBy(r => r.TenLoaiRanh).ToList();
+                cboLoaiRanh.DataSource = dsLoaiRanh;
+                cboLoaiRanh.DisplayMember = "TenLoaiRanh";
+                cboLoaiRanh.ValueMember = "IDLoaiRanh";
+                cboLoaiRanh.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải danh mục: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void LoadThuoc()
+        {
+            try
+            {
+                // Get all Thuoc
+                _listThuoc = getdata.GetDSThuoc().OrderBy(h => h.TenThuoc).ToList();
+
+                // Filter if checkbox is checked
+                List<Thuoc> displayList = _listThuoc;
+
+                if (checkBoxFilterNotAssigned.Checked)
+                {
+                    // Get list of IDThuoc that have NhanDang
+                    var assignedIDs = _listNhanDang.Select(n => n.IDThuoc).Distinct().ToList();
+
+                    // Filter to show only Thuoc without NhanDang
+                    displayList = _listThuoc.Where(t => !assignedIDs.Contains(t.IDThuoc)).ToList();
+                }
+
+                // Create display list with HoatChat name
+                var displayData = displayList.Select(t => new
+                {
+                    IDThuoc = t.IDThuoc,
+                    TenThuoc = t.TenThuoc,
+                    SDK = t.SDK,
+                    IDHoatChat = t.IDHoatChat,
+                    TenHoatChat = GetTenHoatChat(t.IDHoatChat),
+                    HamLuong = t.HamLuong,
+                    DangBaoChe = t.DangBaoChe,
+                    NhaSX = t.NhaSX
+                }).ToList();
+
+                gridThuoc.DataSource = null;
+                gridThuoc.DataSource = displayData;
+                dataGridViewThuoc.AutoResizeColumns();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi tải danh sách Thuốc: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadData()
         {
             try
             {
-                grid1.DataSource = getdata.GetDSNhanDangThuoc();
+                // Load HoatChat for name lookup
+                _listHoatChat = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
+
+                // Load NhanDang data
+                _listNhanDang = getdata.GetDSNhanDangThuoc();
+                grid1.DataSource = _listNhanDang;
                 dgvData.DataSource = grid1;
+                dgvData.AutoResizeColumns();
+
+                // Load Thuoc list
+                LoadThuoc();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message.ToString(), "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi tải dữ liệu: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -200,19 +271,7 @@ namespace PillIdentifierForm.Forms
 
         private void dgvData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Check if clicked row is valid (not header row)
-            if (e.RowIndex >= 0)
-            {
-                DataGridViewRow row = dgvData.Rows[e.RowIndex];
-
-                // Populate textboxes with selected row data
-                textBoxIDNhandang.Text = row.Cells["IDThuoc"].Value.ToString();
-                textBoxIDThuoc.Text = row.Cells["TenThuoc"].Value.ToString();
-
-                // Enable buttons after selection
-                buttonXoa.Enabled = true;
-                buttonSua.Enabled = true;
-            }
+            // Handled by SelectionChanged event
         }
 
         private void buttonThem_Click(object sender, EventArgs e)
@@ -234,7 +293,6 @@ namespace PillIdentifierForm.Forms
                     entity.IDLoaiRanh,
                     entity.MaHinh
                 );
-                
 
                 if (result)
                 {
@@ -278,12 +336,14 @@ namespace PillIdentifierForm.Forms
                         MessageBox.Show("Xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else
+                    {
                         MessageBox.Show("Xóa thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Lỗi khi xóa: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Lỗi khi xóa: " + ex.Message, "Lỏi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -302,7 +362,8 @@ namespace PillIdentifierForm.Forms
                 NhanDangThuoc entity = GetEntityFromForm();
                 entity.IDNhanDang = int.Parse(textBoxIDNhandang.Text);
 
-                bool result = updatedata.UpdateNhanDangThuoc(entity.IDNhanDang,
+                bool result = updatedata.UpdateNhanDangThuoc(
+                    entity.IDNhanDang,
                     entity.IDThuoc,
                     entity.CoKhacDau,
                     entity.KhacDauMatTruoc,
@@ -320,7 +381,9 @@ namespace PillIdentifierForm.Forms
                     MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
+                {
                     MessageBox.Show("Cập nhật thất bại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
@@ -339,16 +402,10 @@ namespace PillIdentifierForm.Forms
                 ImportCSV(ofd.FileName);
             }
         }
+
         private void buttonXoatrang_Click(object sender, EventArgs e)
         {
-            LoadData();
             ClearForm();
-        }
-
-        private void refreshDatagrid()
-        {
-            grid1.DataSource = getdata.GetDSThuoc();
-            dgvData.AutoResizeColumns();
         }
 
         private void ImportCSV(string filePath)
@@ -423,14 +480,10 @@ namespace PillIdentifierForm.Forms
                 MessageBox.Show("Lỗi khi import CSV: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void textBoxThuoc_TextChanged(object sender, EventArgs e)
         {
             buttonThem.Enabled = !string.IsNullOrWhiteSpace(textBoxIDThuoc.Text);
-        }
-
-        private void LoadHoatChat()
-        {
-            List<HoatChat> ds = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
         }
 
         private void dgvData_SelectionChanged(object sender, EventArgs e)
@@ -451,6 +504,9 @@ namespace PillIdentifierForm.Forms
                 SetComboBoxValue(cboDangThuoc, row.Cells["IDDangThuoc"].Value);
                 SetComboBoxValue(cboLoaiViThuoc, row.Cells["IDLoaiViThuoc"].Value);
                 SetComboBoxValue(cboLoaiRanh, row.Cells["IDLoaiRanh"].Value);
+
+                buttonXoa.Enabled = true;
+                buttonSua.Enabled = true;
             }
         }
 
@@ -489,6 +545,71 @@ namespace PillIdentifierForm.Forms
                     MessageBox.Show("Lỗi khi xuất template: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void dataGridViewThuoc_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // Check if clicked row is valid (not header row)
+                if (e.RowIndex < 0) return;
+
+                DataGridViewRow row = dataGridViewThuoc.Rows[e.RowIndex];
+
+                // Get IDThuoc from selected row
+                if (row.Cells["IDThuoc"].Value != null)
+                {
+                    int idThuoc = Convert.ToInt32(row.Cells["IDThuoc"].Value);
+                    textBoxIDThuoc.Text = idThuoc.ToString();
+
+                    // Check if this Thuoc already has NhanDang
+                    NhanDangThuoc existing = _listNhanDang.FirstOrDefault(n => n.IDThuoc == idThuoc);
+
+                    if (existing != null)
+                    {
+                        // Load existing NhanDang data
+                        textBoxIDNhandang.Text = existing.IDNhanDang.ToString();
+                        chkCoKhacDau.Checked = existing.CoKhacDau;
+                        txtKhacDauMatTruoc.Text = existing.KhacDauMatTruoc;
+                        txtKhacDauMatSau.Text = existing.KhacDauMatSau;
+                        txtMaHinh.Text = existing.MaHinh;
+
+                        SetComboBoxValue(cboHinhDang, existing.IDHinhDang);
+                        SetComboBoxValue(cboDangThuoc, existing.IDDangThuoc);
+                        SetComboBoxValue(cboLoaiViThuoc, existing.IDLoaiViThuoc);
+                        SetComboBoxValue(cboLoaiRanh, existing.IDLoaiRanh);
+
+                        buttonXoa.Enabled = true;
+                        buttonSua.Enabled = true;
+                    }
+                    else
+                    {
+                        // Clear form for new entry
+                        textBoxIDNhandang.Clear();
+                        chkCoKhacDau.Checked = false;
+                        txtKhacDauMatTruoc.Clear();
+                        txtKhacDauMatSau.Clear();
+                        txtMaHinh.Clear();
+                        cboHinhDang.SelectedIndex = -1;
+                        cboDangThuoc.SelectedIndex = -1;
+                        cboLoaiViThuoc.SelectedIndex = -1;
+                        cboLoaiRanh.SelectedIndex = -1;
+
+                        buttonXoa.Enabled = false;
+                        buttonSua.Enabled = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi chọn thuốc: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void checkBoxFilterNotAssigned_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadThuoc();
         }
     }
 }

@@ -54,9 +54,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 54);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(139, 17);
+            this.label2.Size = new System.Drawing.Size(112, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Tên hình dạng thuốc";
+            this.label2.Text = "Tên loại vỉ thuốc";
             // 
             // textBoxLoaiViThuoc
             // 
@@ -148,11 +148,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Location = new System.Drawing.Point(12, 8);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 17);
+            this.label1.Size = new System.Drawing.Size(106, 17);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Mã hình dạng thuốc";
+            this.label1.Text = "Mã loại vỉ thuốc";
             // 
             // textBoxIDLoaiViThuoc
             // 
@@ -208,6 +208,7 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 6);
             this.dataGridView1.MultiSelect = false;

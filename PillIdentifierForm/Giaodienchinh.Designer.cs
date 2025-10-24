@@ -96,6 +96,7 @@
             this.danhMụcHoạtChấtGốcToolStripMenuItem.Name = "danhMụcHoạtChấtGốcToolStripMenuItem";
             this.danhMụcHoạtChấtGốcToolStripMenuItem.Size = new System.Drawing.Size(246, 26);
             this.danhMụcHoạtChấtGốcToolStripMenuItem.Text = "Danh mục hoạt chất gốc";
+            this.danhMụcHoạtChấtGốcToolStripMenuItem.Click += new System.EventHandler(this.danhMụcHoạtChấtGốcToolStripMenuItem_Click);
             // 
             // danhMụcHoạtChấtToolStripMenuItem
             // 
@@ -187,6 +188,7 @@
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Name = "thiếtLậpHìnhẢnhThuốcToolStripMenuItem";
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Text = "Thiết lập hình ảnh thuốc";
+            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem_Click);
             // 
             // traCứuToolStripMenuItem
             // 

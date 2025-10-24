@@ -38,6 +38,7 @@
             this.buttonThem = new System.Windows.Forms.Button();
             this.buttonXoatrang = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.buttonGDHoatChat = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.comboBoxHC = new System.Windows.Forms.ComboBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -55,7 +56,6 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.buttonGDHoatChat = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -180,6 +180,17 @@
             this.panel1.Size = new System.Drawing.Size(1034, 196);
             this.panel1.TabIndex = 13;
             // 
+            // buttonGDHoatChat
+            // 
+            this.buttonGDHoatChat.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonGDHoatChat.Location = new System.Drawing.Point(982, 72);
+            this.buttonGDHoatChat.Name = "buttonGDHoatChat";
+            this.buttonGDHoatChat.Size = new System.Drawing.Size(40, 23);
+            this.buttonGDHoatChat.TabIndex = 19;
+            this.buttonGDHoatChat.Text = "...";
+            this.buttonGDHoatChat.UseVisualStyleBackColor = true;
+            this.buttonGDHoatChat.Click += new System.EventHandler(this.buttonGDHoatChat_Click);
+            // 
             // label9
             // 
             this.label9.AutoSize = true;
@@ -191,6 +202,8 @@
             // 
             // comboBoxHC
             // 
+            this.comboBoxHC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxHC.FormattingEnabled = true;
             this.comboBoxHC.Location = new System.Drawing.Point(473, 72);
             this.comboBoxHC.Name = "comboBoxHC";
@@ -210,7 +223,6 @@
             // 
             this.textBoxGhichu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxGhichu.Enabled = false;
             this.textBoxGhichu.Location = new System.Drawing.Point(473, 164);
             this.textBoxGhichu.Name = "textBoxGhichu";
             this.textBoxGhichu.Size = new System.Drawing.Size(549, 22);
@@ -227,9 +239,6 @@
             // 
             // textBoxNSX
             // 
-            this.textBoxNSX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxNSX.Enabled = false;
             this.textBoxNSX.Location = new System.Drawing.Point(12, 164);
             this.textBoxNSX.Name = "textBoxNSX";
             this.textBoxNSX.Size = new System.Drawing.Size(455, 22);
@@ -248,7 +257,6 @@
             // 
             this.textBoxDBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxDBC.Enabled = false;
             this.textBoxDBC.Location = new System.Drawing.Point(473, 119);
             this.textBoxDBC.Name = "textBoxDBC";
             this.textBoxDBC.Size = new System.Drawing.Size(549, 22);
@@ -265,9 +273,6 @@
             // 
             // textBoxHamluong
             // 
-            this.textBoxHamluong.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxHamluong.Enabled = false;
             this.textBoxHamluong.Location = new System.Drawing.Point(12, 119);
             this.textBoxHamluong.Name = "textBoxHamluong";
             this.textBoxHamluong.Size = new System.Drawing.Size(455, 22);
@@ -275,8 +280,6 @@
             // 
             // textBoxSDK
             // 
-            this.textBoxSDK.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxSDK.Location = new System.Drawing.Point(12, 74);
             this.textBoxSDK.Name = "textBoxSDK";
             this.textBoxSDK.Size = new System.Drawing.Size(455, 22);
@@ -293,8 +296,6 @@
             // 
             // textBoxIDThuoc
             // 
-            this.textBoxIDThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxIDThuoc.Enabled = false;
             this.textBoxIDThuoc.Location = new System.Drawing.Point(12, 29);
             this.textBoxIDThuoc.Name = "textBoxIDThuoc";
@@ -344,6 +345,7 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 6);
             this.dataGridView1.MultiSelect = false;
@@ -354,16 +356,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(1010, 263);
             this.dataGridView1.TabIndex = 16;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // buttonGDHoatChat
-            // 
-            this.buttonGDHoatChat.Location = new System.Drawing.Point(982, 72);
-            this.buttonGDHoatChat.Name = "buttonGDHoatChat";
-            this.buttonGDHoatChat.Size = new System.Drawing.Size(40, 23);
-            this.buttonGDHoatChat.TabIndex = 19;
-            this.buttonGDHoatChat.Text = "...";
-            this.buttonGDHoatChat.UseVisualStyleBackColor = true;
-            this.buttonGDHoatChat.Click += new System.EventHandler(this.buttonGDHoatChat_Click);
             // 
             // DanhmucThuoc
             // 

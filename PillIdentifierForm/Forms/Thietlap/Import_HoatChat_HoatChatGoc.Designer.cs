@@ -35,9 +35,15 @@
             this.button1 = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTong = new System.Windows.Forms.DataGridView();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.buttonGetTong = new System.Windows.Forms.Button();
+            this.buttonExportCSVTong = new System.Windows.Forms.Button();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTong)).BeginInit();
             this.SuspendLayout();
             // 
             // label4
@@ -73,6 +79,8 @@
             // 
             // panel2
             // 
+            this.panel2.Controls.Add(this.buttonExportCSVTong);
+            this.panel2.Controls.Add(this.buttonGetTong);
             this.panel2.Controls.Add(this.button1);
             this.panel2.Controls.Add(this.buttonThoat);
             this.panel2.Controls.Add(this.buttonSua);
@@ -96,6 +104,9 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.label2);
+            this.panel3.Controls.Add(this.label1);
+            this.panel3.Controls.Add(this.dataGridViewTong);
             this.panel3.Controls.Add(this.dataGridView1);
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
@@ -111,14 +122,69 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 6);
+            this.dataGridView1.Location = new System.Drawing.Point(12, 197);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowTemplate.Height = 24;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView1.Size = new System.Drawing.Size(1010, 459);
+            this.dataGridView1.Size = new System.Drawing.Size(1010, 268);
             this.dataGridView1.TabIndex = 8;
+            // 
+            // dataGridViewTong
+            // 
+            this.dataGridViewTong.AllowUserToAddRows = false;
+            this.dataGridViewTong.AllowUserToDeleteRows = false;
+            this.dataGridViewTong.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewTong.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewTong.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTong.Location = new System.Drawing.Point(15, 29);
+            this.dataGridViewTong.Name = "dataGridViewTong";
+            this.dataGridViewTong.ReadOnly = true;
+            this.dataGridViewTong.RowTemplate.Height = 24;
+            this.dataGridViewTong.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewTong.Size = new System.Drawing.Size(1010, 145);
+            this.dataGridViewTong.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(108, 17);
+            this.label1.TabIndex = 10;
+            this.label1.Text = "Danh sách tổng";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(12, 177);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(119, 17);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Danh sách import";
+            // 
+            // buttonGetTong
+            // 
+            this.buttonGetTong.Location = new System.Drawing.Point(12, 9);
+            this.buttonGetTong.Name = "buttonGetTong";
+            this.buttonGetTong.Size = new System.Drawing.Size(143, 43);
+            this.buttonGetTong.TabIndex = 11;
+            this.buttonGetTong.Text = "Lấy dữ liệu tổng";
+            this.buttonGetTong.UseVisualStyleBackColor = true;
+            this.buttonGetTong.Click += new System.EventHandler(this.buttonGetTong_Click);
+            // 
+            // buttonExportCSVTong
+            // 
+            this.buttonExportCSVTong.Location = new System.Drawing.Point(161, 9);
+            this.buttonExportCSVTong.Name = "buttonExportCSVTong";
+            this.buttonExportCSVTong.Size = new System.Drawing.Size(143, 43);
+            this.buttonExportCSVTong.TabIndex = 12;
+            this.buttonExportCSVTong.Text = "Xuất dữ liệu tổng";
+            this.buttonExportCSVTong.UseVisualStyleBackColor = true;
+            this.buttonExportCSVTong.Click += new System.EventHandler(this.buttonExportCSVTong_Click);
             // 
             // ImportHoatChat_HoatChatGoc
             // 
@@ -136,7 +202,9 @@
             this.Load += new System.EventHandler(this.ImportHoatChat_HoatChatGoc_Load);
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTong)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,5 +219,10 @@
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.DataGridView dataGridViewTong;
+        private System.Windows.Forms.Button buttonExportCSVTong;
+        private System.Windows.Forms.Button buttonGetTong;
     }
 }

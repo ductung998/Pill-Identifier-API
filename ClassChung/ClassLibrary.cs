@@ -643,6 +643,16 @@ namespace ClassChung
 
                 return kq;
             }
+            public List<HoatChat_HoatChatGoc> GetDSHoatChat_HoatChatGoc()
+            {
+                List<HoatChat_HoatChatGoc> kq = new List<HoatChat_HoatChatGoc>();
+
+                List<r_HoatChat_HoatChatGoc> ds = db.r_HoatChat_HoatChatGocs.ToList();
+                foreach (r_HoatChat_HoatChatGoc i in ds)
+                    kq.Add(new HoatChat_HoatChatGoc(i.IDHoatChat, i.IDHoatChatGoc));
+
+                return kq;
+            }
             // Lấy toàn bộ Loại Rãnh
             public List<LoaiRanh> GetDSLoaiRanh()
             {
@@ -685,6 +695,16 @@ namespace ClassChung
 
                 foreach (d_Thuoc i in ds)
                     kq.Add(new Thuoc(i.IDThuoc, i.TenThuoc, i.SDK, i.IDHoatChat, i.HamLuong, i.DangBaoChe, i.NhaSX, i.GhiChu));
+                return kq;
+            }
+            public List<Thuoc_MauSac> GetDSThuoc_MauSac()
+            {
+                List<Thuoc_MauSac> kq = new List<Thuoc_MauSac>();
+
+                List<r_Thuoc_MauSac> ds = db.r_Thuoc_MauSacs.ToList();
+                foreach (r_Thuoc_MauSac i in ds)
+                    kq.Add(new Thuoc_MauSac(i.IDThuoc,i.IDMauSac));
+
                 return kq;
             }
             // Lấy toàn bộ Nhận dạng thuốc

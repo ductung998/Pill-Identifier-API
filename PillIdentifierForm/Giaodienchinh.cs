@@ -103,5 +103,17 @@ namespace PillIdentifierForm
             Forms.FormNhanDangThuoc FormNhanDangThuoc = new Forms.FormNhanDangThuoc();
             openChildForm(FormNhanDangThuoc);
         }
+
+        private void danhMụcHoạtChấtGốcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.DanhmucHoatChatGoc DanhmucHoatChatGoc = new Forms.DanhmucHoatChatGoc();
+            openChildForm(DanhmucHoatChatGoc);
+        }
+
+        private void thiếtLậpHìnhẢnhThuốcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.Form_MauSacThuoc Form_MauSacThuoc = new Forms.Form_MauSacThuoc();
+            openChildForm(Form_MauSacThuoc);
+        }
     }
 }

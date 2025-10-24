@@ -19,3 +19,7 @@ C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdent
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucHoatChatGoc.resources
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.DanhmucHinhDang.resources
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.FormHoatChat_HoatChatGoc.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.FormNhanDangThuoc.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.ImportThuoc_MauSac.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.ImportHoatChat_HoatChatGoc.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.Form_MauSacThuoc.resources

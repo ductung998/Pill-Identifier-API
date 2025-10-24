@@ -38,13 +38,13 @@
             this.buttonThem = new System.Windows.Forms.Button();
             this.buttonXoatrang = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.comboBoxLoaiHC = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBoxIDHoatChat = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.comboBoxLoaiHC = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -158,6 +158,17 @@
             this.panel1.Size = new System.Drawing.Size(1034, 158);
             this.panel1.TabIndex = 13;
             // 
+            // comboBoxLoaiHC
+            // 
+            this.comboBoxLoaiHC.FormattingEnabled = true;
+            this.comboBoxLoaiHC.Items.AddRange(new object[] {
+            "Đơn chất",
+            "Phối hợp"});
+            this.comboBoxLoaiHC.Location = new System.Drawing.Point(12, 119);
+            this.comboBoxLoaiHC.Name = "comboBoxLoaiHC";
+            this.comboBoxLoaiHC.Size = new System.Drawing.Size(1010, 24);
+            this.comboBoxLoaiHC.TabIndex = 8;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -220,6 +231,7 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Location = new System.Drawing.Point(12, 6);
             this.dataGridView1.MultiSelect = false;
@@ -230,17 +242,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(1010, 301);
             this.dataGridView1.TabIndex = 8;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            // 
-            // comboBoxLoaiHC
-            // 
-            this.comboBoxLoaiHC.FormattingEnabled = true;
-            this.comboBoxLoaiHC.Items.AddRange(new object[] {
-            "Đơn chất",
-            "Phối hợp"});
-            this.comboBoxLoaiHC.Location = new System.Drawing.Point(12, 119);
-            this.comboBoxLoaiHC.Name = "comboBoxLoaiHC";
-            this.comboBoxLoaiHC.Size = new System.Drawing.Size(1010, 24);
-            this.comboBoxLoaiHC.TabIndex = 8;
             // 
             // DanhmucHoatChat
             // 
