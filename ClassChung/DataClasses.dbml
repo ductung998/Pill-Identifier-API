@@ -8,26 +8,6 @@
       <Association Name="d_ChiDinh_r_HoatChatGoc_ChiDinh" Member="r_HoatChatGoc_ChiDinhs" ThisKey="IDChiDinh" OtherKey="IDChiDinh" Type="r_HoatChatGoc_ChiDinh" />
     </Type>
   </Table>
-  <Table Name="dbo.w_NhanDangThuoc" Member="w_NhanDangThuocs">
-    <Type Name="w_NhanDangThuoc">
-      <Column Name="IDNhanDang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="IDThuoc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CoKhacDau" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
-      <Column Name="KhacDauMatTruoc" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="KhacDauMatSau" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Column Name="IDHinhDang" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IDDangThuoc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="IDLoaiViThuoc" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="IDLoaiRanh" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="MaHinh" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
-      <Association Name="w_NhanDangThuoc_d_HinhAnhThuocChiTiet" Member="d_HinhAnhThuocChiTiets" ThisKey="IDNhanDang" OtherKey="IDNhanDang" Type="d_HinhAnhThuocChiTiet" />
-      <Association Name="d_DangThuoc_w_NhanDangThuoc" Member="d_DangThuoc" ThisKey="IDDangThuoc" OtherKey="IDDangThuoc" Type="d_DangThuoc" IsForeignKey="true" />
-      <Association Name="d_HinhDang_w_NhanDangThuoc" Member="d_HinhDang" ThisKey="IDHinhDang" OtherKey="IDHinhDang" Type="d_HinhDang" IsForeignKey="true" />
-      <Association Name="d_LoaiRanh_w_NhanDangThuoc" Member="d_LoaiRanh" ThisKey="IDLoaiRanh" OtherKey="IDLoaiRanh" Type="d_LoaiRanh" IsForeignKey="true" />
-      <Association Name="d_LoaiViThuoc_w_NhanDangThuoc" Member="d_LoaiViThuoc" ThisKey="IDLoaiViThuoc" OtherKey="IDLoaiViThuoc" Type="d_LoaiViThuoc" IsForeignKey="true" />
-      <Association Name="d_Thuoc_w_NhanDangThuoc" Member="d_Thuoc" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="d_Thuoc" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.d_DangThuoc" Member="d_DangThuocs">
     <Type Name="d_DangThuoc">
       <Column Name="IDDangThuoc" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -124,9 +104,31 @@
       <Column Name="DangBaoChe" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="NhaSX" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
       <Column Name="GhiChu" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
-      <Association Name="d_Thuoc_w_NhanDangThuoc" Member="w_NhanDangThuocs" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="w_NhanDangThuoc" />
+      <Column Name="URL" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
       <Association Name="d_Thuoc_r_Thuoc_MauSac" Member="r_Thuoc_MauSacs" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="r_Thuoc_MauSac" />
+      <Association Name="d_Thuoc_w_NhanDangThuoc" Member="w_NhanDangThuocs" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="w_NhanDangThuoc" />
       <Association Name="d_HoatChat_d_Thuoc" Member="d_HoatChat" ThisKey="IDHoatChat" OtherKey="IDHoatChat" Type="d_HoatChat" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.w_NhanDangThuoc" Member="w_NhanDangThuocs">
+    <Type Name="w_NhanDangThuoc">
+      <Column Name="IDNhanDang" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IDThuoc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CoKhacDau" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="KhacDauMatTruoc" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="KhacDauMatSau" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="IDHinhDang" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDDangThuoc" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="IDLoaiViThuoc" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IDLoaiRanh" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MaHinh" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="KichThuoc" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="w_NhanDangThuoc_d_HinhAnhThuocChiTiet" Member="d_HinhAnhThuocChiTiets" ThisKey="IDNhanDang" OtherKey="IDNhanDang" Type="d_HinhAnhThuocChiTiet" />
+      <Association Name="d_DangThuoc_w_NhanDangThuoc" Member="d_DangThuoc" ThisKey="IDDangThuoc" OtherKey="IDDangThuoc" Type="d_DangThuoc" IsForeignKey="true" />
+      <Association Name="d_HinhDang_w_NhanDangThuoc" Member="d_HinhDang" ThisKey="IDHinhDang" OtherKey="IDHinhDang" Type="d_HinhDang" IsForeignKey="true" />
+      <Association Name="d_LoaiViThuoc_w_NhanDangThuoc" Member="d_LoaiViThuoc" ThisKey="IDLoaiViThuoc" OtherKey="IDLoaiViThuoc" Type="d_LoaiViThuoc" IsForeignKey="true" />
+      <Association Name="d_LoaiRanh_w_NhanDangThuoc" Member="d_LoaiRanh" ThisKey="IDLoaiRanh" OtherKey="IDLoaiRanh" Type="d_LoaiRanh" IsForeignKey="true" />
+      <Association Name="d_Thuoc_w_NhanDangThuoc" Member="d_Thuoc" ThisKey="IDThuoc" OtherKey="IDThuoc" Type="d_Thuoc" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

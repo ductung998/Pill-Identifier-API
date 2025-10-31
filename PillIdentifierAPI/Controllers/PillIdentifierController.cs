@@ -238,7 +238,7 @@ namespace PillIdentifierAPI.Controllers
                     return Ok(new ApiResponse<bool> { Success = false, Message = "Thiếu dữ liệu đầu vào." });
 
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool result = db.InsertChiDinh(cd.TenChiDinh, cd.MoTa);
+                bool result = db.InsertChiDinh(cd);
 
                 return Ok(new ApiResponse<bool>
                 {
@@ -259,7 +259,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertDangThuoc(data.TenDangThuoc);
+                bool kq = db.InsertDangThuoc(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -275,7 +275,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertHinhDang(data.TenHinhDang);
+                bool kq = db.InsertHinhDang(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -291,7 +291,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertHoatChat(data.TenHoatChat, data.LoaiHoatChat);
+                bool kq = db.InsertHoatChat(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -307,7 +307,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertHoatChatGoc(data.TenHoatChat, data.GhiChu);
+                bool kq = db.InsertHoatChatGoc(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -323,7 +323,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertLoaiRanh(data.TenLoaiRanh);
+                bool kq = db.InsertLoaiRanh(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -339,7 +339,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertLoaiViThuoc(data.TenLoaiVi);
+                bool kq = db.InsertLoaiViThuoc(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -355,7 +355,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertMauSac(data.TenMauSac);
+                bool kq = db.InsertMauSac(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -370,8 +370,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertThuoc(data.TenThuoc, data.SDK, data.IDHoatChat,
-                                         data.HamLuong, data.DangBaoChe, data.NhaSX, data.GhiChu);
+                bool kq = db.InsertThuoc(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -387,7 +386,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertHoatChat_HoatChatGoc(data.IDHoatChat, data.IDHoatChatGoc);
+                bool kq = db.InsertHoatChat_HoatChatGoc(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -403,7 +402,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertHoatChatGoc_ChiDinh(data.IDHoatChatGoc, data.IDChiDinh);
+                bool kq = db.InsertHoatChatGoc_ChiDinh(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -419,7 +418,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertThuoc_MauSac(data.IDThuoc, data.IDMauSac);
+                bool kq = db.InsertThuoc_MauSac(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -435,10 +434,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.InsertData db = new KetnoiDB.InsertData();
-                bool kq = db.InsertNhanDangThuoc(data.IDThuoc, data.CoKhacDau,
-                                                 data.KhacDauMatTruoc, data.KhacDauMatSau,
-                                                 data.IDHinhDang, data.IDDangThuoc,
-                                                 data.IDLoaiViThuoc, data.IDLoaiRanh, data.MaHinh);
+                bool kq = db.InsertNhanDangThuoc(data);
                 return Ok(new ApiResponse<bool> { Success = kq, Data = kq });
             }
             catch (Exception ex)
@@ -709,10 +705,7 @@ namespace PillIdentifierAPI.Controllers
                     return Ok(new ApiResponse<bool> { Success = false, Message = "Thiếu dữ liệu đầu vào." });
 
                 var db = new KetnoiDB.UpdateData();
-                bool result = db.UpdateNhanDangThuoc(nd.IDNhanDang, nd.IDThuoc, nd.CoKhacDau,
-                                                     nd.KhacDauMatTruoc, nd.KhacDauMatSau,
-                                                     nd.IDHinhDang, nd.IDDangThuoc,
-                                                     nd.IDLoaiViThuoc, nd.IDLoaiRanh, nd.MaHinh);
+                bool result = db.UpdateNhanDangThuoc(nd);
 
                 return Ok(new ApiResponse<bool>
                 {

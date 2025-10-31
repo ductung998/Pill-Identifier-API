@@ -71,8 +71,14 @@ namespace PillIdentifierForm.Forms
                     return;
                 }
 
+                ChiDinh item = new ChiDinh
+                {
+                    TenChiDinh = textBoxChiDinh.Text.Trim(),
+                    MoTa = textBoxMoTa.Text.Trim()
+                };
+
                 // Insert new record using KetnoiDB.InsertData
-                if (insertdata.InsertChiDinh(textBoxChiDinh.Text.Trim(), textBoxMoTa.Text.Trim()))
+                if (insertdata.InsertChiDinh(item))
                 {
                     MessageBox.Show("Thêm mới thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);

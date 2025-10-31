@@ -64,14 +64,17 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxDangThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên dạng thuốc!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxDangThuoc.Focus();
                     return;
                 }
-
+                DangThuoc themdangthuoc = new DangThuoc
+                {
+                    TenDangThuoc = textBoxDangThuoc.Text.Trim()
+                };
                 // Insert new record using KetnoiDB.InsertData
-                if (insertdata.InsertDangThuoc(textBoxDangThuoc.Text.Trim()))
+                if (insertdata.InsertDangThuoc(themdangthuoc))
                 {
                     MessageBox.Show("Thêm mới thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);

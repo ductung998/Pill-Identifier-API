@@ -37,6 +37,9 @@
             this.buttonThem = new System.Windows.Forms.Button();
             this.buttonXoatrang = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.dataGridViewThuoc = new System.Windows.Forms.DataGridView();
+            this.checkBoxFilterNotAssigned = new System.Windows.Forms.CheckBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.cboLoaiRanh = new System.Windows.Forms.ComboBox();
             this.cboLoaiViThuoc = new System.Windows.Forms.ComboBox();
             this.cboDangThuoc = new System.Windows.Forms.ComboBox();
@@ -59,14 +62,13 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.label11 = new System.Windows.Forms.Label();
-            this.checkBoxFilterNotAssigned = new System.Windows.Forms.CheckBox();
-            this.dataGridViewThuoc = new System.Windows.Forms.DataGridView();
+            this.comboBoxFilterHoatChat = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -154,6 +156,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.comboBoxFilterHoatChat);
             this.panel1.Controls.Add(this.dataGridViewThuoc);
             this.panel1.Controls.Add(this.checkBoxFilterNotAssigned);
             this.panel1.Controls.Add(this.label11);
@@ -182,6 +186,45 @@
             this.panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.panel1.Size = new System.Drawing.Size(1034, 248);
             this.panel1.TabIndex = 13;
+            // 
+            // dataGridViewThuoc
+            // 
+            this.dataGridViewThuoc.AllowUserToAddRows = false;
+            this.dataGridViewThuoc.AllowUserToDeleteRows = false;
+            this.dataGridViewThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewThuoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewThuoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewThuoc.Location = new System.Drawing.Point(12, 29);
+            this.dataGridViewThuoc.MultiSelect = false;
+            this.dataGridViewThuoc.Name = "dataGridViewThuoc";
+            this.dataGridViewThuoc.ReadOnly = true;
+            this.dataGridViewThuoc.RowTemplate.Height = 24;
+            this.dataGridViewThuoc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewThuoc.Size = new System.Drawing.Size(1010, 93);
+            this.dataGridViewThuoc.TabIndex = 17;
+            this.dataGridViewThuoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewThuoc_CellClick);
+            // 
+            // checkBoxFilterNotAssigned
+            // 
+            this.checkBoxFilterNotAssigned.AutoSize = true;
+            this.checkBoxFilterNotAssigned.Location = new System.Drawing.Point(804, 6);
+            this.checkBoxFilterNotAssigned.Name = "checkBoxFilterNotAssigned";
+            this.checkBoxFilterNotAssigned.Size = new System.Drawing.Size(218, 21);
+            this.checkBoxFilterNotAssigned.TabIndex = 29;
+            this.checkBoxFilterNotAssigned.Text = "Lọc thuốc chưa có nhận dạng";
+            this.checkBoxFilterNotAssigned.UseVisualStyleBackColor = true;
+            this.checkBoxFilterNotAssigned.CheckedChanged += new System.EventHandler(this.checkBoxFilterNotAssigned_CheckedChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 9);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(115, 17);
+            this.label11.TabIndex = 28;
+            this.label11.Text = "Danh sách thuốc";
             // 
             // cboLoaiRanh
             // 
@@ -399,44 +442,23 @@
             this.dgvData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellClick);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
             // 
-            // label11
+            // comboBoxFilterHoatChat
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 9);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(115, 17);
-            this.label11.TabIndex = 28;
-            this.label11.Text = "Danh sách thuốc";
+            this.comboBoxFilterHoatChat.FormattingEnabled = true;
+            this.comboBoxFilterHoatChat.Location = new System.Drawing.Point(294, 4);
+            this.comboBoxFilterHoatChat.Name = "comboBoxFilterHoatChat";
+            this.comboBoxFilterHoatChat.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxFilterHoatChat.TabIndex = 30;
+            this.comboBoxFilterHoatChat.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterHoatChat_SelectedIndexChanged);
             // 
-            // checkBoxFilterNotAssigned
+            // label12
             // 
-            this.checkBoxFilterNotAssigned.AutoSize = true;
-            this.checkBoxFilterNotAssigned.Location = new System.Drawing.Point(221, 8);
-            this.checkBoxFilterNotAssigned.Name = "checkBoxFilterNotAssigned";
-            this.checkBoxFilterNotAssigned.Size = new System.Drawing.Size(218, 21);
-            this.checkBoxFilterNotAssigned.TabIndex = 29;
-            this.checkBoxFilterNotAssigned.Text = "Lọc thuốc chưa có nhận dạng";
-            this.checkBoxFilterNotAssigned.UseVisualStyleBackColor = true;
-            this.checkBoxFilterNotAssigned.CheckedChanged += new System.EventHandler(this.checkBoxFilterNotAssigned_CheckedChanged);
-            // 
-            // dataGridViewThuoc
-            // 
-            this.dataGridViewThuoc.AllowUserToAddRows = false;
-            this.dataGridViewThuoc.AllowUserToDeleteRows = false;
-            this.dataGridViewThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewThuoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewThuoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewThuoc.Location = new System.Drawing.Point(12, 29);
-            this.dataGridViewThuoc.MultiSelect = false;
-            this.dataGridViewThuoc.Name = "dataGridViewThuoc";
-            this.dataGridViewThuoc.ReadOnly = true;
-            this.dataGridViewThuoc.RowTemplate.Height = 24;
-            this.dataGridViewThuoc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewThuoc.Size = new System.Drawing.Size(1010, 93);
-            this.dataGridViewThuoc.TabIndex = 17;
-            this.dataGridViewThuoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewThuoc_CellClick);
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(162, 7);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(126, 17);
+            this.label12.TabIndex = 31;
+            this.label12.Text = "Lọc theo hoạt chất";
             // 
             // FormNhanDangThuoc
             // 
@@ -455,10 +477,10 @@
             this.Load += new System.EventHandler(this.FormNhanDangThuoc_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -500,5 +522,7 @@
         private System.Windows.Forms.CheckBox checkBoxFilterNotAssigned;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.DataGridView dataGridViewThuoc;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.ComboBox comboBoxFilterHoatChat;
     }
 }

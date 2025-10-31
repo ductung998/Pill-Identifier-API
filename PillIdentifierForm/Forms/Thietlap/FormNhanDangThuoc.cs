@@ -32,6 +32,13 @@ namespace PillIdentifierForm.Forms
             InitializeComponent();
             LoadDropdowns();
             LoadData();
+            txtKhacDauMatTruoc.Enabled = false;
+            txtKhacDauMatSau.Enabled = false;
+        }
+
+        private void FormNhanDangThuoc_Load(object sender, EventArgs e)
+        {
+            ClearForm();
         }
 
         #region helper
@@ -117,12 +124,12 @@ namespace PillIdentifierForm.Forms
             entity.IDDangThuoc = Convert.ToInt32(cboDangThuoc.SelectedValue);
 
             entity.IDLoaiViThuoc = cboLoaiViThuoc.SelectedValue != null && cboLoaiViThuoc.SelectedIndex >= 0
-                ? (int?)Convert.ToInt32(cboLoaiViThuoc.SelectedValue)
-                : null;
+                ? Convert.ToInt32(cboLoaiViThuoc.SelectedValue)
+                : 0;
 
             entity.IDLoaiRanh = cboLoaiRanh.SelectedValue != null && cboLoaiRanh.SelectedIndex >= 0
-                ? (int?)Convert.ToInt32(cboLoaiRanh.SelectedValue)
-                : null;
+                ? Convert.ToInt32(cboLoaiRanh.SelectedValue)
+                : 0;
 
             entity.MaHinh = txtMaHinh.Text;
 
@@ -141,6 +148,7 @@ namespace PillIdentifierForm.Forms
             cboDangThuoc.SelectedIndex = -1;
             cboLoaiViThuoc.SelectedIndex = -1;
             cboLoaiRanh.SelectedIndex = -1;
+            comboBoxFilterHoatChat.SelectedIndex = -1;
 
             buttonXoa.Enabled = false;
             buttonSua.Enabled = false;
@@ -156,42 +164,50 @@ namespace PillIdentifierForm.Forms
         }
         #endregion
 
-        private void FormNhanDangThuoc_Load(object sender, EventArgs e)
-        {
-            ClearForm();
-        }
-
         private void LoadDropdowns()
         {
             try
             {
                 // Load HinhDang
-                var dsHinhDang = getdata.GetDSHinhDang().OrderBy(h => h.TenHinhDang).ToList();
+                List<HinhDang> dsHinhDang = getdata.GetDSHinhDang().OrderBy(h => h.TenHinhDang).ToList();
                 cboHinhDang.DataSource = dsHinhDang;
                 cboHinhDang.DisplayMember = "TenHinhDang";
                 cboHinhDang.ValueMember = "IDHinhDang";
                 cboHinhDang.SelectedIndex = -1;
 
                 // Load DangThuoc
-                var dsDangThuoc = getdata.GetDSDangThuoc().OrderBy(d => d.TenDangThuoc).ToList();
+                List<DangThuoc> dsDangThuoc = getdata.GetDSDangThuoc().OrderBy(d => d.TenDangThuoc).ToList();
                 cboDangThuoc.DataSource = dsDangThuoc;
                 cboDangThuoc.DisplayMember = "TenDangThuoc";
                 cboDangThuoc.ValueMember = "IDDangThuoc";
                 cboDangThuoc.SelectedIndex = -1;
 
                 // Load LoaiViThuoc with empty option
-                var dsLoaiVi = getdata.GetDSLoaiViThuoc().OrderBy(v => v.TenLoaiVi).ToList();
+                List<LoaiViThuoc> dsLoaiVi = getdata.GetDSLoaiViThuoc().OrderBy(v => v.TenLoaiVi).ToList();
                 cboLoaiViThuoc.DataSource = dsLoaiVi;
                 cboLoaiViThuoc.DisplayMember = "TenLoaiVi";
                 cboLoaiViThuoc.ValueMember = "IDLoaiViThuoc";
                 cboLoaiViThuoc.SelectedIndex = -1;
 
                 // Load LoaiRanh with empty option
-                var dsLoaiRanh = getdata.GetDSLoaiRanh().OrderBy(r => r.TenLoaiRanh).ToList();
+                List<LoaiRanh> dsLoaiRanh = getdata.GetDSLoaiRanh().OrderBy(r => r.TenLoaiRanh).ToList();
                 cboLoaiRanh.DataSource = dsLoaiRanh;
                 cboLoaiRanh.DisplayMember = "TenLoaiRanh";
                 cboLoaiRanh.ValueMember = "IDLoaiRanh";
                 cboLoaiRanh.SelectedIndex = -1;
+
+                // Load HoatChat for filter - add "All" option at the beginning
+                _listHoatChat = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
+
+                // Create a list with "All" option
+                List<HoatChat> filterList = new List<HoatChat>();
+                filterList.Add(new HoatChat { IDHoatChat = -1, TenHoatChat = "(Tất cả)" });
+                filterList.AddRange(_listHoatChat);
+
+                comboBoxFilterHoatChat.DataSource = filterList;
+                comboBoxFilterHoatChat.DisplayMember = "TenHoatChat";
+                comboBoxFilterHoatChat.ValueMember = "IDHoatChat";
+                comboBoxFilterHoatChat.SelectedIndex = 0; // Select "All" by default
             }
             catch (Exception ex)
             {
@@ -212,10 +228,22 @@ namespace PillIdentifierForm.Forms
                 if (checkBoxFilterNotAssigned.Checked)
                 {
                     // Get list of IDThuoc that have NhanDang
-                    var assignedIDs = _listNhanDang.Select(n => n.IDThuoc).Distinct().ToList();
-
+                    List<int> assignedIDs = _listNhanDang.Select(n => n.IDThuoc).Distinct().ToList();
                     // Filter to show only Thuoc without NhanDang
-                    displayList = _listThuoc.Where(t => !assignedIDs.Contains(t.IDThuoc)).ToList();
+                    displayList = displayList.Where(t => !assignedIDs.Contains(t.IDThuoc)).ToList();
+                }
+
+                // Filter by HoatChat if selected
+                if (comboBoxFilterHoatChat.SelectedValue != null &&
+                    comboBoxFilterHoatChat.SelectedValue is int)
+                {
+                    int selectedHoatChatID = (int)comboBoxFilterHoatChat.SelectedValue;
+
+                    // Only filter if not "All" (-1)
+                    if (selectedHoatChatID != -1)
+                    {
+                        displayList = displayList.Where(t => t.IDHoatChat == selectedHoatChatID).ToList();
+                    }
                 }
 
                 // Create display list with HoatChat name
@@ -233,6 +261,7 @@ namespace PillIdentifierForm.Forms
 
                 gridThuoc.DataSource = null;
                 gridThuoc.DataSource = displayData;
+                dataGridViewThuoc.DataSource = gridThuoc;
                 dataGridViewThuoc.AutoResizeColumns();
             }
             catch (Exception ex)
@@ -246,9 +275,6 @@ namespace PillIdentifierForm.Forms
         {
             try
             {
-                // Load HoatChat for name lookup
-                _listHoatChat = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
-
                 // Load NhanDang data
                 _listNhanDang = getdata.GetDSNhanDangThuoc();
                 grid1.DataSource = _listNhanDang;
@@ -282,17 +308,7 @@ namespace PillIdentifierForm.Forms
 
                 NhanDangThuoc entity = GetEntityFromForm();
 
-                bool result = insertdata.InsertNhanDangThuoc(
-                    entity.IDThuoc,
-                    entity.CoKhacDau,
-                    entity.KhacDauMatTruoc,
-                    entity.KhacDauMatSau,
-                    entity.IDHinhDang,
-                    entity.IDDangThuoc,
-                    entity.IDLoaiViThuoc,
-                    entity.IDLoaiRanh,
-                    entity.MaHinh
-                );
+                bool result = insertdata.InsertNhanDangThuoc(entity);
 
                 if (result)
                 {
@@ -362,17 +378,7 @@ namespace PillIdentifierForm.Forms
                 NhanDangThuoc entity = GetEntityFromForm();
                 entity.IDNhanDang = int.Parse(textBoxIDNhandang.Text);
 
-                bool result = updatedata.UpdateNhanDangThuoc(
-                    entity.IDNhanDang,
-                    entity.IDThuoc,
-                    entity.CoKhacDau,
-                    entity.KhacDauMatTruoc,
-                    entity.KhacDauMatSau,
-                    entity.IDHinhDang,
-                    entity.IDDangThuoc,
-                    entity.IDLoaiViThuoc,
-                    entity.IDLoaiRanh,
-                    entity.MaHinh);
+                bool result = updatedata.UpdateNhanDangThuoc(entity);
 
                 if (result)
                 {
@@ -446,8 +452,8 @@ namespace PillIdentifierForm.Forms
                         entity.KhacDauMatSau = values[3].Trim();
                         entity.IDHinhDang = int.Parse(values[4].Trim());
                         entity.IDDangThuoc = int.Parse(values[5].Trim());
-                        entity.IDLoaiViThuoc = string.IsNullOrEmpty(values[6].Trim()) ? (int?)null : int.Parse(values[6].Trim());
-                        entity.IDLoaiRanh = string.IsNullOrEmpty(values[7].Trim()) ? (int?)null : int.Parse(values[7].Trim());
+                        entity.IDLoaiViThuoc = string.IsNullOrEmpty(values[6].Trim()) ? 0 : int.Parse(values[6].Trim());
+                        entity.IDLoaiRanh = string.IsNullOrEmpty(values[7].Trim()) ? 0 : int.Parse(values[7].Trim());
                         entity.MaHinh = values[8].Trim();
 
                         entities.Add(entity);
@@ -608,6 +614,11 @@ namespace PillIdentifierForm.Forms
         }
 
         private void checkBoxFilterNotAssigned_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadThuoc();
+        }
+
+        private void comboBoxFilterHoatChat_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadThuoc();
         }

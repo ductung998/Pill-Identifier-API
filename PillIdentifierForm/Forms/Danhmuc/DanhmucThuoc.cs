@@ -95,9 +95,19 @@ namespace PillIdentifierForm.Forms
                 // Get IDHoatChat from combobox
                 int idHoatChat = comboBoxHC.SelectedValue != null ? Convert.ToInt32(comboBoxHC.SelectedValue) : 1;
 
+                Thuoc item = new Thuoc
+                {
+                    TenThuoc = textBoxThuoc.Text.Trim(),
+                    SDK = textBoxSDK.Text.Trim(),
+                    IDHoatChat = idHoatChat,
+                    HamLuong = textBoxHamluong.Text.Trim(),
+                    DangBaoChe = textBoxDBC.Text.Trim(),
+                    NhaSX = textBoxNSX.Text.Trim(),
+                    GhiChu = textBoxGhichu.Text.Trim(),
+                    URL = textBoxURL.Text.Trim()
+                };
                 // Insert new record using KetnoiDB.InsertData
-                if (insertdata.InsertThuoc(textBoxThuoc.Text.Trim(), textBoxSDK.Text.Trim(), idHoatChat,
-                    textBoxHamluong.Text.Trim(), textBoxDBC.Text.Trim(), textBoxNSX.Text.Trim(), textBoxGhichu.Text.Trim()))
+                if (insertdata.InsertThuoc(item))
                 {
                     MessageBox.Show("Thêm mới thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);

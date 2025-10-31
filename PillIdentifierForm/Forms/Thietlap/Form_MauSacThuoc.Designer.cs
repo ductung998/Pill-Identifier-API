@@ -33,6 +33,9 @@
             this.buttonThoat = new System.Windows.Forms.Button();
             this.buttonSua = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBoxIDThuoc = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.dataGridViewThuoc = new System.Windows.Forms.DataGridView();
             this.buttonXoaHCG = new System.Windows.Forms.Button();
             this.buttonThemHCG = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -42,14 +45,11 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewThuoc = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxIDThuoc = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).BeginInit();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -109,6 +109,44 @@
             this.panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.panel1.Size = new System.Drawing.Size(1034, 187);
             this.panel1.TabIndex = 13;
+            // 
+            // textBoxIDThuoc
+            // 
+            this.textBoxIDThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.textBoxIDThuoc.Enabled = false;
+            this.textBoxIDThuoc.Location = new System.Drawing.Point(78, 158);
+            this.textBoxIDThuoc.Name = "textBoxIDThuoc";
+            this.textBoxIDThuoc.Size = new System.Drawing.Size(253, 22);
+            this.textBoxIDThuoc.TabIndex = 15;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 161);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 17);
+            this.label1.TabIndex = 14;
+            this.label1.Text = "ID thuốc";
+            // 
+            // dataGridViewThuoc
+            // 
+            this.dataGridViewThuoc.AllowUserToAddRows = false;
+            this.dataGridViewThuoc.AllowUserToDeleteRows = false;
+            this.dataGridViewThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridViewThuoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridViewThuoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewThuoc.Location = new System.Drawing.Point(12, 35);
+            this.dataGridViewThuoc.MultiSelect = false;
+            this.dataGridViewThuoc.Name = "dataGridViewThuoc";
+            this.dataGridViewThuoc.ReadOnly = true;
+            this.dataGridViewThuoc.RowTemplate.Height = 24;
+            this.dataGridViewThuoc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dataGridViewThuoc.Size = new System.Drawing.Size(1010, 117);
+            this.dataGridViewThuoc.TabIndex = 9;
+            this.dataGridViewThuoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewThuoc_CellClick);
             // 
             // buttonXoaHCG
             // 
@@ -213,44 +251,6 @@
             this.dataGridView1.Size = new System.Drawing.Size(1010, 272);
             this.dataGridView1.TabIndex = 8;
             // 
-            // dataGridViewThuoc
-            // 
-            this.dataGridViewThuoc.AllowUserToAddRows = false;
-            this.dataGridViewThuoc.AllowUserToDeleteRows = false;
-            this.dataGridViewThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridViewThuoc.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            this.dataGridViewThuoc.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewThuoc.Location = new System.Drawing.Point(12, 35);
-            this.dataGridViewThuoc.MultiSelect = false;
-            this.dataGridViewThuoc.Name = "dataGridViewThuoc";
-            this.dataGridViewThuoc.ReadOnly = true;
-            this.dataGridViewThuoc.RowTemplate.Height = 24;
-            this.dataGridViewThuoc.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridViewThuoc.Size = new System.Drawing.Size(1010, 117);
-            this.dataGridViewThuoc.TabIndex = 9;
-            this.dataGridViewThuoc.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewThuoc_CellClick);
-            // 
-            // label1
-            // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 161);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 17);
-            this.label1.TabIndex = 14;
-            this.label1.Text = "ID thuốc";
-            // 
-            // textBoxIDThuoc
-            // 
-            this.textBoxIDThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBoxIDThuoc.Enabled = false;
-            this.textBoxIDThuoc.Location = new System.Drawing.Point(78, 158);
-            this.textBoxIDThuoc.Name = "textBoxIDThuoc";
-            this.textBoxIDThuoc.Size = new System.Drawing.Size(253, 22);
-            this.textBoxIDThuoc.TabIndex = 15;
-            // 
             // Form_MauSacThuoc
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -268,10 +268,10 @@
             this.Load += new System.EventHandler(this.Form_MauSacThuoc_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel3.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -56,6 +56,8 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.label10 = new System.Windows.Forms.Label();
+            this.textBoxURL = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -156,6 +158,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.label10);
+            this.panel1.Controls.Add(this.textBoxURL);
             this.panel1.Controls.Add(this.buttonGDHoatChat);
             this.panel1.Controls.Add(this.label9);
             this.panel1.Controls.Add(this.comboBoxHC);
@@ -213,7 +217,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(470, 144);
+            this.label8.Location = new System.Drawing.Point(9, 144);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(57, 17);
             this.label8.TabIndex = 16;
@@ -223,15 +227,15 @@
             // 
             this.textBoxGhichu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxGhichu.Location = new System.Drawing.Point(473, 164);
+            this.textBoxGhichu.Location = new System.Drawing.Point(12, 164);
             this.textBoxGhichu.Name = "textBoxGhichu";
-            this.textBoxGhichu.Size = new System.Drawing.Size(549, 22);
+            this.textBoxGhichu.Size = new System.Drawing.Size(455, 22);
             this.textBoxGhichu.TabIndex = 9;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 144);
+            this.label7.Location = new System.Drawing.Point(740, 99);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(91, 17);
             this.label7.TabIndex = 14;
@@ -239,9 +243,9 @@
             // 
             // textBoxNSX
             // 
-            this.textBoxNSX.Location = new System.Drawing.Point(12, 164);
+            this.textBoxNSX.Location = new System.Drawing.Point(740, 119);
             this.textBoxNSX.Name = "textBoxNSX";
-            this.textBoxNSX.Size = new System.Drawing.Size(455, 22);
+            this.textBoxNSX.Size = new System.Drawing.Size(282, 22);
             this.textBoxNSX.TabIndex = 8;
             // 
             // label6
@@ -259,7 +263,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDBC.Location = new System.Drawing.Point(473, 119);
             this.textBoxDBC.Name = "textBoxDBC";
-            this.textBoxDBC.Size = new System.Drawing.Size(549, 22);
+            this.textBoxDBC.Size = new System.Drawing.Size(261, 22);
             this.textBoxDBC.TabIndex = 7;
             // 
             // label5
@@ -357,6 +361,24 @@
             this.dataGridView1.TabIndex = 16;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(470, 144);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(36, 17);
+            this.label10.TabIndex = 21;
+            this.label10.Text = "URL";
+            // 
+            // textBoxURL
+            // 
+            this.textBoxURL.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxURL.Location = new System.Drawing.Point(473, 164);
+            this.textBoxURL.Name = "textBoxURL";
+            this.textBoxURL.Size = new System.Drawing.Size(549, 22);
+            this.textBoxURL.TabIndex = 20;
+            // 
             // DanhmucThuoc
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -412,5 +434,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ComboBox comboBoxHC;
         private System.Windows.Forms.Button buttonGDHoatChat;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.TextBox textBoxURL;
     }
 }
