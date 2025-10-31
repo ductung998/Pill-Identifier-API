@@ -37,6 +37,10 @@
             this.buttonThem = new System.Windows.Forms.Button();
             this.buttonXoatrang = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBoxKichThuoc = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.comboBoxFilterHoatChat = new System.Windows.Forms.ComboBox();
             this.dataGridViewThuoc = new System.Windows.Forms.DataGridView();
             this.checkBoxFilterNotAssigned = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -62,8 +66,6 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.comboBoxFilterHoatChat = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).BeginInit();
             this.panel2.SuspendLayout();
@@ -156,6 +158,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.textBoxKichThuoc);
+            this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label12);
             this.panel1.Controls.Add(this.comboBoxFilterHoatChat);
             this.panel1.Controls.Add(this.dataGridViewThuoc);
@@ -186,6 +190,42 @@
             this.panel1.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.panel1.Size = new System.Drawing.Size(1034, 248);
             this.panel1.TabIndex = 13;
+            // 
+            // textBoxKichThuoc
+            // 
+            this.textBoxKichThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxKichThuoc.Location = new System.Drawing.Point(764, 219);
+            this.textBoxKichThuoc.Name = "textBoxKichThuoc";
+            this.textBoxKichThuoc.Size = new System.Drawing.Size(258, 22);
+            this.textBoxKichThuoc.TabIndex = 33;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(761, 201);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(74, 17);
+            this.label13.TabIndex = 32;
+            this.label13.Text = "Kích thước";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(162, 7);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(126, 17);
+            this.label12.TabIndex = 31;
+            this.label12.Text = "Lọc theo hoạt chất";
+            // 
+            // comboBoxFilterHoatChat
+            // 
+            this.comboBoxFilterHoatChat.FormattingEnabled = true;
+            this.comboBoxFilterHoatChat.Location = new System.Drawing.Point(294, 4);
+            this.comboBoxFilterHoatChat.Name = "comboBoxFilterHoatChat";
+            this.comboBoxFilterHoatChat.Size = new System.Drawing.Size(121, 24);
+            this.comboBoxFilterHoatChat.TabIndex = 30;
+            this.comboBoxFilterHoatChat.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterHoatChat_SelectedIndexChanged);
             // 
             // dataGridViewThuoc
             // 
@@ -228,26 +268,24 @@
             // 
             // cboLoaiRanh
             // 
-            this.cboLoaiRanh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboLoaiRanh.FormattingEnabled = true;
-            this.cboLoaiRanh.Location = new System.Drawing.Point(764, 218);
+            this.cboLoaiRanh.Location = new System.Drawing.Point(473, 218);
             this.cboLoaiRanh.Name = "cboLoaiRanh";
-            this.cboLoaiRanh.Size = new System.Drawing.Size(258, 24);
+            this.cboLoaiRanh.Size = new System.Drawing.Size(285, 24);
             this.cboLoaiRanh.TabIndex = 27;
             // 
             // cboLoaiViThuoc
             // 
             this.cboLoaiViThuoc.FormattingEnabled = true;
-            this.cboLoaiViThuoc.Location = new System.Drawing.Point(473, 218);
+            this.cboLoaiViThuoc.Location = new System.Drawing.Point(253, 217);
             this.cboLoaiViThuoc.Name = "cboLoaiViThuoc";
-            this.cboLoaiViThuoc.Size = new System.Drawing.Size(285, 24);
+            this.cboLoaiViThuoc.Size = new System.Drawing.Size(214, 24);
             this.cboLoaiViThuoc.TabIndex = 26;
             // 
             // cboDangThuoc
             // 
             this.cboDangThuoc.FormattingEnabled = true;
-            this.cboDangThuoc.Location = new System.Drawing.Point(232, 218);
+            this.cboDangThuoc.Location = new System.Drawing.Point(12, 217);
             this.cboDangThuoc.Name = "cboDangThuoc";
             this.cboDangThuoc.Size = new System.Drawing.Size(235, 24);
             this.cboDangThuoc.TabIndex = 25;
@@ -255,18 +293,16 @@
             // cboHinhDang
             // 
             this.cboHinhDang.FormattingEnabled = true;
-            this.cboHinhDang.Location = new System.Drawing.Point(12, 218);
+            this.cboHinhDang.Location = new System.Drawing.Point(764, 170);
             this.cboHinhDang.Name = "cboHinhDang";
-            this.cboHinhDang.Size = new System.Drawing.Size(214, 24);
+            this.cboHinhDang.Size = new System.Drawing.Size(258, 24);
             this.cboHinhDang.TabIndex = 24;
             // 
             // txtMaHinh
             // 
-            this.txtMaHinh.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtMaHinh.Location = new System.Drawing.Point(473, 171);
             this.txtMaHinh.Name = "txtMaHinh";
-            this.txtMaHinh.Size = new System.Drawing.Size(549, 22);
+            this.txtMaHinh.Size = new System.Drawing.Size(285, 22);
             this.txtMaHinh.TabIndex = 23;
             // 
             // label3
@@ -317,7 +353,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(761, 198);
+            this.label8.Location = new System.Drawing.Point(470, 198);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(68, 17);
             this.label8.TabIndex = 16;
@@ -326,7 +362,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(470, 198);
+            this.label7.Location = new System.Drawing.Point(250, 197);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 17);
             this.label7.TabIndex = 14;
@@ -335,7 +371,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(232, 198);
+            this.label6.Location = new System.Drawing.Point(12, 197);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(81, 17);
             this.label6.TabIndex = 12;
@@ -344,7 +380,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 198);
+            this.label5.Location = new System.Drawing.Point(761, 150);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(73, 17);
             this.label5.TabIndex = 10;
@@ -442,24 +478,6 @@
             this.dgvData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellClick);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
             // 
-            // comboBoxFilterHoatChat
-            // 
-            this.comboBoxFilterHoatChat.FormattingEnabled = true;
-            this.comboBoxFilterHoatChat.Location = new System.Drawing.Point(294, 4);
-            this.comboBoxFilterHoatChat.Name = "comboBoxFilterHoatChat";
-            this.comboBoxFilterHoatChat.Size = new System.Drawing.Size(121, 24);
-            this.comboBoxFilterHoatChat.TabIndex = 30;
-            this.comboBoxFilterHoatChat.SelectedIndexChanged += new System.EventHandler(this.comboBoxFilterHoatChat_SelectedIndexChanged);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(162, 7);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(126, 17);
-            this.label12.TabIndex = 31;
-            this.label12.Text = "Lọc theo hoạt chất";
-            // 
             // FormNhanDangThuoc
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -524,5 +542,7 @@
         private System.Windows.Forms.DataGridView dataGridViewThuoc;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.ComboBox comboBoxFilterHoatChat;
+        private System.Windows.Forms.TextBox textBoxKichThuoc;
+        private System.Windows.Forms.Label label13;
     }
 }

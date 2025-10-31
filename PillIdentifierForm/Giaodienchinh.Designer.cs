@@ -195,6 +195,7 @@
             this.traCứuToolStripMenuItem.Name = "traCứuToolStripMenuItem";
             this.traCứuToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
             this.traCứuToolStripMenuItem.Text = "Tra cứu";
+            this.traCứuToolStripMenuItem.Click += new System.EventHandler(this.traCứuToolStripMenuItem_Click);
             // 
             // panelContainer
             // 

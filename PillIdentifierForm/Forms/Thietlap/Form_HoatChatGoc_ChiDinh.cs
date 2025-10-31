@@ -12,12 +12,12 @@ using ClassChung;
 
 namespace PillIdentifierForm.Forms
 {
-    public partial class FormHoatChat_HoatChatGoc : Form
+    public partial class Form_HoatChatGoc_ChiDinh : Form
     {
-        private List<HoatChat> _listHoatChat;
         private List<HoatChatGoc> _listHoatChatGoc;
-        private BindingList<HoatChat_HoatChatGoc> _listLienKet;
-        HoatChat workingHC;
+        private List<ChiDinh> _listChiDinh;
+        private BindingList<HoatChatGoc_ChiDinh> _listLienKet;
+        HoatChatGoc workingHCG;
 
         BindingSource grid1 = new BindingSource();
 
@@ -27,21 +27,21 @@ namespace PillIdentifierForm.Forms
 
         private bool capnhat = false; // Flag to track unsaved changes
 
-        public FormHoatChat_HoatChatGoc()
+        public Form_HoatChatGoc_ChiDinh()
         {
             InitializeComponent();
         }
 
-        private void FormHoatChat_HoatChatGoc_Load(object sender, EventArgs e)
+        private void Form_HoatChatGoc_ChiDinh_Load(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
 
-            LoadHoatChat();
             LoadHoatChatGoc();
+            LoadChiDinh();
             LoadListLienKet();
 
-            comboBoxHC.SelectedIndex = -1;
             comboBoxHCG.SelectedIndex = -1;
+            comboBoxCD.SelectedIndex = -1;
 
             LoadLinkedList();
         }
@@ -74,18 +74,18 @@ namespace PillIdentifierForm.Forms
         {
             try
             {
-                if (workingHC == null)
+                if (workingHCG == null)
                 {
                     MessageBox.Show("Vui lòng chọn Hoạt Chất trước.", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                deletedata.DeleteHoatChat_HoatChatGoc(workingHC.IDHoatChat);
+                deletedata.DeleteHoatChatGoc_ChiDinh(workingHCG.IDHoatChatGoc);
 
-                foreach (HoatChat_HoatChatGoc i in _listLienKet)
+                foreach (HoatChatGoc_ChiDinh i in _listLienKet)
                 {
-                    insertdata.InsertHoatChat_HoatChatGoc(i);
+                    insertdata.InsertHoatChatGoc_ChiDinh(i);
                 }
 
                 capnhat = false; // Reset flag after successful save
@@ -101,47 +101,47 @@ namespace PillIdentifierForm.Forms
 
         private void buttonImport_Click(object sender, EventArgs e)
         {
-            using (ImportHoatChat_HoatChatGoc formcon = new ImportHoatChat_HoatChatGoc())
+            using (ImportHoatChatGoc_ChiDinh formcon = new ImportHoatChatGoc_ChiDinh())
             {
                 formcon.ShowDialog();
             }
         }
 
-        private void buttonGDHoatChat_Click(object sender, EventArgs e)
+        private void buttonGDHoatChatGoc_Click(object sender, EventArgs e)
         {
-            using (DanhmucHoatChat formcon = new DanhmucHoatChat())
+            using (DanhmucHoatChatGoc formcon = new DanhmucHoatChatGoc())
             {
                 formcon.ShowDialog();
-                LoadHoatChat();
+                LoadHoatChatGoc();
             }
-        }
-
-        private void LoadHoatChat()
-        {
-            _listHoatChat = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
-            comboBoxHC.DataSource = _listHoatChat;
-            comboBoxHC.DisplayMember = "TenHoatChat";
-            comboBoxHC.ValueMember = "IDHoatChat";
         }
 
         private void LoadHoatChatGoc()
         {
             _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChat).ToList();
             comboBoxHCG.DataSource = _listHoatChatGoc;
-            comboBoxHCG.DisplayMember = "TenHoatChat";
+            comboBoxHCG.DisplayMember = "TenHoatChatGoc";
             comboBoxHCG.ValueMember = "IDHoatChatGoc";
+        }
+
+        private void LoadChiDinh()
+        {
+            _listChiDinh = getdata.GetDSChiDinh().OrderBy(h => h.TenChiDinh).ToList();
+            comboBoxCD.DataSource = _listChiDinh;
+            comboBoxCD.DisplayMember = "TenHoatChatGoc";
+            comboBoxCD.ValueMember = "IDChiDinh";
         }
 
         private void LoadListLienKet()
         {
-            _listLienKet = new BindingList<HoatChat_HoatChatGoc>();
+            _listLienKet = new BindingList<HoatChatGoc_ChiDinh>();
         }
 
         private void comboBoxHC_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
-                if (comboBoxHC.SelectedValue == null || !(comboBoxHC.SelectedValue is int))
+                if (comboBoxHCG.SelectedValue == null || !(comboBoxHCG.SelectedValue is int))
                     return;
 
                 // Check for unsaved changes before switching
@@ -161,9 +161,9 @@ namespace PillIdentifierForm.Forms
                     else if (result == DialogResult.Cancel)
                     {
                         // Revert to previous selection
-                        if (workingHC != null)
+                        if (workingHCG != null)
                         {
-                            comboBoxHC.SelectedValue = workingHC.IDHoatChat;
+                            comboBoxHCG.SelectedValue = workingHCG.IDHoatChatGoc;
                         }
                         return;
                     }
@@ -173,19 +173,19 @@ namespace PillIdentifierForm.Forms
                     }
                 }
 
-                int idHoatChat = (int)comboBoxHC.SelectedValue;
-                workingHC = getdata.GetHC(idHoatChat);
+                int idHoatChatGoc = (int)comboBoxHCG.SelectedValue;
+                workingHCG = getdata.GetHCG(idHoatChatGoc);
 
                 _listLienKet.Clear();
 
-                if (workingHC != null && workingHC.dsHCG != null)
+                if (workingHCG != null && workingHCG.dsCD != null)
                 {
-                    foreach (HoatChatGoc goc in workingHC.dsHCG)
+                    foreach (ChiDinh cd in workingHCG.dsCD)
                     {
-                        _listLienKet.Add(new HoatChat_HoatChatGoc
+                        _listLienKet.Add(new HoatChatGoc_ChiDinh
                         {
-                            IDHoatChat = idHoatChat,
-                            IDHoatChatGoc = goc.IDHoatChatGoc
+                            IDHoatChatGoc = idHoatChatGoc,
+                            IDChiDinh = cd.IDChiDinh
                         });
                     }
                 }
@@ -202,14 +202,14 @@ namespace PillIdentifierForm.Forms
 
         private void LoadLinkedList()
         {
-            if (comboBoxHC.SelectedValue == null) return;
+            if (comboBoxHCG.SelectedValue == null) return;
 
             var displayList = _listLienKet.Select(l => new
             {
-                IDHoatChat = l.IDHoatChat,
-                TenHoatChat = GetTenHoatChat(l.IDHoatChat),
                 IDHoatChatGoc = l.IDHoatChatGoc,
-                TenHoatChatGoc = GetTenHoatChatGoc(l.IDHoatChatGoc)
+                TenHoatChatGoc = GetTenHoatChatGoc(l.IDHoatChatGoc),
+                IDChiDinh = l.IDChiDinh,
+                TenChiDinh = GetTenChiDinh(l.IDChiDinh)
             }).ToList();
 
             grid1.DataSource = null;
@@ -218,41 +218,41 @@ namespace PillIdentifierForm.Forms
             dataGridView1.Refresh();
         }
 
-        private string GetTenHoatChat(int id)
+        private string GetTenHoatChatGoc(int id)
         {
-            HoatChat hc = _listHoatChat.FirstOrDefault(h => h.IDHoatChat == id);
+            HoatChatGoc hc = _listHoatChatGoc.FirstOrDefault(h => h.IDHoatChatGoc == id);
             return hc != null ? hc.TenHoatChat : "";
         }
 
-        private string GetTenHoatChatGoc(int id)
+        private string GetTenChiDinh(int id)
         {
-            HoatChatGoc hcg = _listHoatChatGoc.FirstOrDefault(g => g.IDHoatChatGoc == id);
-            return hcg != null ? hcg.TenHoatChat : "";
+            ChiDinh hcg = _listChiDinh.FirstOrDefault(g => g.IDChiDinh == id);
+            return hcg != null ? hcg.TenChiDinh : "";
         }
 
         private void buttonThemHCG_Click(object sender, EventArgs e)
         {
-            if (comboBoxHC.SelectedValue == null || comboBoxHCG.SelectedValue == null)
+            if (comboBoxHCG.SelectedValue == null || comboBoxCD.SelectedValue == null)
             {
-                MessageBox.Show("Vui lòng chọn cả Hoạt Chất và Hoạt Chất Gốc.", "Thông báo",
+                MessageBox.Show("Vui lòng chọn cả Hoạt Chất Gốc và Chỉ định.", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            int idHoatChat = (int)comboBoxHC.SelectedValue;
             int idHoatChatGoc = (int)comboBoxHCG.SelectedValue;
+            int idChiDinh = (int)comboBoxCD.SelectedValue;
 
-            if (_listLienKet.Any(l => l.IDHoatChat == idHoatChat && l.IDHoatChatGoc == idHoatChatGoc))
+            if (_listLienKet.Any(l => l.IDHoatChatGoc == idHoatChatGoc && l.IDChiDinh == idChiDinh))
             {
                 MessageBox.Show("Liên kết này đã tồn tại.", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            _listLienKet.Add(new HoatChat_HoatChatGoc
+            _listLienKet.Add(new HoatChatGoc_ChiDinh
             {
-                IDHoatChat = idHoatChat,
-                IDHoatChatGoc = idHoatChatGoc
+                IDHoatChatGoc = idHoatChatGoc,
+                IDChiDinh = idChiDinh
             });
 
             capnhat = true; // Mark as having unsaved changes
@@ -277,7 +277,7 @@ namespace PillIdentifierForm.Forms
             {
                 foreach (DataGridViewRow row in dataGridView1.SelectedRows)
                 {
-                    HoatChat_HoatChatGoc item = row.DataBoundItem as HoatChat_HoatChatGoc;
+                    HoatChatGoc_ChiDinh item = row.DataBoundItem as HoatChatGoc_ChiDinh;
                     if (item != null)
                     {
                         _listLienKet.Remove(item);

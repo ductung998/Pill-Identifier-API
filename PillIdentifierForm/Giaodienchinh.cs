@@ -115,5 +115,11 @@ namespace PillIdentifierForm
             Forms.Form_MauSacThuoc Form_MauSacThuoc = new Forms.Form_MauSacThuoc();
             openChildForm(Form_MauSacThuoc);
         }
+
+        private void traCứuToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.Tracuu Tracuu = new Forms.Tracuu();
+            openChildForm(Tracuu);
+        }
     }
 }

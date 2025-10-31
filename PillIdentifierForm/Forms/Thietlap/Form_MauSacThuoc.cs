@@ -89,7 +89,7 @@ namespace PillIdentifierForm.Forms
 
                 foreach (Thuoc_MauSac i in _listLienKet)
                 {
-                    insertdata.InsertThuoc_MauSac(i.IDThuoc, i.IDMauSac);
+                    insertdata.InsertThuoc_MauSac(i);
                 }
 
                 capnhat = false; // Reset flag after successful save

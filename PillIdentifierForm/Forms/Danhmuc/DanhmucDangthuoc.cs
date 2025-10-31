@@ -101,14 +101,14 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDDangThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn chỉ định cần xóa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn dạng thuốc cần xóa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Confirm deletion
                 DialogResult result = MessageBox.Show(
-                    "Bạn có chắc chắn muốn xóa chỉ định này?",
+                    "Bạn có chắc chắn muốn xóa dạng thuốc này?",
                     "Xác nhận xóa",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -147,7 +147,7 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDDangThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn chỉ định cần sửa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn dạng thuốc cần sửa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -155,7 +155,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxDangThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên dạng thuốc!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxDangThuoc.Focus();
                     return;

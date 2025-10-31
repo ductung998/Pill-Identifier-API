@@ -132,6 +132,7 @@ namespace PillIdentifierForm.Forms
                 : 0;
 
             entity.MaHinh = txtMaHinh.Text;
+            entity.KichThuoc = textBoxKichThuoc.Text != "" ? Convert.ToDouble(textBoxKichThuoc.Text) : 0;
 
             return entity;
         }
@@ -579,6 +580,7 @@ namespace PillIdentifierForm.Forms
                         txtKhacDauMatTruoc.Text = existing.KhacDauMatTruoc;
                         txtKhacDauMatSau.Text = existing.KhacDauMatSau;
                         txtMaHinh.Text = existing.MaHinh;
+                        textBoxKichThuoc.Text = existing.KichThuoc.ToString();
 
                         SetComboBoxValue(cboHinhDang, existing.IDHinhDang);
                         SetComboBoxValue(cboDangThuoc, existing.IDDangThuoc);

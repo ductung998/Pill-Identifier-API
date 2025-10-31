@@ -64,14 +64,17 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxLoaiViThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên loại vỉ thuốc!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxLoaiViThuoc.Focus();
                     return;
                 }
-
+                LoaiViThuoc them = new LoaiViThuoc
+                {
+                    TenLoaiVi = textBoxLoaiViThuoc.Text.Trim()
+                };
                 // Insert new record using KetnoiDB.InsertData
-                if (insertdata.InsertLoaiViThuoc(textBoxLoaiViThuoc.Text.Trim()))
+                if (insertdata.InsertLoaiViThuoc(them))
                 {
                     MessageBox.Show("Thêm mới thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -98,14 +101,14 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDLoaiViThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn chỉ định cần xóa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn loại vỉ thuốc cần xóa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Confirm deletion
                 DialogResult result = MessageBox.Show(
-                    "Bạn có chắc chắn muốn xóa chỉ định này?",
+                    "Bạn có chắc chắn muốn xóa loại vỉ thuốc này?",
                     "Xác nhận xóa",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -144,7 +147,7 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDLoaiViThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn chỉ định cần sửa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn loại vỉ thuốc cần sửa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -152,7 +155,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxLoaiViThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên loại vỉ thuốc!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxLoaiViThuoc.Focus();
                     return;

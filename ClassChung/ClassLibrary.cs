@@ -596,6 +596,15 @@ namespace ClassChung
                     kq.Add(HoatChat_HoatChatGoc.fromHoatChat_HoatChatGocDB(i));
                 return kq;
             }
+            public List<HoatChatGoc_ChiDinh> GetDSHoatChatGoc_ChiDinh()
+            {
+                List<HoatChatGoc_ChiDinh> kq = new List<HoatChatGoc_ChiDinh>();
+
+                List<r_HoatChatGoc_ChiDinh> ds = db.r_HoatChatGoc_ChiDinhs.ToList();
+                foreach (r_HoatChatGoc_ChiDinh i in ds)
+                    kq.Add(HoatChatGoc_ChiDinh.fromHoatChatGoc_ChiDinhDB(i));
+                return kq;
+            }
             // Lấy toàn bộ Loại Rãnh
             public List<LoaiRanh> GetDSLoaiRanh()
             {
@@ -703,7 +712,25 @@ namespace ClassChung
                                      where data.IDHoatChat == idHoatChat
                                      select data).FirstOrDefault();
                     kq = HoatChat.fromHoatChatDB(hoatchat);
-                    kq.dsHCG = GetHCGbyidHC(kq.IDHoatChat);
+                    kq.dsHCG = GetHCGbyidHC(idHoatChat);
+
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+            public HoatChatGoc GetHCG(int idHoatChatGoc)
+            {
+                HoatChatGoc kq = new HoatChatGoc();
+                try
+                {
+                    d_HoatChatGoc hoatchatgoc = (from data in db.d_HoatChatGocs
+                                           where data.IDHoatChatGoc == idHoatChatGoc
+                                           select data).FirstOrDefault();
+                    kq = HoatChatGoc.fromHoatChatGocDB(hoatchatgoc);
+                    kq.dsCD = GetCDbyidHCG(idHoatChatGoc);
 
                     return kq;
                 }
@@ -723,6 +750,24 @@ namespace ClassChung
                                               select data).ToList();
                     foreach (d_HoatChatGoc i in ds)
                         kq.Add(HoatChatGoc.fromHoatChatGocDB(i));
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+            public List<ChiDinh> GetCDbyidHCG(int idHoatChatGoc)
+            {
+                List<ChiDinh> kq = new List<ChiDinh>();
+                try
+                {
+                    List<d_ChiDinh> ds = (from data in db.d_ChiDinhs
+                                              join s1 in db.r_HoatChatGoc_ChiDinhs on data.IDChiDinh equals s1.IDChiDinh
+                                              where s1.IDHoatChatGoc == idHoatChatGoc
+                                              select data).ToList();
+                    foreach (d_ChiDinh i in ds)
+                        kq.Add(ChiDinh.fromChiDinhDB(i));
                     return kq;
                 }
                 catch
@@ -807,14 +852,23 @@ namespace ClassChung
                 }
             }
 
-            public List<Thuoc> GetNhanDangThuoc(string imprint, int? idMausac1 = null, int? idMausac2 = null,
-                int? idHinhdang = null, int? idDangthuoc = null, int? idLoaiVi = null, int? idLoaiRanh = null)
+            public List<Thuoc> GetNhanDangThuoc(
+                string imprintFront = null,
+                string imprintBack = null,
+                int? idMausac1 = null,
+                int? idMausac2 = null,
+                int? idHinhdang = null,
+                int? idDangthuoc = null,
+                int? idLoaiVi = null,
+                int? idLoaiRanh = null,
+                double? kichThuoc = null)
             {
                 List<Thuoc> kq = new List<Thuoc>();
                 try
                 {
                     List<int> dsIDThuoc = new List<int>();
 
+                    // ===== COLOR FILTERING =====
                     IQueryable<r_Thuoc_MauSac> query1 = from data in db.r_Thuoc_MauSacs
                                                         select data;
 
@@ -834,27 +888,115 @@ namespace ClassChung
                         dsIDThuoc.AddRange(query1.Where(x => x.IDMauSac == idMausac2).Select(x => x.IDThuoc).ToList());
                     }
 
+                    // ===== MAIN ATTRIBUTES FILTERING =====
                     IQueryable<w_NhanDangThuoc> query2 = from data in db.w_NhanDangThuocs
                                                          select data;
+
                     if (idHinhdang != null)
                         query2 = query2.Where(x => x.IDHinhDang == idHinhdang);
+
                     if (idDangthuoc != null)
                         query2 = query2.Where(x => x.IDDangThuoc == idDangthuoc);
+
                     if (idLoaiVi != null)
                         query2 = query2.Where(x => x.IDLoaiViThuoc == idLoaiVi);
+
                     if (idLoaiRanh != null)
                         query2 = query2.Where(x => x.IDLoaiRanh == idLoaiRanh);
-                    if (!string.IsNullOrEmpty(imprint))
-                        query2 = query2.Where(x => x.KhacDauMatTruoc.Contains(imprint) || x.KhacDauMatSau.Contains(imprint));
 
-                    foreach (w_NhanDangThuoc i in query2)
+                    // ===== SIZE FILTERING (with tolerance) =====
+                    if (kichThuoc != null)
                     {
-                        dsIDThuoc.Add(i.IDThuoc);
+                        double? kichThuocMin = kichThuoc * 0.8;
+                        double? kichThuocMax = kichThuoc * 1.2;
+                        query2 = query2.Where(x => x.KichThuoc >= kichThuocMin && x.KichThuoc <= kichThuocMax);
+                    }
+
+                    // ===== IMPRINT FILTERING (Multi-level matching) =====
+                    if (!string.IsNullOrEmpty(imprintFront) || !string.IsNullOrEmpty(imprintBack))
+                    {
+                        var imprintQuery = query2.ToList(); // Load to memory for complex string matching
+                        List<w_NhanDangThuoc> matchedByImprint = new List<w_NhanDangThuoc>();
+
+                        foreach (var item in imprintQuery)
+                        {
+                            bool matches = false;
+                            string front = (item.KhacDauMatTruoc ?? "").Trim().ToUpper();
+                            string back = (item.KhacDauMatSau ?? "").Trim().ToUpper();
+                            string searchFront = (imprintFront ?? "").Trim().ToUpper();
+                            string searchBack = (imprintBack ?? "").Trim().ToUpper();
+
+                            // Priority 1: Exact match on specified side(s)
+                            if (!string.IsNullOrEmpty(searchFront) && front == searchFront)
+                                matches = true;
+                            if (!string.IsNullOrEmpty(searchBack) && back == searchBack)
+                                matches = true;
+
+                            // Priority 2: If both sides specified, check if they match (either way)
+                            if (!string.IsNullOrEmpty(searchFront) && !string.IsNullOrEmpty(searchBack))
+                            {
+                                if ((front == searchFront && back == searchBack) ||
+                                    (front == searchBack && back == searchFront))
+                                    matches = true;
+                            }
+
+                            // Priority 3: Contains match (partial match)
+                            if (!matches)
+                            {
+                                if (!string.IsNullOrEmpty(searchFront) && front.Contains(searchFront))
+                                    matches = true;
+                                if (!string.IsNullOrEmpty(searchBack) && back.Contains(searchBack))
+                                    matches = true;
+                            }
+
+                            // Priority 4: Cross-side contains (user might have sides confused)
+                            if (!matches)
+                            {
+                                if (!string.IsNullOrEmpty(searchFront) && back.Contains(searchFront))
+                                    matches = true;
+                                if (!string.IsNullOrEmpty(searchBack) && front.Contains(searchBack))
+                                    matches = true;
+                            }
+
+                            if (matches)
+                                matchedByImprint.Add(item);
+                        }
+
+                        foreach (w_NhanDangThuoc i in matchedByImprint)
+                        {
+                            dsIDThuoc.Add(i.IDThuoc);
+                        }
+                    }
+                    else
+                    {
+                        // No imprint filter, add all from query2
+                        foreach (w_NhanDangThuoc i in query2)
+                        {
+                            dsIDThuoc.Add(i.IDThuoc);
+                        }
                     }
 
                     dsIDThuoc = dsIDThuoc.Distinct().ToList();
 
                     kq = GetDSThuoc().Where(x => dsIDThuoc.Contains(x.IDThuoc)).ToList();
+
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+            public NhanDangThuoc GetNhanDangByThuoc(Thuoc item)
+            {
+                NhanDangThuoc kq = new NhanDangThuoc();
+                try
+                {
+                    w_NhanDangThuoc search = (from data in db.w_NhanDangThuocs
+                                              where data.IDThuoc == item.IDThuoc
+                                              select data).FirstOrDefault();
+
+                    kq = NhanDangThuoc.fromNhanDangThuocDB(search);
 
                     return kq;
                 }
@@ -1448,12 +1590,12 @@ namespace ClassChung
                 }
             }
 
-            public bool DeleteHoatChatGoc_ChiDinh(int idHoatChatGoc, int idChiDinh)
+            public bool DeleteHoatChatGoc_ChiDinh(int idHoatChatGoc)
             {
                 try
                 {
                     r_HoatChatGoc_ChiDinh link = db.r_HoatChatGoc_ChiDinhs.SingleOrDefault(x =>
-                        x.IDHoatChatGoc == idHoatChatGoc && x.IDChiDinh == idChiDinh);
+                        x.IDHoatChatGoc == idHoatChatGoc);
                     if (link != null)
                     {
                         db.r_HoatChatGoc_ChiDinhs.DeleteOnSubmit(link);
@@ -1680,6 +1822,7 @@ namespace ClassChung
         public int IDHoatChatGoc { get; set; }
         public string TenHoatChat { get; set; }
         public string GhiChu { get; set; }
+        public List<ChiDinh> dsCD { get; set; }
         public HoatChatGoc()
         {
 

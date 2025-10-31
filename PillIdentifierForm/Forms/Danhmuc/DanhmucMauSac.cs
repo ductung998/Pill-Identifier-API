@@ -64,14 +64,19 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxMauSac.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên màu sắc!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxMauSac.Focus();
                     return;
                 }
 
+                MauSac them = new MauSac
+                {
+                    TenMauSac = textBoxMauSac.Text.Trim()
+                };
+
                 // Insert new record using KetnoiDB.InsertData
-                if (insertdata.InsertMauSac(textBoxMauSac.Text.Trim()))
+                if (insertdata.InsertMauSac(them))
                 {
                     MessageBox.Show("Thêm mới thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -98,14 +103,14 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDMauSac.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn chỉ định cần xóa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn màu sắc cần xóa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Confirm deletion
                 DialogResult result = MessageBox.Show(
-                    "Bạn có chắc chắn muốn xóa chỉ định này?",
+                    "Bạn có chắc chắn muốn xóa màu sắc này?",
                     "Xác nhận xóa",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -144,7 +149,7 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDMauSac.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn chỉ định cần sửa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn màu sắc cần sửa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -152,7 +157,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxMauSac.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên màu sắc!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxMauSac.Focus();
                     return;

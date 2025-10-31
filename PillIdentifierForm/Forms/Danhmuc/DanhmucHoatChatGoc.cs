@@ -65,14 +65,20 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxHoatChatGoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên hoạt chất gốc!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxHoatChatGoc.Focus();
                     return;
                 }
 
+                HoatChatGoc them = new HoatChatGoc
+                {
+                    TenHoatChat = textBoxHoatChatGoc.Text.Trim(),
+                    GhiChu = textBoxMoTa.Text.Trim()
+                };
+
                 // Insert new record using KetnoiDB.InsertData
-                if (insertdata.InsertHoatChatGoc(textBoxHoatChatGoc.Text.Trim(), textBoxMoTa.Text.Trim()))
+                if (insertdata.InsertHoatChatGoc(them))
                 {
                     MessageBox.Show("Thêm mới thành công!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -99,14 +105,14 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDHoatChatGoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn chỉ định cần xóa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn hoạt chất gốc cần xóa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Confirm deletion
                 DialogResult result = MessageBox.Show(
-                    "Bạn có chắc chắn muốn xóa chỉ định này?",
+                    "Bạn có chắc chắn muốn xóa hoạt chất gốc này?",
                     "Xác nhận xóa",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -145,7 +151,7 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDHoatChatGoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn chỉ định cần sửa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn hoạt chất gốc cần sửa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -153,7 +159,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxHoatChatGoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên chỉ định!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên hoạt chất gốc!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxHoatChatGoc.Focus();
                     return;
