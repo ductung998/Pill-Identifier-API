@@ -9,6 +9,9 @@ namespace ClassChung
     #region Kết nối CSDL
     public class KetnoiDB
     {
+        private static string activeConnection = "ClassChung.Properties.Settings.PillIDConnectionString_Local";
+        // private static string activeConnection = "ClassChung.Properties.Settings.PillIDConnectionString_Server";
+
         protected static DataClassesDataContext db = new DataClassesDataContext();
         #region Nhập liệu đơn
         public class InsertData

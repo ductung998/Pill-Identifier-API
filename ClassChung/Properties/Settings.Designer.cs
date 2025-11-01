@@ -32,5 +32,37 @@ namespace ClassChung.Properties {
                 return ((string)(this["PillIDConnectionString"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=103.140.249.152;Initial Catalog=PillID;Persist Security Info=True;Use" +
+            "r ID=PillUser;Password=StrongPasswordHere!;")]
+        public string PillIDConnectionString_Server {
+            get {
+                return ((string)(this["PillIDConnectionString_Server"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-SP0BRKD;Initial Catalog=PillID;Integrated Security=True")]
+        public string PillIDConnectionString_Local {
+            get {
+                return ((string)(this["PillIDConnectionString_Local"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=103.140.249.152;Initial Catalog=PillID;Persist Security Info=True;Use" +
+            "r ID=PillUser;Password=StrongPasswordHere!")]
+        public string PillIDConnectionString1 {
+            get {
+                return ((string)(this["PillIDConnectionString1"]));
+            }
+        }
     }
 }
