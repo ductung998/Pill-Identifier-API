@@ -19,7 +19,7 @@ namespace PillIdentifierForm.Forms
         private int currentPage = 1;
         private int itemsPerPage = 12;
         private int totalPages = 0;
-        private KetnoiDB.GetData bll = new KetnoiDB.GetData();
+        private KetnoiDB.GetData getdata = new KetnoiDB.GetData();
 
         public Tracuu()
         {
@@ -44,7 +44,7 @@ namespace PillIdentifierForm.Forms
         {
             try
             {
-                List<MauSac> _listMauSac = bll.GetDSMauSac().OrderBy(h => h.TenMauSac).ToList();
+                List<MauSac> _listMauSac = getdata.GetDSMauSac().OrderBy(h => h.TenMauSac).ToList();
                 cboMauSac1.DataSource = _listMauSac;
                 cboMauSac1.DisplayMember = "TenMauSac";
                 cboMauSac1.ValueMember = "IDMauSac";
@@ -53,22 +53,22 @@ namespace PillIdentifierForm.Forms
                 cboMauSac2.DisplayMember = "TenMauSac";
                 cboMauSac2.ValueMember = "IDMauSac";
 
-                List<HinhDang> _listHinhDang = bll.GetDSHinhDang().OrderBy(h => h.TenHinhDang).ToList();
+                List<HinhDang> _listHinhDang = getdata.GetDSHinhDang().OrderBy(h => h.TenHinhDang).ToList();
                 cboHinhDang.DataSource = _listHinhDang;
                 cboHinhDang.DisplayMember = "TenHinhDang";
                 cboHinhDang.ValueMember = "IDHinhDang";
 
-                List<DangThuoc> _listDangThuoc = bll.GetDSDangThuoc().OrderBy(h => h.TenDangThuoc).ToList();
+                List<DangThuoc> _listDangThuoc = getdata.GetDSDangThuoc().OrderBy(h => h.TenDangThuoc).ToList();
                 cboDangThuoc.DataSource = _listDangThuoc;
                 cboDangThuoc.DisplayMember = "TenDangThuoc";
                 cboDangThuoc.ValueMember = "IDDangThuoc";
 
-                List<LoaiViThuoc> _listLoaiViThuoc = bll.GetDSLoaiViThuoc().OrderBy(h => h.TenLoaiVi).ToList();
+                List<LoaiViThuoc> _listLoaiViThuoc = getdata.GetDSLoaiViThuoc().OrderBy(h => h.TenLoaiVi).ToList();
                 cboLoaiVi.DataSource = _listLoaiViThuoc;
                 cboLoaiVi.DisplayMember = "TenLoaiVi";
                 cboLoaiVi.ValueMember = "IDLoaiViThuoc";
 
-                List<LoaiRanh> _listLoaiRanh = bll.GetDSLoaiRanh().OrderBy(h => h.TenLoaiRanh).ToList();
+                List<LoaiRanh> _listLoaiRanh = getdata.GetDSLoaiRanh().OrderBy(h => h.TenLoaiRanh).ToList();
                 cboLoaiRanh.DataSource = _listLoaiRanh;
                 cboLoaiRanh.DisplayMember = "TenLoaiRanh";
                 cboLoaiRanh.ValueMember = "IDLoaiRanh";
@@ -127,7 +127,7 @@ namespace PillIdentifierForm.Forms
                 }
 
                 // Search
-                allResults = bll.GetNhanDangThuoc(
+                allResults = getdata.GetNhanDangThuoc(
                     string.IsNullOrWhiteSpace(imprintFront) ? null : imprintFront,
                     string.IsNullOrWhiteSpace(imprintBack) ? null : imprintBack,
                     idMauSac1, idMauSac2, idHinhDang, idDangThuoc,
@@ -228,10 +228,9 @@ namespace PillIdentifierForm.Forms
                 flpResults.Controls.Add(cardPanel);
             }
         }
-
         private Panel CreateResultCard(Thuoc thuoc)
         {
-            NhanDangThuoc nhandang = bll.GetNhanDangByThuoc(thuoc);
+            NhanDangThuoc nhandang = getdata.GetNhanDangByThuoc(thuoc);
             // Card Panel: 250x320 pixels
             Panel card = new Panel();
             card.Width = 250;
@@ -251,38 +250,36 @@ namespace PillIdentifierForm.Forms
             picDrug.BorderStyle = BorderStyle.FixedSingle;
             picDrug.BackColor = Color.WhiteSmoke;
 
-            // Load image based on MaHinh
+            // Load image based on MaHinh - SỬA DỤNG GetDrugImagesFolder()
             try
             {
-                string imagePath = Path.Combine(Application.StartupPath, "Images", "Drugs", nhandang.MaHinh + ".jpg");
-                if (File.Exists(imagePath))
+                if (!string.IsNullOrEmpty(nhandang.MaHinh))
                 {
-                    picDrug.Image = Image.FromFile(imagePath);
-                }
-                else
-                {
-                    // Try PNG
-                    imagePath = Path.Combine(Application.StartupPath, "Images", "Drugs", nhandang.MaHinh + ".png");
+                    string imagePath = Path.Combine(getdata.GetDrugImagesFolder(), nhandang.MaHinh);
+
                     if (File.Exists(imagePath))
                     {
+                        // Dispose previous image to free memory
+                        if (picDrug.Image != null)
+                        {
+                            picDrug.Image.Dispose();
+                        }
                         picDrug.Image = Image.FromFile(imagePath);
+                        picDrug.Controls.Clear(); // Remove "Không có hình" label if exists
                     }
                     else
                     {
-                        // Placeholder text
-                        Label lblNoImage = new Label();
-                        lblNoImage.Text = "Không có hình";
-                        lblNoImage.TextAlign = ContentAlignment.MiddleCenter;
-                        lblNoImage.Dock = DockStyle.Fill;
-                        lblNoImage.ForeColor = Color.Gray;
-                        lblNoImage.Font = new Font("Arial", 10, FontStyle.Italic);
-                        picDrug.Controls.Add(lblNoImage);
+                        ShowNoImageLabel(picDrug);
                     }
+                }
+                else
+                {
+                    ShowNoImageLabel(picDrug);
                 }
             }
             catch
             {
-                picDrug.BackColor = Color.LightGray;
+                ShowNoImageLabel(picDrug);
             }
 
             // Drug name
@@ -376,12 +373,15 @@ namespace PillIdentifierForm.Forms
 
         private void ShowDrugDetails(Thuoc thuoc)
         {
-            NhanDangThuoc nhandang = bll.GetNhanDangByThuoc(thuoc);
+            NhanDangThuoc nhandang = getdata.GetNhanDangByThuoc(thuoc);
             // Open detail form or show comprehensive info
+
+            string imagePath = Path.Combine(getdata.GetDrugImagesFolder(), nhandang.MaHinh);
+
             StringBuilder details = new StringBuilder();
             details.AppendLine("Tên thuốc: " + thuoc.TenThuoc);
             details.AppendLine("Số đăng ký: " + thuoc.SDK);
-            details.AppendLine("Mã hình: " + nhandang.MaHinh);
+            details.AppendLine("Mã hình: " + imagePath);
             details.AppendLine("ID: " + thuoc.IDThuoc.ToString());
 
             if (nhandang.KichThuoc > 0)
@@ -391,6 +391,24 @@ namespace PillIdentifierForm.Forms
 
             MessageBox.Show(details.ToString(), "Chi tiết thuốc",
                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        private void ShowNoImageLabel(PictureBox picDrug)
+        {
+            if (picDrug.Image != null)
+            {
+                picDrug.Image.Dispose();
+                picDrug.Image = null;
+            }
+
+            picDrug.Controls.Clear();
+
+            Label lblNoImage = new Label();
+            lblNoImage.Text = "Không có hình";
+            lblNoImage.TextAlign = ContentAlignment.MiddleCenter;
+            lblNoImage.Dock = DockStyle.Fill;
+            lblNoImage.ForeColor = Color.Gray;
+            lblNoImage.Font = new Font("Arial", 10, FontStyle.Italic);
+            picDrug.Controls.Add(lblNoImage);
         }
         private void buttonThoat_Click(object sender, EventArgs e)
         {

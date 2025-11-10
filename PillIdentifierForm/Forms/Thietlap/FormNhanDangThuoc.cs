@@ -282,6 +282,12 @@ namespace PillIdentifierForm.Forms
                 dgvData.DataSource = grid1;
                 dgvData.AutoResizeColumns();
 
+                // Hide ID columns or configure them
+                dgvData.Columns["IDHinhDang"].Visible = false;
+                dgvData.Columns["IDDangThuoc"].Visible = false;
+                dgvData.Columns["IDLoaiViThuoc"].Visible = false;
+                dgvData.Columns["IDLoaiRanh"].Visible = false;
+
                 // Load Thuoc list
                 LoadThuoc();
             }
@@ -624,5 +630,70 @@ namespace PillIdentifierForm.Forms
         {
             LoadThuoc();
         }
+
+        private void btnAddImage_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Check if a record is selected
+                if (dgvData.CurrentRow == null)
+                {
+                    MessageBox.Show("Vui lòng chọn một dòng trước khi thêm hình ảnh.", "Thông báo",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Get the IDNhanDang from the selected row
+                int idNhanDang = Convert.ToInt32(dgvData.CurrentRow.Cells["IDNhanDang"].Value);
+
+                // Open file dialog to select image
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png";
+                openFileDialog.Title = "Chọn hình ảnh thuốc";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    // Get the file extension
+                    string fileExtension = Path.GetExtension(openFileDialog.FileName);
+
+                    // Get the drugs folder using the new method
+                    string drugsFolder = getdata.GetDrugImagesFolder();
+
+                    // Create the new filename using IDNhanDang
+                    string newFileName = idNhanDang.ToString() + fileExtension;
+                    string destinationPath = Path.Combine(drugsFolder, newFileName);
+
+                    // Check if file already exists
+                    if (File.Exists(destinationPath))
+                    {
+                        DialogResult result = MessageBox.Show(
+                            "Hình ảnh cho ID này đã tồn tại. Bạn có muốn ghi đè?",
+                            "Xác nhận",
+                            MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Question);
+
+                        if (result == DialogResult.No)
+                        {
+                            return;
+                        }
+                    }
+
+                    // Copy the file to the destination
+                    File.Copy(openFileDialog.FileName, destinationPath, true);
+
+                    // Update the textbox with the new filename
+                    txtMaHinh.Text = newFileName;
+
+                    MessageBox.Show("Đã lưu hình ảnh thành công!", "Thành công",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi khi lưu hình ảnh: " + ex.Message, "Lỗi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
     }
 }

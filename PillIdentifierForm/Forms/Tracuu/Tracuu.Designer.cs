@@ -320,21 +320,23 @@
             // 
             this.lblTotalResults.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblTotalResults.AutoSize = true;
-            this.lblTotalResults.Location = new System.Drawing.Point(467, 19);
+            this.lblTotalResults.Location = new System.Drawing.Point(440, 29);
             this.lblTotalResults.Name = "lblTotalResults";
             this.lblTotalResults.Size = new System.Drawing.Size(54, 17);
             this.lblTotalResults.TabIndex = 19;
             this.lblTotalResults.Text = "label11";
+            this.lblTotalResults.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // lblPageInfo
             // 
             this.lblPageInfo.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.lblPageInfo.AutoSize = true;
-            this.lblPageInfo.Location = new System.Drawing.Point(407, 19);
+            this.lblPageInfo.Location = new System.Drawing.Point(440, 6);
             this.lblPageInfo.Name = "lblPageInfo";
             this.lblPageInfo.Size = new System.Drawing.Size(54, 17);
             this.lblPageInfo.TabIndex = 18;
             this.lblPageInfo.Text = "label11";
+            this.lblPageInfo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // btnNextPage
             // 

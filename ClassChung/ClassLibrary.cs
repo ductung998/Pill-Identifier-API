@@ -3,15 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ClassChung
 {
     #region Kết nối CSDL
     public class KetnoiDB
     {
-        private static string activeConnection = "ClassChung.Properties.Settings.PillIDConnectionString_Local";
-        // private static string activeConnection = "ClassChung.Properties.Settings.PillIDConnectionString_Server";
-
         protected static DataClassesDataContext db = new DataClassesDataContext();
         #region Nhập liệu đơn
         public class InsertData
@@ -686,6 +684,33 @@ namespace ClassChung
                         MaHinh = i.MaHinh ?? string.Empty,
                         KichThuoc = i.KichThuoc ?? 0.0
                     };
+
+                    d_HinhDang hinhDang = db.d_HinhDangs.FirstOrDefault(h => h.IDHinhDang == i.IDHinhDang);
+                    a.TenHinhDang = hinhDang != null ? hinhDang.TenHinhDang : string.Empty;
+
+                    d_DangThuoc dangThuoc = db.d_DangThuocs.FirstOrDefault(d => d.IDDangThuoc == i.IDDangThuoc);
+                    a.TenDangThuoc = dangThuoc != null ? dangThuoc.TenDangThuoc : string.Empty;
+
+                    if (i.IDLoaiViThuoc.HasValue)
+                    {
+                        d_LoaiViThuoc loaiVi = db.d_LoaiViThuocs.FirstOrDefault(v => v.IDLoaiViThuoc == i.IDLoaiViThuoc);
+                        a.TenLoaiVi = loaiVi != null ? loaiVi.TenLoaiVi : string.Empty;
+                    }
+                    else
+                    {
+                        a.TenLoaiVi = string.Empty;
+                    }
+
+                    if (i.IDLoaiRanh.HasValue)
+                    {
+                        d_LoaiRanh loaiRanh = db.d_LoaiRanhs.FirstOrDefault(r => r.IDLoaiRanh == i.IDLoaiRanh);
+                        a.TenLoaiRanh = loaiRanh != null ? loaiRanh.TenLoaiRanh : string.Empty;
+                    }
+                    else
+                    {
+                        a.TenLoaiRanh = string.Empty;
+                    }
+
                     kq.Add(a);
                 }
                 return kq;
@@ -1007,6 +1032,22 @@ namespace ClassChung
                 {
                     return kq;
                 }
+            }
+            public string GetDrugImagesFolder()
+            {
+                string folder = Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                    "PillIdentifier", // Thay bằng tên app của bạn (giống form kia)
+                    "Images",
+                    "Drugs"
+                );
+
+                if (!Directory.Exists(folder))
+                {
+                    Directory.CreateDirectory(folder);
+                }
+
+                return folder;
             }
         }
         #endregion
@@ -2091,9 +2132,13 @@ namespace ClassChung
         public string KhacDauMatTruoc { get; set; }
         public string KhacDauMatSau { get; set; }
         public int IDHinhDang { get; set; }
+        public string TenHinhDang { get; set; }
         public int IDDangThuoc { get; set; }
+        public string TenDangThuoc { get; set; }
         public int IDLoaiViThuoc { get; set; }
+        public string TenLoaiVi { get; set; }
         public int IDLoaiRanh { get; set; }
+        public string TenLoaiRanh { get; set; }
         public string MaHinh { get; set; }
         public double KichThuoc { get; set; }
 

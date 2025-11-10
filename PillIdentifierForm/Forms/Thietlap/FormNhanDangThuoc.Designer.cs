@@ -66,6 +66,7 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.btnAddImage = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).BeginInit();
             this.panel2.SuspendLayout();
@@ -158,6 +159,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.btnAddImage);
             this.panel1.Controls.Add(this.textBoxKichThuoc);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label12);
@@ -302,7 +304,7 @@
             // 
             this.txtMaHinh.Location = new System.Drawing.Point(473, 171);
             this.txtMaHinh.Name = "txtMaHinh";
-            this.txtMaHinh.Size = new System.Drawing.Size(285, 22);
+            this.txtMaHinh.Size = new System.Drawing.Size(198, 22);
             this.txtMaHinh.TabIndex = 23;
             // 
             // label3
@@ -310,9 +312,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(470, 153);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 17);
+            this.label3.Size = new System.Drawing.Size(120, 17);
             this.label3.TabIndex = 22;
-            this.label3.Text = "Mã hình";
+            this.label3.Text = "Mã hình minh họa";
             // 
             // chkCoKhacDau
             // 
@@ -478,6 +480,16 @@
             this.dgvData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellClick);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
             // 
+            // btnAddImage
+            // 
+            this.btnAddImage.Location = new System.Drawing.Point(677, 171);
+            this.btnAddImage.Name = "btnAddImage";
+            this.btnAddImage.Size = new System.Drawing.Size(81, 24);
+            this.btnAddImage.TabIndex = 34;
+            this.btnAddImage.Text = "Chọn hình";
+            this.btnAddImage.UseVisualStyleBackColor = true;
+            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
+            // 
             // FormNhanDangThuoc
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -544,5 +556,6 @@
         private System.Windows.Forms.ComboBox comboBoxFilterHoatChat;
         private System.Windows.Forms.TextBox textBoxKichThuoc;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btnAddImage;
     }
 }
