@@ -26,3 +26,7 @@ C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdent
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.Form_HoatChatGoc_ChiDinh.resources
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.ImportHoatChatGoc_ChiDinh.resources
 C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.Forms.Tracuu.resources
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\bin\Debug\PillIdentifierForm.exe.manifest
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\bin\Debug\PillIdentifierForm.application
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.exe.manifest
+C:\Users\Admin\documents\visual studio 2013\Projects\PillIdentifierAPI\PillIdentifierForm\obj\Debug\PillIdentifierForm.application

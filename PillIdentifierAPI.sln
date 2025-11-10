@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PillIdentifierForm", "PillI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PillIdentifierAPI", "PillIdentifierAPI\PillIdentifierAPI.csproj", "{1E0F6CEB-D344-42EC-80AE-B3387CF41942}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PillIdentifierMVC", "PillIdentifierMVC\PillIdentifierMVC.csproj", "{7A16E2C7-67F9-4584-8002-CE6BB465267B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{1E0F6CEB-D344-42EC-80AE-B3387CF41942}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1E0F6CEB-D344-42EC-80AE-B3387CF41942}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1E0F6CEB-D344-42EC-80AE-B3387CF41942}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A16E2C7-67F9-4584-8002-CE6BB465267B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A16E2C7-67F9-4584-8002-CE6BB465267B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A16E2C7-67F9-4584-8002-CE6BB465267B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A16E2C7-67F9-4584-8002-CE6BB465267B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
