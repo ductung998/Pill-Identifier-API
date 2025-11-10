@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Giaodienchinh));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.danhMụcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.danhMụcChỉĐịnhToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -214,6 +215,7 @@
             this.ClientSize = new System.Drawing.Size(1032, 553);
             this.Controls.Add(this.panelContainer);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Giaodienchinh";
             this.Text = "Phần mềm tra cứu dạng thuốc viên";
