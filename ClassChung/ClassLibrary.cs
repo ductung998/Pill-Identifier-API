@@ -20,9 +20,12 @@ namespace ClassChung
                 {
                     //Tạo object và gán giá trị nhập
                     d_ChiDinh cd = item.toChiDinhDB();
+
                     //Insert vào DB và submits
-                    db.d_ChiDinhs.InsertOnSubmit(cd);
+                    db.d_ChiDinhs.InsertOnSubmit(cd); // <=> "INSERT INTO  VALUE"
+
                     db.SubmitChanges();
+
                     return true;
                 }
                 catch (Exception)
@@ -156,6 +159,7 @@ namespace ClassChung
                 {
                     d_Thuoc dbRecord = new d_Thuoc
                     {
+                        TenThuoc = item.TenThuoc,
                         SDK = item.SDK,
                         IDHoatChat = item.IDHoatChat,
                         HamLuong = item.HamLuong,
@@ -540,10 +544,13 @@ namespace ClassChung
             public List<ChiDinh> GetDSChiDinh()
             {
                 List<ChiDinh> kq = new List<ChiDinh>();
+
                 List<d_ChiDinh> ds = (from data in db.d_ChiDinhs
                                       select data).ToList();
+
                 foreach (d_ChiDinh i in ds)
                     kq.Add(ChiDinh.fromChiDinhDB(i));
+
                 return kq;
             }
             // Lấy toàn bộ Dạng Thuốc
@@ -1059,6 +1066,11 @@ namespace ClassChung
                 try
                 {
                     d_ChiDinh cd = db.d_ChiDinhs.SingleOrDefault(x => x.IDChiDinh == idChiDinh);
+
+                    //d_ChiDinh cd1 = (from data in db.d_ChiDinhs
+                    //                where data.IDChiDinh == idChiDinh
+                    //                select data).SingleOrDefault();
+
                     if (cd != null)
                     {
                         cd.TenChiDinh = chiDinh;
@@ -1066,6 +1078,7 @@ namespace ClassChung
                         db.SubmitChanges();
                         return true;
                     }
+
                     return false;
                 }
                 catch (Exception)

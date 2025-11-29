@@ -243,8 +243,6 @@
             // 
             // textBoxGhichu
             // 
-            this.textBoxGhichu.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxGhichu.Location = new System.Drawing.Point(12, 164);
             this.textBoxGhichu.Name = "textBoxGhichu";
             this.textBoxGhichu.Size = new System.Drawing.Size(455, 22);
@@ -261,6 +259,8 @@
             // 
             // textBoxNSX
             // 
+            this.textBoxNSX.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxNSX.Location = new System.Drawing.Point(740, 119);
             this.textBoxNSX.Name = "textBoxNSX";
             this.textBoxNSX.Size = new System.Drawing.Size(282, 22);
@@ -277,8 +277,6 @@
             // 
             // textBoxDBC
             // 
-            this.textBoxDBC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxDBC.Location = new System.Drawing.Point(473, 119);
             this.textBoxDBC.Name = "textBoxDBC";
             this.textBoxDBC.Size = new System.Drawing.Size(261, 22);

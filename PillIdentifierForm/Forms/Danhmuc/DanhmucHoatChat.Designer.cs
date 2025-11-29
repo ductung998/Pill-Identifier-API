@@ -160,6 +160,8 @@
             // 
             // comboBoxLoaiHC
             // 
+            this.comboBoxLoaiHC.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxLoaiHC.FormattingEnabled = true;
             this.comboBoxLoaiHC.Items.AddRange(new object[] {
             "Đơn chất",

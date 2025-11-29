@@ -64,5 +64,16 @@ namespace ClassChung.Properties {
                 return ((string)(this["PillIDConnectionString1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=103.140.249.152;Initial Catalog=PillID;Persist Security Info=True;Use" +
+            "r ID=PillUser")]
+        public string PillIDConnectionString2 {
+            get {
+                return ((string)(this["PillIDConnectionString2"]));
+            }
+        }
     }
 }

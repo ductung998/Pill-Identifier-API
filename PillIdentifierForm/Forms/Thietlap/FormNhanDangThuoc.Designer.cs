@@ -37,6 +37,7 @@
             this.buttonThem = new System.Windows.Forms.Button();
             this.buttonXoatrang = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnAddImage = new System.Windows.Forms.Button();
             this.textBoxKichThuoc = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -66,7 +67,6 @@
             this.buttonImport = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.btnAddImage = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewThuoc)).BeginInit();
             this.panel2.SuspendLayout();
@@ -193,6 +193,16 @@
             this.panel1.Size = new System.Drawing.Size(1034, 248);
             this.panel1.TabIndex = 13;
             // 
+            // btnAddImage
+            // 
+            this.btnAddImage.Location = new System.Drawing.Point(677, 171);
+            this.btnAddImage.Name = "btnAddImage";
+            this.btnAddImage.Size = new System.Drawing.Size(81, 24);
+            this.btnAddImage.TabIndex = 34;
+            this.btnAddImage.Text = "Chọn hình";
+            this.btnAddImage.UseVisualStyleBackColor = true;
+            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
+            // 
             // textBoxKichThuoc
             // 
             this.textBoxKichThuoc.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -294,6 +304,8 @@
             // 
             // cboHinhDang
             // 
+            this.cboHinhDang.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.cboHinhDang.FormattingEnabled = true;
             this.cboHinhDang.Location = new System.Drawing.Point(764, 170);
             this.cboHinhDang.Name = "cboHinhDang";
@@ -479,16 +491,6 @@
             this.dgvData.TabIndex = 16;
             this.dgvData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellClick);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
-            // 
-            // btnAddImage
-            // 
-            this.btnAddImage.Location = new System.Drawing.Point(677, 171);
-            this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(81, 24);
-            this.btnAddImage.TabIndex = 34;
-            this.btnAddImage.Text = "Chọn hình";
-            this.btnAddImage.UseVisualStyleBackColor = true;
-            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
             // 
             // FormNhanDangThuoc
             // 

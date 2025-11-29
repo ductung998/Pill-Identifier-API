@@ -7,14 +7,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="PillIdentifierForm.exe.manifest" size="4158">
+    <dependentAssembly dependencyType="install" codebase="PillIdentifierForm.exe.manifest" size="4630">
       <assemblyIdentity name="PillIdentifierForm.exe" version="1.0.0.3" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>chis8irfA2ZT6V1YvbbI6mzB8wYqhri5dTwDfxwXeX0=</dsig:DigestValue>
+        <dsig:DigestValue>QWVVPsGADoIGks/6b/t1bRtbORIDvhZNDtKh8e3farU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

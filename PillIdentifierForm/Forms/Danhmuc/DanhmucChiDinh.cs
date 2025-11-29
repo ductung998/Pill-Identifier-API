@@ -15,11 +15,13 @@ namespace PillIdentifierForm.Forms
     public partial class DanhmucChiDinh : Form
     {
         BindingSource grid1 = new BindingSource();
+
         KetnoiDB.GetData getdata = new KetnoiDB.GetData();
         KetnoiDB.InsertData insertdata = new KetnoiDB.InsertData();
         KetnoiDB.UpdateData updatedata = new KetnoiDB.UpdateData();
         KetnoiDB.DeleteData deletedata = new KetnoiDB.DeleteData();
         KetnoiDB.BulkInsertData bulkInsert = new KetnoiDB.BulkInsertData();
+
         public DanhmucChiDinh()
         {
             InitializeComponent();
