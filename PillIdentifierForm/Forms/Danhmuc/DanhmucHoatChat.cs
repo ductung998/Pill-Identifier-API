@@ -260,6 +260,7 @@ namespace PillIdentifierForm.Forms
         {
             textBoxIDHoatChat.Clear();
             textBoxHoatChat.Clear();
+            comboBoxLoaiHC.SelectedIndex = -1;
             textBoxHoatChat.Focus();
         }
         private void ImportFromCSV(string filePath, List<HoatChat> listHoatChat)

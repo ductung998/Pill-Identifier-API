@@ -239,7 +239,7 @@ namespace PillIdentifierForm.Forms
 
         private void LoadHoatChatGoc()
         {
-            _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChat).ToList();
+            _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChatGoc).ToList();
         }
 
         private void LoadChiDinh()
@@ -250,7 +250,7 @@ namespace PillIdentifierForm.Forms
         private string GetTenHoatChat(int id)
         {
             HoatChatGoc hc = _listHoatChatGoc.FirstOrDefault(h => h.IDHoatChatGoc == id);
-            return hc != null ? hc.TenHoatChat : "(Không tìm thấy ID: " + id.ToString() + ")";
+            return hc != null ? hc.TenHoatChatGoc : "(Không tìm thấy ID: " + id.ToString() + ")";
         }
 
         private string GetTenChiDinh(int id)

@@ -118,7 +118,7 @@ namespace PillIdentifierForm.Forms
 
         private void LoadHoatChatGoc()
         {
-            _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChat).ToList();
+            _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChatGoc).ToList();
             comboBoxHCG.DataSource = _listHoatChatGoc;
             comboBoxHCG.DisplayMember = "TenHoatChatGoc";
             comboBoxHCG.ValueMember = "IDHoatChatGoc";
@@ -221,7 +221,7 @@ namespace PillIdentifierForm.Forms
         private string GetTenHoatChatGoc(int id)
         {
             HoatChatGoc hc = _listHoatChatGoc.FirstOrDefault(h => h.IDHoatChatGoc == id);
-            return hc != null ? hc.TenHoatChat : "";
+            return hc != null ? hc.TenHoatChatGoc : "";
         }
 
         private string GetTenChiDinh(int id)

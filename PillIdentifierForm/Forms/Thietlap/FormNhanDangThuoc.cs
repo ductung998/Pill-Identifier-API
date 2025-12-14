@@ -581,7 +581,7 @@ namespace PillIdentifierForm.Forms
                     if (existing != null)
                     {
                         // Load existing NhanDang data
-                        textBoxIDNhandang.Text = existing.IDNhanDang.ToString();
+                        textBoxIDNhandang.Text = getdata.GetNhanDangByThuoc(idThuoc).IDNhanDang.ToString();
                         chkCoKhacDau.Checked = existing.CoKhacDau;
                         txtKhacDauMatTruoc.Text = existing.KhacDauMatTruoc;
                         txtKhacDauMatSau.Text = existing.KhacDauMatSau;

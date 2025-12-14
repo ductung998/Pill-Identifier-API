@@ -230,7 +230,7 @@ namespace PillIdentifierForm.Forms
         }
         private Panel CreateResultCard(Thuoc thuoc)
         {
-            NhanDangThuoc nhandang = getdata.GetNhanDangByThuoc(thuoc);
+            NhanDangThuoc nhandang = getdata.GetNhanDangByThuoc(thuoc.IDThuoc);
             // Card Panel: 250x320 pixels
             Panel card = new Panel();
             card.Width = 250;
@@ -373,7 +373,7 @@ namespace PillIdentifierForm.Forms
 
         private void ShowDrugDetails(Thuoc thuoc)
         {
-            NhanDangThuoc nhandang = getdata.GetNhanDangByThuoc(thuoc);
+            NhanDangThuoc nhandang = getdata.GetNhanDangByThuoc(thuoc.IDThuoc);
             // Open detail form or show comprehensive info
 
             string imagePath = Path.Combine(getdata.GetDrugImagesFolder(), nhandang.MaHinh);

@@ -49,7 +49,7 @@ namespace PillIdentifierForm.Forms
 
                 // Populate textboxes with selected row data
                 textBoxIDLoaiViThuoc.Text = row.Cells["IDLoaiViThuoc"].Value.ToString();
-                textBoxLoaiViThuoc.Text = row.Cells["TenLoaiViThuoc"].Value.ToString();
+                textBoxLoaiViThuoc.Text = row.Cells["TenLoaiVi"].Value.ToString();
 
                 // Enable buttons after selection
                 buttonXoa.Enabled = true;

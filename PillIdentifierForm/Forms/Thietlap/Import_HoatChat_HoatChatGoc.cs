@@ -244,7 +244,7 @@ namespace PillIdentifierForm.Forms
 
         private void LoadHoatChatGoc()
         {
-            _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChat).ToList();
+            _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChatGoc).ToList();
         }
 
         private string GetTenHoatChat(int id)
@@ -256,7 +256,7 @@ namespace PillIdentifierForm.Forms
         private string GetTenHoatChatGoc(int id)
         {
             HoatChatGoc hcg = _listHoatChatGoc.FirstOrDefault(g => g.IDHoatChatGoc == id);
-            return hcg != null ? hcg.TenHoatChat : "(Không tìm thấy ID: " + id.ToString() + ")";
+            return hcg != null ? hcg.TenHoatChatGoc : "(Không tìm thấy ID: " + id.ToString() + ")";
         }
 
         private void buttonGetTong_Click(object sender, EventArgs e)

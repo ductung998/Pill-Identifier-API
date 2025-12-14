@@ -18,6 +18,13 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_ChiDinhs
+                                    .Any(x => x.TenChiDinh.ToLower() == item.TenChiDinh.ToLower());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
+
                     //Tạo object và gán giá trị nhập
                     d_ChiDinh cd = item.toChiDinhDB();
 
@@ -37,6 +44,13 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_DangThuocs
+                                    .Any(x => x.TenDangThuoc.ToLower() == item.TenDangThuoc.ToLower());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
+
                     d_DangThuoc dt = item.toDangThuocDB();
 
                     db.d_DangThuocs.InsertOnSubmit(dt);
@@ -67,6 +81,12 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_HinhDangs.Any(x => x.TenHinhDang.ToLower() == item.TenHinhDang.ToLower());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
+
                     d_HinhDang hd = item.toHinhDangDB();
 
                     db.d_HinhDangs.InsertOnSubmit(hd);
@@ -82,6 +102,12 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_HoatChats.Any(x => x.TenHoatChat.ToLower() == item.TenHoatChat.ToLower());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
+
                     d_HoatChat hc = item.toHoatChatDB();
 
                     db.d_HoatChats.InsertOnSubmit(hc);
@@ -97,6 +123,12 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_HoatChatGocs.Any(x => x.TenHoatChat.ToLower() == item.TenHoatChatGoc.ToLower());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
+
                     d_HoatChatGoc hcg = item.toHoatChatGocDB();
 
                     db.d_HoatChatGocs.InsertOnSubmit(hcg);
@@ -112,6 +144,12 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_LoaiRanhs.Any(x => x.TenLoaiRanh.ToLower() == item.TenLoaiRanh.ToLower());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
+
                     d_LoaiRanh lr = item.toLoaiRanhDB();
 
                     db.d_LoaiRanhs.InsertOnSubmit(lr);
@@ -127,6 +165,11 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_LoaiViThuocs.Any(x => x.TenLoaiVi.ToLower() == item.TenLoaiVi.ToLower());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
                     d_LoaiViThuoc lvt = item.toLoaiViThuocDB();
 
                     db.d_LoaiViThuocs.InsertOnSubmit(lvt);
@@ -142,6 +185,12 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_MauSacs.Any(x => x.TenMauSac.ToLower() == item.TenMauSac.ToLower());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
+
                     d_MauSac ms = item.toMauSacDB();
 
                     db.d_MauSacs.InsertOnSubmit(ms);
@@ -157,6 +206,12 @@ namespace ClassChung
             {
                 try
                 {
+                    // kiểm tra tồn tại
+                    bool exists = db.d_Thuocs.Any(x => x.SDK.Trim() == item.SDK.Trim());
+
+                    if (exists)
+                        return false; // đã tồn tại → không insert
+
                     d_Thuoc dbRecord = new d_Thuoc
                     {
                         TenThuoc = item.TenThuoc,
@@ -248,11 +303,29 @@ namespace ClassChung
                 try
                 {
                     List<d_ChiDinh> dsimport = new List<d_ChiDinh>();
+
                     foreach (ChiDinh i in listChiDinh)
                     {
                         d_ChiDinh a = i.toChiDinhDB();
                         dsimport.Add(a);
                     }
+
+                    // 2. Lấy dữ liệu hiện có trong DB
+                    List<d_ChiDinh> dshienco = db.d_ChiDinhs.ToList();
+
+                    // 3. Tạo HashSet để check trùng nhanh (O(1))
+                    HashSet<string> tapHienCo = new HashSet<string>(
+                        dshienco.Select(x => x.TenChiDinh.Trim().ToLower())
+                    );
+
+                    // 4. Remove những phần tử bị trùng
+                    dsimport = dsimport
+                        .Where(x => !tapHienCo.Contains(x.TenChiDinh.Trim().ToLower()))
+                        .ToList();
+
+                    if (dsimport.Count == 0)
+                        return false; // không có gì để insert
+
                     db.d_ChiDinhs.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
@@ -274,6 +347,23 @@ namespace ClassChung
 
                         dsimport.Add(a);
                     }
+
+                    // 2. Lấy dữ liệu hiện có trong DB
+                    List<d_DangThuoc> dshienco = db.d_DangThuocs.ToList();
+
+                    // 3. Tạo HashSet để check trùng nhanh (O(1))
+                    HashSet<string> tapHienCo = new HashSet<string>(
+                        dshienco.Select(x => x.TenDangThuoc.Trim().ToLower())
+                    );
+
+                    // 4. Remove những phần tử bị trùng
+                    dsimport = dsimport
+                        .Where(x => !tapHienCo.Contains(x.TenDangThuoc.Trim().ToLower()))
+                        .ToList();
+
+                    if (dsimport.Count == 0)
+                        return false; // không có gì để insert
+
                     db.d_DangThuocs.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
@@ -313,9 +403,25 @@ namespace ClassChung
                     foreach (HinhDang i in listHinhDang)
                     {
                         d_HinhDang a = i.toHinhDangDB();
-
                         dsimport.Add(a);
                     }
+
+                    // 2. Lấy dữ liệu hiện có trong DB
+                    List<d_HinhDang> dshienco = db.d_HinhDangs.ToList();
+
+                    // 3. Tạo HashSet để check trùng nhanh (O(1))
+                    HashSet<string> tapHienCo = new HashSet<string>(
+                        dshienco.Select(x => x.TenHinhDang.Trim().ToLower())
+                    );
+
+                    // 4. Remove những phần tử bị trùng
+                    dsimport = dsimport
+                        .Where(x => !tapHienCo.Contains(x.TenHinhDang.Trim().ToLower()))
+                        .ToList();
+
+                    if (dsimport.Count == 0)
+                        return false; // không có gì để insert
+
                     db.d_HinhDangs.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
@@ -334,9 +440,25 @@ namespace ClassChung
                     foreach (HoatChat i in listHoatChat)
                     {
                         d_HoatChat a = i.toHoatChatDB();
-
                         dsimport.Add(a);
                     }
+
+                    // 2. Lấy dữ liệu hiện có trong DB
+                    List<d_HoatChat> dshienco = db.d_HoatChats.ToList();
+
+                    // 3. Tạo HashSet để check trùng nhanh (O(1))
+                    HashSet<string> tapHienCo = new HashSet<string>(
+                        dshienco.Select(x => x.TenHoatChat.Trim().ToLower())
+                    );
+
+                    // 4. Remove những phần tử bị trùng
+                    dsimport = dsimport
+                        .Where(x => !tapHienCo.Contains(x.TenHoatChat.Trim().ToLower()))
+                        .ToList();
+
+                    if (dsimport.Count == 0)
+                        return false; // không có gì để insert
+
                     db.d_HoatChats.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
@@ -355,9 +477,25 @@ namespace ClassChung
                     foreach (HoatChatGoc i in listHoatChatGoc)
                     {
                         d_HoatChatGoc a = i.toHoatChatGocDB();
-
                         dsimport.Add(a);
                     }
+
+                    // 2. Lấy dữ liệu hiện có trong DB
+                    List<d_HoatChatGoc> dshienco = db.d_HoatChatGocs.ToList();
+
+                    // 3. Tạo HashSet để check trùng nhanh (O(1))
+                    HashSet<string> tapHienCo = new HashSet<string>(
+                        dshienco.Select(x => x.TenHoatChat.Trim().ToLower())
+                    );
+
+                    // 4. Remove những phần tử bị trùng
+                    dsimport = dsimport
+                        .Where(x => !tapHienCo.Contains(x.TenHoatChat.Trim().ToLower()))
+                        .ToList();
+
+                    if (dsimport.Count == 0)
+                        return false; // không có gì để insert*/
+
                     db.d_HoatChatGocs.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
@@ -376,9 +514,25 @@ namespace ClassChung
                     foreach (LoaiRanh i in listLoaiRanh)
                     {
                         d_LoaiRanh a = i.toLoaiRanhDB();
-
                         dsimport.Add(a);
                     }
+
+                    // 2. Lấy dữ liệu hiện có trong DB
+                    List<d_LoaiRanh> dshienco = db.d_LoaiRanhs.ToList();
+
+                    // 3. Tạo HashSet để check trùng nhanh (O(1))
+                    HashSet<string> tapHienCo = new HashSet<string>(
+                        dshienco.Select(x => x.TenLoaiRanh.Trim().ToLower())
+                    );
+
+                    // 4. Remove những phần tử bị trùng
+                    dsimport = dsimport
+                        .Where(x => !tapHienCo.Contains(x.TenLoaiRanh.Trim().ToLower()))
+                        .ToList();
+
+                    if (dsimport.Count == 0)
+                        return false; // không có gì để insert
+
                     db.d_LoaiRanhs.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
@@ -397,9 +551,25 @@ namespace ClassChung
                     foreach (LoaiViThuoc i in listLoaiViThuoc)
                     {
                         d_LoaiViThuoc a = i.toLoaiViThuocDB();
-
                         dsimport.Add(a);
                     }
+
+                    // 2. Lấy dữ liệu hiện có trong DB
+                    List<d_LoaiViThuoc> dshienco = db.d_LoaiViThuocs.ToList();
+
+                    // 3. Tạo HashSet để check trùng nhanh (O(1))
+                    HashSet<string> tapHienCo = new HashSet<string>(
+                        dshienco.Select(x => x.TenLoaiVi.Trim().ToLower())
+                    );
+
+                    // 4. Remove những phần tử bị trùng
+                    dsimport = dsimport
+                        .Where(x => !tapHienCo.Contains(x.TenLoaiVi.Trim().ToLower()))
+                        .ToList();
+
+                    if (dsimport.Count == 0)
+                        return false; // không có gì để insert
+
                     db.d_LoaiViThuocs.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
@@ -420,6 +590,23 @@ namespace ClassChung
                         d_MauSac a = i.toMauSacDB();
                         dsimport.Add(a);
                     }
+
+                    // 2. Lấy dữ liệu hiện có trong DB
+                    List<d_MauSac> dshienco = db.d_MauSacs.ToList();
+
+                    // 3. Tạo HashSet để check trùng nhanh (O(1))
+                    HashSet<string> tapHienCo = new HashSet<string>(
+                        dshienco.Select(x => x.TenMauSac.Trim().ToLower())
+                    );
+
+                    // 4. Remove những phần tử bị trùng
+                    dsimport = dsimport
+                        .Where(x => !tapHienCo.Contains(x.TenMauSac.Trim().ToLower()))
+                        .ToList();
+
+                    if (dsimport.Count == 0)
+                        return false; // không có gì để insert
+
                     db.d_MauSacs.InsertAllOnSubmit(dsimport);
                     db.SubmitChanges();
                     return true;
@@ -655,6 +842,7 @@ namespace ClassChung
 
                 foreach (d_Thuoc i in ds)
                     kq.Add(Thuoc.fromThuocDB(i));
+
                 return kq;
             }
             public List<Thuoc_MauSac> GetDSThuoc_MauSac()
@@ -1022,13 +1210,13 @@ namespace ClassChung
                     return kq;
                 }
             }
-            public NhanDangThuoc GetNhanDangByThuoc(Thuoc item)
+            public NhanDangThuoc GetNhanDangByThuoc(int IDThuoc)
             {
                 NhanDangThuoc kq = new NhanDangThuoc();
                 try
                 {
                     w_NhanDangThuoc search = (from data in db.w_NhanDangThuocs
-                                              where data.IDThuoc == item.IDThuoc
+                                              where data.IDThuoc == IDThuoc
                                               select data).FirstOrDefault();
 
                     kq = NhanDangThuoc.fromNhanDangThuocDB(search);
@@ -1877,7 +2065,7 @@ namespace ClassChung
     public class HoatChatGoc
     {
         public int IDHoatChatGoc { get; set; }
-        public string TenHoatChat { get; set; }
+        public string TenHoatChatGoc { get; set; }
         public string GhiChu { get; set; }
         public List<ChiDinh> dsCD { get; set; }
         public HoatChatGoc()
@@ -1891,8 +2079,11 @@ namespace ClassChung
             HoatChatGoc kq = new HoatChatGoc
             {
                 IDHoatChatGoc = item.IDHoatChatGoc,
-                TenHoatChat = item.TenHoatChat
+                TenHoatChatGoc = item.TenHoatChat,
+                GhiChu = item.GhiChu
             };
+            if (kq.GhiChu == null)
+                kq.GhiChu = "";
             return kq;
         }
         public d_HoatChatGoc toHoatChatGocDB()
@@ -1900,7 +2091,8 @@ namespace ClassChung
             d_HoatChatGoc kq = new d_HoatChatGoc
             {
                 IDHoatChatGoc = this.IDHoatChatGoc,
-                TenHoatChat = this.TenHoatChat
+                TenHoatChat = this.TenHoatChatGoc,
+                GhiChu = this.GhiChu
             };
             return kq;
         }

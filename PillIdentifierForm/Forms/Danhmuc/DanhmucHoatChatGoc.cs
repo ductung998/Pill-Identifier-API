@@ -50,7 +50,7 @@ namespace PillIdentifierForm.Forms
                 // Populate textboxes with selected row data
                 textBoxIDHoatChatGoc.Text = row.Cells["IDHoatChatGoc"].Value.ToString();
                 textBoxHoatChatGoc.Text = row.Cells["TenHoatChatGoc"].Value.ToString();
-                textBoxMoTa.Text = row.Cells["MoTa"].Value.ToString();
+                textBoxMoTa.Text = row.Cells["GhiChu"].Value.ToString();
 
                 // Enable buttons after selection
                 buttonXoa.Enabled = true;
@@ -73,7 +73,7 @@ namespace PillIdentifierForm.Forms
 
                 HoatChatGoc them = new HoatChatGoc
                 {
-                    TenHoatChat = textBoxHoatChatGoc.Text.Trim(),
+                    TenHoatChatGoc = textBoxHoatChatGoc.Text.Trim(),
                     GhiChu = textBoxMoTa.Text.Trim()
                 };
 
@@ -287,7 +287,7 @@ namespace PillIdentifierForm.Forms
                     if (values.Length >= 1 && !string.IsNullOrWhiteSpace(values[0]))
                     {
                         HoatChatGoc cd = new HoatChatGoc();
-                        cd.TenHoatChat = values[0].Trim().Trim('"');
+                        cd.TenHoatChatGoc = values[0].Trim().Trim('"');
                         cd.GhiChu = values.Length > 1 ? values[1].Trim().Trim('"') : "";
                         listHoatChatGoc.Add(cd);
                     }

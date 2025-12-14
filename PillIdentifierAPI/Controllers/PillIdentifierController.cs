@@ -575,11 +575,11 @@ namespace PillIdentifierAPI.Controllers
         {
             try
             {
-                if (hcg == null || hcg.IDHoatChatGoc <= 0 || string.IsNullOrWhiteSpace(hcg.TenHoatChat))
+                if (hcg == null || hcg.IDHoatChatGoc <= 0 || string.IsNullOrWhiteSpace(hcg.TenHoatChatGoc))
                     return Ok(new ApiResponse<bool> { Success = false, Message = "Thiếu dữ liệu đầu vào." });
 
                 var db = new KetnoiDB.UpdateData();
-                bool result = db.UpdateHoatChatGoc(hcg.IDHoatChatGoc, hcg.TenHoatChat, hcg.GhiChu);
+                bool result = db.UpdateHoatChatGoc(hcg.IDHoatChatGoc, hcg.TenHoatChatGoc, hcg.GhiChu);
 
                 return Ok(new ApiResponse<bool>
                 {
