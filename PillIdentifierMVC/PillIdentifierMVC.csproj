@@ -219,6 +219,12 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ClassChung\ClassChung.csproj">
+      <Project>{6d5a353e-3c5a-42f3-abd4-caf5006cdad6}</Project>
+      <Name>ClassChung</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
