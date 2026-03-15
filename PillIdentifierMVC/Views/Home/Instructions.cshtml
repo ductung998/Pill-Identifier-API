@@ -1,0 +1,85 @@
+@{
+    ViewBag.Title = "Hướng Dẫn Sử Dụng";
+}
+
+@Html.ActionLink("← Quay lại tìm kiếm", "Index", "Home", null, new { @class = "btn-back" })
+
+<div class="instructions-panel">
+    <p class="intro">
+        Phần mềm nhận dạng thuốc viên giúp bạn tra cứu thông tin thuốc dựa trên các đặc điểm bên ngoài của viên thuốc.
+        Điền vào các trường bạn biết — càng nhiều thông tin càng cho kết quả chính xác hơn.
+    </p>
+
+    <div class="instruction-item">
+        <div class="instruction-icon">1</div>
+        <div class="instruction-body">
+            <div class="field-name">Có khắc dấu trên viên thuốc không?</div>
+            <div class="field-desc">Chọn "Có" nếu viên thuốc có chữ, số hoặc ký hiệu được khắc hoặc in trên bề mặt. Chọn "Không" nếu bề mặt trơn. Chọn "Không rõ" nếu bạn không chắc chắn.</div>
+            <div class="field-tip">Khi chọn "Có", bạn có thể nhập nội dung khắc dấu ở mặt trước và mặt sau.</div>
+        </div>
+    </div>
+
+    <div class="instruction-item">
+        <div class="instruction-icon">2</div>
+        <div class="instruction-body">
+            <div class="field-name">Khắc dấu mặt trước / mặt sau</div>
+            <div class="field-desc">Nhập các chữ, số hoặc ký hiệu được in trên mỗi mặt của viên thuốc. Ví dụ: "500", "TYLENOL", "M 32".</div>
+            <div class="field-tip">Có thể nhập một phần ký hiệu — hệ thống sẽ tìm kiếm gần đúng.</div>
+        </div>
+    </div>
+
+    <div class="instruction-item">
+        <div class="instruction-icon">3</div>
+        <div class="instruction-body">
+            <div class="field-name">Hình dạng</div>
+            <div class="field-desc">Chọn hình dạng của viên thuốc. Có thể chọn nhiều hình dạng cùng lúc — hệ thống sẽ trả về kết quả khớp với bất kỳ hình dạng nào đã chọn.</div>
+            <div class="field-tip">Ví dụ: tròn, bầu dục, hình chữ nhật, hình tam giác...</div>
+        </div>
+    </div>
+
+    <div class="instruction-item">
+        <div class="instruction-icon">4</div>
+        <div class="instruction-body">
+            <div class="field-name">Màu sắc 1 và Màu sắc 2</div>
+            <div class="field-desc">Chọn màu chính của viên thuốc. Nếu viên thuốc có hai màu (ví dụ nửa trên một màu, nửa dưới màu khác), hãy chọn cả hai màu.</div>
+            <div class="field-tip">Bỏ trống nếu không rõ màu sắc.</div>
+        </div>
+    </div>
+
+    <div class="instruction-item">
+        <div class="instruction-icon">5</div>
+        <div class="instruction-body">
+            <div class="field-name">Loại rãnh</div>
+            <div class="field-desc">Rãnh là đường kẻ trên viên thuốc dùng để bẻ đôi. Chọn loại rãnh phù hợp (không có rãnh, một rãnh, rãnh chéo, v.v.).</div>
+            <div class="field-tip">Để trống nếu bạn không chú ý đến rãnh.</div>
+        </div>
+    </div>
+
+    <div class="instruction-item">
+        <div class="instruction-icon">6</div>
+        <div class="instruction-body">
+            <div class="field-name">Loại vỉ thuốc</div>
+            <div class="field-desc">Chọn loại vỉ (bao bì) mà thuốc được đóng gói trong đó. Ví dụ: vỉ nhôm, hộp nhựa, lọ, v.v.</div>
+            <div class="field-tip">Thông tin này có thể bỏ trống nếu bạn không có vỉ thuốc bên cạnh.</div>
+        </div>
+    </div>
+
+    <div class="instruction-item">
+        <div class="instruction-icon">7</div>
+        <div class="instruction-body">
+            <div class="field-name">Đường kính (cm)</div>
+            <div class="field-desc">Nhập đường kính lớn nhất của viên thuốc tính bằng centimét. Ví dụ: 1.2 (nghĩa là 12 mm).</div>
+            <div class="field-tip">Dùng thước để đo chính xác hơn. Bỏ trống nếu không đo được.</div>
+        </div>
+    </div>
+
+    <div class="instruction-item">
+        <div class="instruction-icon">8</div>
+        <div class="instruction-body">
+            <div class="field-name">Dạng thuốc</div>
+            <div class="field-desc">Chọn dạng bào chế của thuốc: viên nén, viên nang cứng, viên nang mềm, viên bao phim, v.v.</div>
+            <div class="field-tip">Bỏ trống nếu bạn không xác định được dạng bào chế.</div>
+        </div>
+    </div>
+
+</div>

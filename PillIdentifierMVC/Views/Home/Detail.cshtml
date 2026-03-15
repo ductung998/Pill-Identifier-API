@@ -1,0 +1,134 @@
+@model PillIdentifierMVC.Models.PillDetailModel
+@{
+    ViewBag.Title = Model.Thuoc != null ? Model.Thuoc.TenThuoc : "Chi Tiết Thuốc";
+    var firstImage = Model.Thuoc.HinhAnhChiTiet != null && Model.Thuoc.HinhAnhChiTiet.Count > 0
+        ? Model.Thuoc.HinhAnhChiTiet[0].DuongDanHinh : null;
+}
+
+@Html.ActionLink("← Quay lại", "Index", "Home", null, new { @class = "btn-back" })
+
+<div class="detail-panel">
+
+    <div class="detail-image-placeholder">
+        @if (!string.IsNullOrEmpty(firstImage))
+        {
+            <img src="@firstImage" alt="@Model.Thuoc.TenThuoc" style="width:100%;height:100%;object-fit:contain;" />
+        }
+        else
+        {
+            <span>Chưa có<br/>hình ảnh</span>
+        }
+    </div>
+
+    <div class="detail-drug-name">@Model.Thuoc.TenThuoc</div>
+
+    <div class="detail-section-title">Thông tin chung</div>
+
+    @if (!string.IsNullOrEmpty(Model.Thuoc.NhaSX))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Nhà sản xuất</div>
+            <div class="detail-value">@Model.Thuoc.NhaSX</div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.TenHoatChat))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Hoạt chất</div>
+            <div class="detail-value">@Model.TenHoatChat</div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Thuoc.HamLuong))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Hàm lượng</div>
+            <div class="detail-value">@Model.Thuoc.HamLuong</div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Thuoc.DangBaoChe))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Dạng bào chế</div>
+            <div class="detail-value">@Model.Thuoc.DangBaoChe</div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Thuoc.SDK))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Số đăng ký</div>
+            <div class="detail-value">@Model.Thuoc.SDK</div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.Thuoc.GhiChu))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Ghi chú</div>
+            <div class="detail-value" style="font-style:italic;color:#666;">@Model.Thuoc.GhiChu</div>
+        </div>
+    }
+
+    <div class="detail-section-title">Nhận dạng vật lý</div>
+
+    @if (Model.Mausac != null && Model.Mausac.Count > 0)
+    {
+        <div class="detail-row">
+            <div class="detail-label">Màu sắc</div>
+            <div class="detail-value">
+                @foreach (var ms in Model.Mausac)
+                {
+                    <span class="color-tag">@ms.TenMauSac</span>
+                }
+            </div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.TenHinhDang))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Hình dạng</div>
+            <div class="detail-value">@Model.TenHinhDang</div>
+        </div>
+    }
+    @if (Model.NhanDang != null && Model.NhanDang.KichThuoc > 0)
+    {
+        <div class="detail-row">
+            <div class="detail-label">Đường kính</div>
+            <div class="detail-value">@Model.NhanDang.KichThuoc cm</div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.TenLoaiRanh))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Loại rãnh</div>
+            <div class="detail-value">@Model.TenLoaiRanh</div>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(Model.TenLoaiVi))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Loại vỉ thuốc</div>
+            <div class="detail-value">@Model.TenLoaiVi</div>
+        </div>
+    }
+    @if (Model.NhanDang != null && !string.IsNullOrEmpty(Model.NhanDang.KhacDauMatTruoc))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Khắc dấu mặt trước</div>
+            <div class="detail-value">@Model.NhanDang.KhacDauMatTruoc</div>
+        </div>
+    }
+    @if (Model.NhanDang != null && !string.IsNullOrEmpty(Model.NhanDang.KhacDauMatSau))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Khắc dấu mặt sau</div>
+            <div class="detail-value">@Model.NhanDang.KhacDauMatSau</div>
+        </div>
+    }
+    @if (Model.NhanDang != null && !string.IsNullOrEmpty(Model.NhanDang.MaHinh))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Mã hình</div>
+            <div class="detail-value">@Model.NhanDang.MaHinh</div>
+        </div>
+    }
+
+</div>

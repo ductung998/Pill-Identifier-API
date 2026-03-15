@@ -1,42 +1,555 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+/* =========================================================
+   PHẦN MỀM NHẬN DẠNG THUỐC VIÊN — Global Styles
+   ========================================================= */
+
+body {
+    padding-top: 0;
+    padding-bottom: 40px;
+    background-color: #eef2f7;
+    font-family: 'Be Vietnam Pro', Arial, sans-serif;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+/* Remove the max-width constraint on form inputs from the original template */
+input, select, textarea {
+    max-width: 100%;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+/* =========================================================
+   Page Header
+   ========================================================= */
+.page-header-bar {
+    background-color: #ffffff;
+    border-bottom: 2px solid #d0daea;
+    padding: 18px 0 14px;
+    margin-bottom: 28px;
 }
 
-/* styles for validation helpers */
-.field-validation-error {
-    color: #b94a48;
+.page-header-bar h1 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1a3a5c;
+    letter-spacing: 1px;
+    margin: 0;
+    text-transform: uppercase;
 }
 
-.field-validation-valid {
+.page-header-bar .btn-search {
+    background-color: transparent;
+    color: #1a5fa8;
+    border: 1.5px solid #1a5fa8;
+    padding: 7px 20px;
+    font-size: 12px;
+    box-shadow: none;
+    margin-left: 0;
+}
+
+.page-header-bar .btn-search:hover {
+    background-color: #1a5fa8;
+    color: #fff;
+    box-shadow: none;
+}
+
+/* =========================================================
+   Search Form Panel
+   ========================================================= */
+.search-panel {
+    background: #ffffff;
+    border: 1px solid #d0daea;
+    border-radius: 6px;
+    padding: 24px 28px 20px;
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    font-weight: bold;
+    color: #1a3a5c;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    border-radius: 4px;
+    border: 1px solid #bcc8d8;
+    color: #333;
+}
+
+.form-control:focus {
+    border-color: #1a5fa8;
+    box-shadow: 0 0 0 2px rgba(26, 95, 168, 0.15);
+}
+
+/* Inline clear (XÓA) button inside text inputs */
+.input-with-clear {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-clear input {
+    flex: 1;
+    padding-right: 60px;
+}
+
+.input-with-clear .btn-clear-inline {
+    position: absolute;
+    right: 0;
+    background: #1a5fa8;
+    color: #fff;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    padding: 6px 12px;
+    font-size: 12px;
+    height: 34px;
+    cursor: pointer;
+}
+
+.input-with-clear .btn-clear-inline:hover {
+    background: #154d8a;
+}
+
+/* Imprint radio toggle */
+.imprint-radio-group label {
+    font-weight: normal;
+    margin-right: 16px;
+    cursor: pointer;
+}
+
+.imprint-radio-group input[type=radio] {
+    margin-right: 4px;
+}
+
+/* =========================================================
+   Custom Multi-Select Dropdown (Shapes, Colors, etc.)
+   ========================================================= */
+.custom-dropdown {
+    position: relative;
+}
+
+.custom-dropdown .dropdown-toggle-btn {
+    width: 100%;
+    text-align: left;
+    background: #fff;
+    border: 1px solid #bcc8d8;
+    border-radius: 4px;
+    padding: 6px 10px;
+    color: #333;
+    cursor: pointer;
+    height: 34px;
+    line-height: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-dropdown .dropdown-toggle-btn:after {
+    content: ' ▾';
+    float: right;
+    color: #666;
+}
+
+.custom-dropdown .dropdown-toggle-btn.open {
+    border-color: #1a5fa8;
+    box-shadow: 0 0 0 2px rgba(26, 95, 168, 0.15);
+}
+
+.custom-dropdown .dropdown-menu-custom {
     display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #bcc8d8;
+    border-radius: 0 0 4px 4px;
+    z-index: 1000;
+    max-height: 260px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
-input.input-validation-error {
-    border: 1px solid #b94a48;
+.custom-dropdown .dropdown-menu-custom.open {
+    display: block;
 }
 
-input[type="checkbox"].input-validation-error {
-    border: 0 none;
+/* 2-column grid inside dropdowns */
+.custom-dropdown .dropdown-items-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 4px 0;
 }
 
-.validation-summary-errors {
-    color: #b94a48;
+.custom-dropdown .dropdown-item-label {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: normal;
+    color: #333;
+    margin: 0;
+    transition: background 0.1s;
+    font-size: 13px;
 }
 
-.validation-summary-valid {
-    display: none;
+.custom-dropdown .dropdown-item-label:hover {
+    background: #f0f4f8;
 }
+
+.custom-dropdown .dropdown-item-label input[type=checkbox],
+.custom-dropdown .dropdown-item-label input[type=radio] {
+    margin-right: 8px;
+    flex-shrink: 0;
+}
+
+/* Color swatch circle */
+.color-swatch {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    margin-right: 8px;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+/* =========================================================
+   Search / Reset Buttons
+   ========================================================= */
+.search-actions {
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #e8eef5;
+}
+
+.btn-search {
+    background-color: #1a5fa8;
+    color: #fff;
+    border: none;
+    padding: 9px 32px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+    box-shadow: 0 2px 6px rgba(26,95,168,0.18);
+}
+
+.btn-search:hover {
+    background-color: #154d8a;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(26,95,168,0.28);
+}
+
+.btn-reset {
+    background-color: #fff;
+    color: #dc3545;
+    border: 1.5px solid #dc3545;
+    padding: 9px 32px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-left: 8px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.btn-reset:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+/* =========================================================
+   Results Page
+   ========================================================= */
+.results-info {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 16px;
+}
+
+.result-card {
+    background: #ffffff;
+    border: 1px solid #d0daea;
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+/* Col 1 — image */
+.result-card-image {
+    width: 100px;
+    min-width: 100px;
+    height: 100px;
+    background: #e8eef5;
+    border: 1px solid #d0daea;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9aabbf;
+    font-size: 28px;
+    overflow: hidden;
+}
+
+.result-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Col 2 — drug info */
+.result-col-drug {
+    flex: 1.2;
+    min-width: 0;
+}
+
+/* Col 3 — physical info */
+.result-col-physical {
+    flex: 1.2;
+    min-width: 0;
+}
+
+/* Col 4 — notes + action */
+.result-col-action {
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.drug-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a5fa8;
+    margin-bottom: 6px;
+}
+
+.meta-row {
+    font-size: 13px;
+    color: #444;
+    margin-bottom: 3px;
+}
+
+.meta-label {
+    font-weight: 600;
+    color: #333;
+}
+
+.btn-detail {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.btn-detail:hover {
+    background-color: #b02a37;
+    color: #fff;
+    text-decoration: none;
+}
+
+.img-placeholder-icon {
+    font-size: 32px;
+    color: #b0bec5;
+}
+
+.color-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: 6px;
+    font-size: 13px;
+}
+
+/* =========================================================
+   Detail Page
+   ========================================================= */
+.detail-panel {
+    background: #ffffff;
+    border: 1px solid #d0daea;
+    border-radius: 6px;
+    padding: 28px;
+    margin-bottom: 24px;
+}
+
+.detail-drug-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #1a3a5c;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #eef2f7;
+}
+
+.detail-image-placeholder {
+    width: 180px;
+    height: 180px;
+    background: #e8eef5;
+    border: 1px solid #d0daea;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9aabbf;
+    font-size: 13px;
+    text-align: center;
+    float: right;
+    margin: 0 0 16px 24px;
+}
+
+.detail-section-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #1a5fa8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 20px 0 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #d0daea;
+}
+
+.detail-row {
+    display: flex;
+    padding: 5px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #f0f4f8;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+}
+
+.detail-label {
+    font-weight: bold;
+    color: #1a3a5c;
+    min-width: 200px;
+    flex-shrink: 0;
+}
+
+.detail-value {
+    color: #333;
+}
+
+.btn-back {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 16px;
+}
+
+.btn-back:hover {
+    background-color: #545b62;
+    color: #fff;
+    text-decoration: none;
+}
+
+/* =========================================================
+   Instructions Page
+   ========================================================= */
+.instructions-panel {
+    background: #ffffff;
+    border: 1px solid #d0daea;
+    border-radius: 6px;
+    padding: 28px;
+    margin-bottom: 24px;
+}
+
+.instructions-panel .intro {
+    color: #555;
+    font-size: 15px;
+    margin-bottom: 24px;
+}
+
+.instruction-item {
+    display: flex;
+    gap: 16px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eef2f7;
+}
+
+.instruction-item:last-child {
+    border-bottom: none;
+}
+
+.instruction-icon {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    background: #1a5fa8;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.instruction-body .field-name {
+    font-size: 15px;
+    font-weight: bold;
+    color: #1a3a5c;
+    margin-bottom: 4px;
+}
+
+.instruction-body .field-desc {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.instruction-body .field-tip {
+    font-size: 13px;
+    color: #1a5fa8;
+    font-style: italic;
+}
+
+/* =========================================================
+   Utility
+   ========================================================= */
+.text-muted-sm {
+    color: #999;
+    font-size: 12px;
+    font-style: italic;
+}
+
+.no-results {
+    text-align: center;
+    padding: 48px 0;
+    color: #888;
+}
+
+.no-results .no-results-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+    color: #ccd6e0;
+}
+
+/* Validation helpers (kept from original) */
+.field-validation-error { color: #b94a48; }
+.field-validation-valid { display: none; }
+input.input-validation-error { border: 1px solid #b94a48; }
+input[type="checkbox"].input-validation-error { border: 0 none; }
+.validation-summary-errors { color: #b94a48; }
+.validation-summary-valid { display: none; }

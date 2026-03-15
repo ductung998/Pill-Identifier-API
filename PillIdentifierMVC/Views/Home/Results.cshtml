@@ -1,0 +1,104 @@
+@model PillIdentifierMVC.Models.PillSearchPageModel
+@using System.Linq
+@{
+    ViewBag.Title = "Kết Quả Tìm Kiếm";
+}
+
+<div style="margin-bottom:16px;">
+    @Html.ActionLink("← Tìm kiếm lại", "Index", "Home", null, new { @class = "btn-back" })
+</div>
+
+@if (Model.Results == null || Model.Results.Count == 0)
+{
+    <div class="no-results">
+        <div class="no-results-icon">&#128269;</div>
+        <p>Không tìm thấy thuốc phù hợp với tiêu chí đã chọn.</p>
+        <p class="text-muted-sm">Hãy thử bỏ bớt điều kiện lọc và tìm kiếm lại.</p>
+    </div>
+}
+else
+{
+    <div class="results-info">Tìm thấy <strong>@Model.Results.Count</strong> kết quả.</div>
+
+    foreach (var card in Model.Results)
+    {
+        var firstImage = card.Thuoc.HinhAnhChiTiet != null && card.Thuoc.HinhAnhChiTiet.Count > 0
+            ? card.Thuoc.HinhAnhChiTiet[0].DuongDanHinh : null;
+
+        <div class="result-card">
+
+            @* Col 1: Image *@
+            <div class="result-card-image">
+                @if (!string.IsNullOrEmpty(firstImage))
+                {
+                    <img src="@firstImage" alt="@card.Thuoc.TenThuoc" />
+                }
+                else
+                {
+                    <span class="img-placeholder-icon">&#128247;</span>
+                }
+            </div>
+
+            @* Col 2: Drug info *@
+            <div class="result-col-drug">
+                <div class="drug-name">@card.Thuoc.TenThuoc</div>
+                @if (!string.IsNullOrEmpty(card.Thuoc.NhaSX))
+                {
+                    <div class="meta-row"><span class="meta-label">Nhà sản xuất:</span> @card.Thuoc.NhaSX</div>
+                }
+                @if (!string.IsNullOrEmpty(card.TenHoatChat))
+                {
+                    <div class="meta-row"><span class="meta-label">Hoạt chất:</span> @card.TenHoatChat</div>
+                }
+                @if (!string.IsNullOrEmpty(card.Thuoc.HamLuong))
+                {
+                    <div class="meta-row"><span class="meta-label">Hàm lượng:</span> @card.Thuoc.HamLuong</div>
+                }
+                @if (!string.IsNullOrEmpty(card.TenDangThuoc))
+                {
+                    <div class="meta-row"><span class="meta-label">Dạng thuốc:</span> @card.TenDangThuoc</div>
+                }
+            </div>
+
+            @* Col 3: Physical info *@
+            <div class="result-col-physical">
+                @if (card.Mausac != null && card.Mausac.Count > 0)
+                {
+                    <div class="meta-row">
+                        <span class="meta-label">Màu sắc:</span>
+                        @string.Join(", ", card.Mausac.Select(m => m.TenMauSac))
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(card.TenHinhDang))
+                {
+                    <div class="meta-row"><span class="meta-label">Hình dạng:</span> @card.TenHinhDang</div>
+                }
+                @if (card.NhanDang != null && card.NhanDang.KichThuoc > 0)
+                {
+                    <div class="meta-row"><span class="meta-label">Đường kính (cm):</span> @card.NhanDang.KichThuoc</div>
+                }
+                @if (card.NhanDang != null && (!string.IsNullOrEmpty(card.NhanDang.KhacDauMatTruoc) || !string.IsNullOrEmpty(card.NhanDang.KhacDauMatSau)))
+                {
+                    var ky = string.Join(" / ", new[] { card.NhanDang.KhacDauMatTruoc, card.NhanDang.KhacDauMatSau }.Where(s => !string.IsNullOrEmpty(s)));
+                    <div class="meta-row"><span class="meta-label">Ký hiệu trên viên thuốc:</span> @ky</div>
+                }
+            </div>
+
+            @* Col 4: Notes + action *@
+            <div class="result-col-action">
+                @if (card.NhanDang != null && !string.IsNullOrEmpty(card.NhanDang.MaHinh))
+                {
+                    <div class="meta-row"><span class="meta-label">Ghi chú:</span> @card.NhanDang.MaHinh</div>
+                }
+                else
+                {
+                    <div class="meta-row text-muted-sm">Ghi chú: (nếu có)</div>
+                }
+                @Html.ActionLink("XEM CHI TIẾT", "Detail", "Home",
+                    new { id = card.Thuoc.IDThuoc },
+                    new { @class = "btn-detail" })
+            </div>
+
+        </div>
+    }
+}
