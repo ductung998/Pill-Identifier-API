@@ -5,7 +5,8 @@
         ? Model.Thuoc.HinhAnhChiTiet[0].DuongDanHinh : null;
 }
 
-@Html.ActionLink("← Quay lại", "Index", "Home", null, new { @class = "btn-back" })
+<a href="@Url.Action("Index", "Home")" class="btn-back"
+   onclick="if(window.history.length > 1 && document.referrer !== '') { window.history.back(); return false; }">← Quay lại kết quả</a>
 
 <div class="detail-panel">
 
