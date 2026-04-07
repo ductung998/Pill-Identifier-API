@@ -6,12 +6,9 @@
 @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { id = "searchForm" }))
 {
     <div class="search-panel">
+        @* ===== ROW 1: Có khắc dấu | (empty) ===== *@
         <div class="row">
-
-            @* ===== LEFT COLUMN ===== *@
             <div class="col-md-6">
-
-                @* Có khắc dấu *@
                 <div class="form-group">
                     <label>Có khắc dấu</label>
                     <div class="imprint-radio-group">
@@ -25,8 +22,13 @@
                         </label>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
 
-                @* Khắc dấu mặt trước *@
+        @* ===== ROW 2: Khắc dấu mặt trước | (empty) ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Khắc dấu mặt trước</label>
                     <div class="input-with-clear">
@@ -37,10 +39,15 @@
                                 onclick="clearField('ImprintFront')">XÓA</button>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
 
-                @* Khắc dấu mặt sau *@
+        @* ===== ROW 3: Khắc dấu mặt sau | Mục đích sử dụng ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label>Khắc dầu mặt sau</label>
+                    <label>Khắc dấu mặt sau</label>
                     <div class="input-with-clear">
                         <input type="text" name="ImprintBack" class="form-control"
                                value="@Model.Filter.ImprintBack"
@@ -49,8 +56,35 @@
                                 onclick="clearField('ImprintBack')">XÓA</button>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mục đích sử dụng</label>
+                    <div class="custom-dropdown" id="dd-chiDinh">
+                        <button type="button" class="dropdown-toggle-btn"
+                                onclick="toggleDropdown('dd-chiDinh')">
+                            <span class="dd-label">Chọn mục đích sử dụng</span>
+                        </button>
+                        <div class="dropdown-menu-custom">
+                            <div class="dropdown-items-grid">
+                                @foreach (var cd in Model.ChiDinhs)
+                                {
+                                    <label class="dropdown-item-label">
+                                        <input type="radio" name="IdChiDinh" value="@cd.IDChiDinh"
+                                               @(Model.Filter.IdChiDinh == cd.IDChiDinh ? "checked" : "") />
+                                        @cd.TenChiDinh
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                @* Hình dạng — multi-select, 2-col grid *@
+        @* ===== ROW 4: Hình dạng | Dạng thuốc ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Hình dạng</label>
                     <div class="custom-dropdown" id="dd-hinhDang">
@@ -75,8 +109,35 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Dạng thuốc</label>
+                    <div class="custom-dropdown" id="dd-dangThuoc">
+                        <button type="button" class="dropdown-toggle-btn"
+                                onclick="toggleDropdown('dd-dangThuoc')">
+                            <span class="dd-label">Chọn dạng bào chế</span>
+                        </button>
+                        <div class="dropdown-menu-custom">
+                            <div class="dropdown-items-grid">
+                                @foreach (var dt in Model.DangThuocs)
+                                {
+                                    <label class="dropdown-item-label">
+                                        <input type="radio" name="IdDangThuoc" value="@dt.IDDangThuoc"
+                                               @(Model.Filter.IdDangThuoc == dt.IDDangThuoc ? "checked" : "") />
+                                        @dt.TenDangThuoc
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                @* Màu sắc 1 — single-select, 2-col grid *@
+        @* ===== ROW 5: Màu sắc 1 | Màu sắc 2 ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Màu sắc 1</label>
                     <div class="custom-dropdown" id="dd-mauSac1">
@@ -99,96 +160,8 @@
                         </div>
                     </div>
                 </div>
-
-                @* Loại rãnh — single-select, 2-col grid *@
-                <div class="form-group">
-                    <label>Loại rãnh</label>
-                    <div class="custom-dropdown" id="dd-loaiRanh">
-                        <button type="button" class="dropdown-toggle-btn"
-                                onclick="toggleDropdown('dd-loaiRanh')">
-                            <span class="dd-label">Chọn loại rãnh</span>
-                        </button>
-                        <div class="dropdown-menu-custom">
-                            <div class="dropdown-items-grid">
-                                @foreach (var lr in Model.LoaiRanhs)
-                                {
-                                    <label class="dropdown-item-label">
-                                        <input type="radio" name="IdLoaiRanh" value="@lr.IDLoaiRanh"
-                                               @(Model.Filter.IdLoaiRanh == lr.IDLoaiRanh ? "checked" : "") />
-                                        @IconHelper.GrooveIcon(lr.IDLoaiRanh)
-                                        @lr.TenLoaiRanh
-                                    </label>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @* Đường kính *@
-                <div class="form-group">
-                    <label>Đường kính (cm)</label>
-                    <div class="input-with-clear">
-                        <input type="number" name="KichThuoc" class="form-control"
-                               step="0.1" min="0"
-                               value="@(Model.Filter.KichThuoc.HasValue ? Model.Filter.KichThuoc.Value.ToString("0.#") : "")"
-                               placeholder="Nhập kích thước viên thuốc" />
-                        <button type="button" class="btn-clear-inline"
-                                onclick="clearField('KichThuoc')">XÓA</button>
-                    </div>
-                </div>
-
             </div>
-
-            @* ===== RIGHT COLUMN ===== *@
             <div class="col-md-6">
-
-                @* Mục đích sử dụng — multi-select, 2-col grid *@
-                <div class="form-group">
-                    <label>Mục đích sử dụng</label>
-                    <div class="custom-dropdown" id="dd-chiDinh">
-                        <button type="button" class="dropdown-toggle-btn"
-                                onclick="toggleDropdown('dd-chiDinh')">
-                            <span class="dd-label">Chọn mục đích sử dụng</span>
-                        </button>
-                        <div class="dropdown-menu-custom">
-                            <div class="dropdown-items-grid">
-                                @foreach (var cd in Model.ChiDinhs)
-                                {
-                                    <label class="dropdown-item-label">
-                                        <input type="radio" name="IdChiDinh" value="@cd.IDChiDinh"
-                                               @(Model.Filter.IdChiDinh == cd.IDChiDinh ? "checked" : "") />
-                                        @cd.TenChiDinh
-                                    </label>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @* Dạng thuốc — single-select, 2-col grid *@
-                <div class="form-group">
-                    <label>Dạng thuốc</label>
-                    <div class="custom-dropdown" id="dd-dangThuoc">
-                        <button type="button" class="dropdown-toggle-btn"
-                                onclick="toggleDropdown('dd-dangThuoc')">
-                            <span class="dd-label">Chọn dạng bào chế</span>
-                        </button>
-                        <div class="dropdown-menu-custom">
-                            <div class="dropdown-items-grid">
-                                @foreach (var dt in Model.DangThuocs)
-                                {
-                                    <label class="dropdown-item-label">
-                                        <input type="radio" name="IdDangThuoc" value="@dt.IDDangThuoc"
-                                               @(Model.Filter.IdDangThuoc == dt.IDDangThuoc ? "checked" : "") />
-                                        @dt.TenDangThuoc
-                                    </label>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @* Màu sắc 2 — single-select, 2-col grid *@
                 <div class="form-group">
                     <label>Màu sắc 2</label>
                     <div class="custom-dropdown" id="dd-mauSac2">
@@ -211,8 +184,36 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                @* Loại vỉ — single-select, 2-col grid *@
+        @* ===== ROW 6: Loại rãnh | Loại vỉ ===== *@
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Loại rãnh</label>
+                    <div class="custom-dropdown" id="dd-loaiRanh">
+                        <button type="button" class="dropdown-toggle-btn"
+                                onclick="toggleDropdown('dd-loaiRanh')">
+                            <span class="dd-label">Chọn loại rãnh</span>
+                        </button>
+                        <div class="dropdown-menu-custom">
+                            <div class="dropdown-items-grid">
+                                @foreach (var lr in Model.LoaiRanhs)
+                                {
+                                    <label class="dropdown-item-label">
+                                        <input type="radio" name="IdLoaiRanh" value="@lr.IDLoaiRanh"
+                                               @(Model.Filter.IdLoaiRanh == lr.IDLoaiRanh ? "checked" : "") />
+                                        @IconHelper.GrooveIcon(lr.IDLoaiRanh)
+                                        @lr.TenLoaiRanh
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Loại vỉ</label>
                     <div class="custom-dropdown" id="dd-loaiVi">
@@ -234,8 +235,25 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+        </div>
+
+        @* ===== ROW 7: Đường kính | (empty) ===== *@
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Đường kính (cm)</label>
+                    <div class="input-with-clear">
+                        <input type="number" name="KichThuoc" class="form-control"
+                               step="0.1" min="0"
+                               value="@(Model.Filter.KichThuoc.HasValue ? Model.Filter.KichThuoc.Value.ToString("0.#") : "")"
+                               placeholder="Nhập kích thước viên thuốc" />
+                        <button type="button" class="btn-clear-inline"
+                                onclick="clearField('KichThuoc')">XÓA</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6"></div>
         </div>
 
         <div class="search-actions">
