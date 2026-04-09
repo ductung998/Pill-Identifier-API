@@ -127,7 +127,7 @@ namespace PillIdentifierForm.Forms
                 }
 
                 // Search
-                allResults = getdata.GetNhanDangThuoc(
+                allResults = getdata.GetNhanDangThuoc(false,
                     string.IsNullOrWhiteSpace(imprintFront) ? null : imprintFront,
                     string.IsNullOrWhiteSpace(imprintBack) ? null : imprintBack,
                     idMauSac1, idMauSac2, idHinhDang, idDangThuoc,
