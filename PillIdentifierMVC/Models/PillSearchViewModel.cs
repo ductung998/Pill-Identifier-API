@@ -5,7 +5,7 @@ namespace PillIdentifierMVC.Models
 {
     public class PillSearchFilter
     {
-        public bool? CoKhacDau { get; set; }
+        public bool CoKhacDau { get; set; } = true;
         public string ImprintFront { get; set; }
         public string ImprintBack { get; set; }
         public List<int> SelectedHinhDangIds { get; set; }
