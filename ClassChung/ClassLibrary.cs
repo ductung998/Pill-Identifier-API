@@ -1076,6 +1076,7 @@ namespace ClassChung
             }
 
             public List<Thuoc> GetNhanDangThuoc(
+                bool hasImprint = false,
                 string imprintFront = null,
                 string imprintBack = null,
                 int? idMausac1 = null,
@@ -1090,31 +1091,35 @@ namespace ClassChung
                 try
                 {
                     List<int> dsIDThuoc = new List<int>();
+                    IQueryable<w_NhanDangThuoc> query2 = from data in db.w_NhanDangThuocs
+                        select data;
 
                     // ===== COLOR FILTERING =====
-                    IQueryable<r_Thuoc_MauSac> query1 = from data in db.r_Thuoc_MauSacs
-                                                        select data;
-
-                    if (idMausac1 != null && idMausac2 != null)
+                    IQueryable<r_Thuoc_MauSac> query1 = db.r_Thuoc_MauSacs;
+                    List<int> validColorIDs = new List<int>();
+                    
+                    if (idMausac1 != null || idMausac2 != null)
                     {
-                        List<int> thuocWithColor1 = query1.Where(x => x.IDMauSac == idMausac1).Select(x => x.IDThuoc).ToList();
-                        List<int> thuocWithColor2 = query1.Where(x => x.IDMauSac == idMausac2).Select(x => x.IDThuoc).ToList();
-                        List<int> thuocWithBothColors = thuocWithColor1.Intersect(thuocWithColor2).ToList();
-                        dsIDThuoc.AddRange(thuocWithBothColors);
-                    }
-                    else if (idMausac1 != null)
-                    {
-                        dsIDThuoc.AddRange(query1.Where(x => x.IDMauSac == idMausac1).Select(x => x.IDThuoc).ToList());
-                    }
-                    else if (idMausac2 != null)
-                    {
-                        dsIDThuoc.AddRange(query1.Where(x => x.IDMauSac == idMausac2).Select(x => x.IDThuoc).ToList());
+                        if (idMausac1 != null && idMausac2 != null)
+                        {
+                            List<int> thuocWithColor1 = query1.Where(x => x.IDMauSac == idMausac1)
+                                .Select(x => x.IDThuoc).ToList();
+                            List<int> thuocWithColor2 = query1.Where(x => x.IDMauSac == idMausac2)
+                                .Select(x => x.IDThuoc).ToList();
+                            validColorIDs = thuocWithColor1.Intersect(thuocWithColor2).ToList();
+                        }
+                        else if (idMausac1 != null)
+                        {
+                            validColorIDs = query1.Where(x => x.IDMauSac == idMausac1).Select(x => x.IDThuoc).ToList();
+                        }
+                        else if (idMausac2 != null)
+                        {
+                            validColorIDs = query1.Where(x => x.IDMauSac == idMausac2).Select(x => x.IDThuoc).ToList();
+                        }
+                        query2 = query2.Where(x => validColorIDs.Contains(x.IDThuoc));
                     }
 
                     // ===== MAIN ATTRIBUTES FILTERING =====
-                    IQueryable<w_NhanDangThuoc> query2 = from data in db.w_NhanDangThuocs
-                                                         select data;
-
                     if (idHinhdang != null)
                         query2 = query2.Where(x => x.IDHinhDang == idHinhdang);
 
@@ -1141,48 +1146,39 @@ namespace ClassChung
                         var imprintQuery = query2.ToList(); // Load to memory for complex string matching
                         List<w_NhanDangThuoc> matchedByImprint = new List<w_NhanDangThuoc>();
 
+                        string searchFront = (imprintFront ?? "").Trim().ToUpper();
+                        string searchBack = (imprintBack ?? "").Trim().ToUpper();
                         foreach (var item in imprintQuery)
                         {
-                            bool matches = false;
                             string front = (item.KhacDauMatTruoc ?? "").Trim().ToUpper();
                             string back = (item.KhacDauMatSau ?? "").Trim().ToUpper();
-                            string searchFront = (imprintFront ?? "").Trim().ToUpper();
-                            string searchBack = (imprintBack ?? "").Trim().ToUpper();
 
-                            // Priority 1: Exact match on specified side(s)
-                            if (!string.IsNullOrEmpty(searchFront) && front == searchFront)
-                                matches = true;
-                            if (!string.IsNullOrEmpty(searchBack) && back == searchBack)
-                                matches = true;
-
-                            // Priority 2: If both sides specified, check if they match (either way)
+                            // Priority 1: If both sides specified, check if they match (either way)
                             if (!string.IsNullOrEmpty(searchFront) && !string.IsNullOrEmpty(searchBack))
                             {
                                 if ((front == searchFront && back == searchBack) ||
                                     (front == searchBack && back == searchFront))
-                                    matches = true;
+                                {
+                                    matchedByImprint.Add(item);
+                                    continue;
+                                }
                             }
 
-                            // Priority 3: Contains match (partial match)
-                            if (!matches)
+                            // Priority 2: Exact match on specified side(s)
+                            if (!string.IsNullOrEmpty(searchFront))
                             {
-                                if (!string.IsNullOrEmpty(searchFront) && front.Contains(searchFront))
-                                    matches = true;
-                                if (!string.IsNullOrEmpty(searchBack) && back.Contains(searchBack))
-                                    matches = true;
+                                if(front == searchFront || back == searchFront)
+                                {
+                                    matchedByImprint.Add(item);
+                                }
                             }
-
-                            // Priority 4: Cross-side contains (user might have sides confused)
-                            if (!matches)
+                            else if (!string.IsNullOrEmpty(searchBack))
                             {
-                                if (!string.IsNullOrEmpty(searchFront) && back.Contains(searchFront))
-                                    matches = true;
-                                if (!string.IsNullOrEmpty(searchBack) && front.Contains(searchBack))
-                                    matches = true;
+                                if(back == searchBack || front == searchBack)
+                                {
+                                    matchedByImprint.Add(item);
+                                }
                             }
-
-                            if (matches)
-                                matchedByImprint.Add(item);
                         }
 
                         foreach (w_NhanDangThuoc i in matchedByImprint)
@@ -1192,7 +1188,7 @@ namespace ClassChung
                     }
                     else
                     {
-                        // No imprint filter, add all from query2
+                        query2 = query2.Where(nhanDangThuoc => nhanDangThuoc.CoKhacDau == hasImprint);
                         foreach (w_NhanDangThuoc i in query2)
                         {
                             dsIDThuoc.Add(i.IDThuoc);

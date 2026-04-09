@@ -207,7 +207,9 @@ namespace PillIdentifierAPI.Controllers
         [HttpGet]
         [Route("api/v1/GetData/GetNhanDangThuoc")]
         public IHttpActionResult GetNhanDangThuoc(
-            string imprint = null,
+            bool hasImprint = false,
+            string imprintFront = null,
+            string imprintBack = null,
             int? idMausac1 = null,
             int? idMausac2 = null,
             int? idHinhdang = null,
@@ -218,7 +220,7 @@ namespace PillIdentifierAPI.Controllers
             try
             {
                 KetnoiDB.GetData db = new KetnoiDB.GetData();
-                List<Thuoc> kq = db.GetNhanDangThuoc(imprint, idMausac1, idMausac2, idHinhdang, idDangthuoc, idLoaiVi, idLoaiRanh);
+                List<Thuoc> kq = db.GetNhanDangThuoc(hasImprint, imprintFront, imprintBack, idMausac1, idMausac2, idHinhdang, idDangthuoc, idLoaiVi, idLoaiRanh);
                 return Ok(new ApiResponse<List<Thuoc>> { Success = true, Data = kq });
             }
             catch (Exception ex)
