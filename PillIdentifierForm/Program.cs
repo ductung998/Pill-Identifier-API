@@ -14,6 +14,8 @@ namespace PillIdentifierForm
         [STAThread]
         static void Main()
         {
+            // Force TLS 1.2 to use Google API
+            System.Net.ServicePointManager.SecurityProtocol = (System.Net.SecurityProtocolType)3072;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Giaodienchinh());
