@@ -2,18 +2,20 @@
 @{
     ViewBag.Title = Model.Thuoc != null ? Model.Thuoc.TenThuoc : "Chi Tiết Thuốc";
     var firstImage = Model.Thuoc.HinhAnhChiTiet != null && Model.Thuoc.HinhAnhChiTiet.Count > 0
-        ? Model.Thuoc.HinhAnhChiTiet[0].DuongDanHinh : null;
+        ? Model.Thuoc.HinhAnhChiTiet[0].DuongDanHinh
+        : null;
 }
 
 <a href="@Url.Action("Index", "Home")" class="btn-back"
-   onclick="if(window.history.length > 1 && document.referrer !== '') { window.history.back(); return false; }">← Quay lại kết quả</a>
+   onclick="if(window.history.length > 1 && document.referrer !== '') { window.history.back(); return false; }">← Quay
+    lại kết quả</a>
 
 <div class="detail-panel">
 
     <div class="detail-image-placeholder">
         @if (!string.IsNullOrEmpty(firstImage))
         {
-            <img src="@firstImage" alt="@Model.Thuoc.TenThuoc" style="width:100%;height:100%;object-fit:contain;" />
+            <img src="@firstImage" alt="@Model.Thuoc.TenThuoc" style="width:100%;height:100%;object-fit:contain;"/>
         }
         else
         {
@@ -58,13 +60,6 @@
         <div class="detail-row">
             <div class="detail-label">Số đăng ký</div>
             <div class="detail-value">@Model.Thuoc.SDK</div>
-        </div>
-    }
-    @if (!string.IsNullOrEmpty(Model.Thuoc.GhiChu))
-    {
-        <div class="detail-row">
-            <div class="detail-label">Ghi chú</div>
-            <div class="detail-value" style="font-style:italic;color:#666;">@Model.Thuoc.GhiChu</div>
         </div>
     }
 
@@ -131,5 +126,16 @@
             <div class="detail-value">@Model.NhanDang.MaHinh</div>
         </div>
     }
-
+    @if (Model.Thuoc.URL != null && !string.IsNullOrEmpty(Model.Thuoc.URL))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Hướng dẫn sử dụng</div>
+            <div class="detail-value">
+                <a href="@Model.Thuoc.URL"
+                   target="_blank"
+                   class="alert-link">@Model.Thuoc.TenThuoc</a>
+            </div>
+        </div>
+    }
+    
 </div>
