@@ -1224,6 +1224,22 @@ namespace ClassChung
                     return kq;
                 }
             }
+            public List<int> GetDSNhanDangIDsByThuoc(int idThuoc)
+            {
+                List<int> kq = new List<int>();
+                try
+                {
+                    kq = (from data in db.w_NhanDangThuocs
+                          where data.IDThuoc == idThuoc
+                          select data.IDNhanDang).ToList();
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+
             public string GetDrugImagesFolder()
             {
                 string folder = Path.Combine(
