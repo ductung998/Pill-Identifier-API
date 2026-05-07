@@ -65,18 +65,34 @@
                 <div class="form-group">
                     <label>Mục đích sử dụng</label>
                     <div class="custom-dropdown" id="dd-chiDinh">
+
                         <button type="button" class="dropdown-toggle-btn"
                                 onclick="toggleDropdown('dd-chiDinh')">
                             <span class="dd-label">Chọn mục đích sử dụng</span>
                         </button>
-                        <div class="dropdown-menu-custom">
-                            <div class="dropdown-items-grid">
+
+                        <div class="dropdown-menu-custom"
+                             style="max-height: none; overflow: visible; padding: 10px 0px 10px 10px; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 10px; z-index: 1000; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+                            <div style="margin-bottom: 10px; padding-right: 10px; position: relative;">
+                                <input type="text" id="searchInputChiDinh" class="form-control" placeholder="Tìm kiếm chỉ định..." onkeyup="filterChiDinh()" style="padding-right: 30px;" />
+                                <span id="clearSearchChiDinh" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none; color: #999; font-size: 18px; font-weight: bold; z-index: 10;" title="Xóa tìm kiếm">&times;</span>
+                            </div>
+
+                            <div
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 210px; overflow-y: auto;">
                                 @foreach (var cd in Model.ChiDinhs)
                                 {
-                                    <label class="dropdown-item-label">
-                                        <input type="radio" name="IdChiDinh" value="@cd.IDChiDinh"
-                                               @(Model.Filter.IdChiDinh == cd.IDChiDinh ? "checked" : "")/>
-                                        @cd.TenChiDinh
+                                    // Check if item is already selected from the backend
+                                    bool isChecked = Model.Filter.IdsChiDinh != null &&
+                                                         Model.Filter.IdsChiDinh.Contains(cd.IDChiDinh);
+
+                                    <label class="chiDinh-item"
+                                           style="display: flex; align-items: center; cursor: pointer; font-weight: normal; margin: 0;">
+                                        <input type="checkbox" name="IdsChiDinh" value="@cd.IDChiDinh"
+                                               @(isChecked ? "checked" : "")
+                                               style="margin-right: 8px;"/>
+                                        <span class="item-name">@cd.TenChiDinh</span>
                                     </label>
                                 }
                             </div>
@@ -335,7 +351,10 @@
             } else if (isMulti) {
                 if (checked.length === 1) {
                     label.innerHTML = getItemHtml(checked[0].closest('label'));
-                } else {
+                } else if (ddId === 'dd-chiDinh'){
+                    updateChiDinhLabel(checked, label);
+                }
+                else {
                     label.innerHTML = checked.length + ' hình dạng đã chọn';
                 }
             } else {
@@ -347,7 +366,7 @@
             {id: 'dd-hinhDang', multi: true, ph: 'Chọn hình dạng'},
             {id: 'dd-mauSac1', multi: false, ph: 'Chọn màu'},
             {id: 'dd-loaiRanh', multi: false, ph: 'Chọn loại rãnh'},
-            {id: 'dd-chiDinh', multi: false, ph: 'Chọn mục đích sử dụng'},
+            {id: 'dd-chiDinh', multi: true, ph: 'Chọn mục đích sử dụng'},
             {id: 'dd-dangThuoc', multi: false, ph: 'Chọn dạng bào chế'},
             {id: 'dd-mauSac2', multi: false, ph: 'Chọn màu'},
             {id: 'dd-loaiVi', multi: false, ph: 'Chọn loại vỉ'}
@@ -376,5 +395,65 @@
                 updateLabel(cfg.id, cfg.multi, cfg.ph);
             });
         }
+
+        function removeVietnameseTones(str) {
+            if (!str) return "";
+            str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            str = str.replace(/đ/g, 'd').replace(/Đ/g, 'D');
+            return str;
+        }
+        
+        // Filter the checkboxes based on the search input
+        function filterChiDinh() {
+            var searchValue = removeVietnameseTones($('#searchInputChiDinh').val().toLowerCase());
+
+            if (searchValue.length > 0) {
+                $('#clearSearchChiDinh').show();
+            } else {
+                $('#clearSearchChiDinh').hide();
+            }
+            
+            // Loop through each label in the grid
+            $('.chiDinh-item').each(function () {
+                var itemName = removeVietnameseTones($(this).find('.item-name').text().toLowerCase());
+
+                // If the text matches the search, show it. Otherwise, hide it.
+                if (itemName.indexOf(searchValue) > -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        // Update the button text to show what is selected
+        function updateChiDinhLabel(selectedCheckboxes, label) {
+            if (selectedCheckboxes.length === 1) {
+                label.innerHTML = getItemHtml(checked[0].closest('label'));
+            } else {
+                var labelText = '';
+                selectedCheckboxes.forEach(function (checkbox) {labelText += getItemHtml(checkbox.closest('label')); labelText += ', ';})
+                label.innerHTML = labelText.substring(0, labelText.length - 2);
+            }
+        }
+
+        // Close the dropdown if the user clicks anywhere outside of it
+        // TODO: assess if this is used anywhere
+        $(document).ready(function () {
+            $('#clearSearchChiDinh').on('click', function() {
+                $('#searchInputChiDinh').val(''); // Clear the input box
+                $(this).hide();                   // Hide the 'x' button
+                filterChiDinh();                  // Run filter again to show all items
+                $('#searchInputChiDinh').focus(); // Put the cursor back in the box
+            });
+
+            $(document).on('click', function (event) {
+                var $container = $('#dd-chiDinh-container');
+                // If the click is not inside the container, hide the menu
+                if ($container.length && !$container.is(event.target) && $container.has(event.target).length === 0) {
+                    $('#dd-chiDinh-menu').hide();
+                }
+            });
+        });
     </script>
 }

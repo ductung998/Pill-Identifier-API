@@ -15,7 +15,7 @@ namespace PillIdentifierMVC.Models
         public int? IdLoaiVi { get; set; }
         public int? IdLoaiRanh { get; set; }
         public double? KichThuoc { get; set; }
-        public int? IdChiDinh { get; set; } // placeholder — not wired to search yet
+        public List<int> IdsChiDinh { get; set; } // placeholder — not wired to search yet
     }
 
     public class PillResultCard

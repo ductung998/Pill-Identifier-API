@@ -46,6 +46,7 @@
             this.thiếtLậpHoạtChấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.traCứuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelContainer = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
@@ -165,7 +166,8 @@
             this.thiếtLậpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.thiếtLậpHoạtChấtToolStripMenuItem,
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem,
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem});
+            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem,
+            this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem});
             this.thiếtLậpToolStripMenuItem.Name = "thiếtLậpToolStripMenuItem";
             this.thiếtLậpToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
             this.thiếtLậpToolStripMenuItem.Text = "Thiết lập";
@@ -190,9 +192,16 @@
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Text = "Thiết lập hình ảnh thuốc";
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem_Click);
-            // 
+            //
+            // thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem
+            //
+            this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem.Name = "thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem";
+            this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
+            this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem.Text = "Thiết lập hình ảnh theo thuốc";
+            this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem_Click);
+            //
             // traCứuToolStripMenuItem
-            // 
+            //
             this.traCứuToolStripMenuItem.Name = "traCứuToolStripMenuItem";
             this.traCứuToolStripMenuItem.Size = new System.Drawing.Size(69, 24);
             this.traCứuToolStripMenuItem.Text = "Tra cứu";
@@ -249,6 +258,7 @@
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpHoạtChấtToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpNhậnDạngThuốcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpHìnhẢnhThuốcToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem;
     }
 }
 

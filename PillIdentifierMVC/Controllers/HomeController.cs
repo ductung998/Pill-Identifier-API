@@ -43,8 +43,8 @@ namespace PillIdentifierMVC.Controllers
             var allHoatChat   = db.GetDSHoatChat();
 
             // Only pass imprint text when user indicated the pill HAS an imprint
-            string imprintFront = filter.CoKhacDau == true ? filter.ImprintFront : null;
-            string imprintBack  = filter.CoKhacDau == true ? filter.ImprintBack  : null;
+            string imprintFront = filter.CoKhacDau ? filter.ImprintFront : null;
+            string imprintBack  = filter.CoKhacDau ? filter.ImprintBack  : null;
 
             // Multi-select shape: OR logic — one call per selected shape, union results
             var shapeIds = filter.SelectedHinhDangIds != null && filter.SelectedHinhDangIds.Count > 0
@@ -55,6 +55,7 @@ namespace PillIdentifierMVC.Controllers
             foreach (var shapeId in shapeIds)
             {
                 var partial = db.GetNhanDangThuoc(
+                    hasImprint: filter.CoKhacDau,
                     imprintFront: imprintFront,
                     imprintBack:  imprintBack,
                     idMausac1:    filter.IdMauSac1,
