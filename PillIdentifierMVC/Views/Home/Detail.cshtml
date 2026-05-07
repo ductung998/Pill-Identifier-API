@@ -62,6 +62,17 @@
             <div class="detail-value">@Model.Thuoc.SDK</div>
         </div>
     }
+    @if (Model.Thuoc.URL != null && !string.IsNullOrEmpty(Model.Thuoc.URL))
+    {
+        <div class="detail-row">
+            <div class="detail-label">Hướng dẫn sử dụng</div>
+            <div class="detail-value">
+                <a href="@Model.Thuoc.URL"
+                   target="_blank"
+                   class="alert-link">@Model.Thuoc.TenThuoc</a>
+            </div>
+        </div>
+    }
 
     <div class="detail-section-title">Nhận dạng vật lý</div>
 
@@ -124,17 +135,6 @@
         <div class="detail-row">
             <div class="detail-label">Mã hình</div>
             <div class="detail-value">@Model.NhanDang.MaHinh</div>
-        </div>
-    }
-    @if (Model.Thuoc.URL != null && !string.IsNullOrEmpty(Model.Thuoc.URL))
-    {
-        <div class="detail-row">
-            <div class="detail-label">Hướng dẫn sử dụng</div>
-            <div class="detail-value">
-                <a href="@Model.Thuoc.URL"
-                   target="_blank"
-                   class="alert-link">@Model.Thuoc.TenThuoc</a>
-            </div>
         </div>
     }
     
