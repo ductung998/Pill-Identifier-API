@@ -37,7 +37,7 @@
             this.buttonThem = new System.Windows.Forms.Button();
             this.buttonXoatrang = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnAddImage = new System.Windows.Forms.Button();
+            // this.btnAddImage = new System.Windows.Forms.Button();
             this.textBoxKichThuoc = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -49,8 +49,8 @@
             this.cboLoaiViThuoc = new System.Windows.Forms.ComboBox();
             this.cboDangThuoc = new System.Windows.Forms.ComboBox();
             this.cboHinhDang = new System.Windows.Forms.ComboBox();
-            this.txtMaHinh = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            // this.txtMaHinh = new System.Windows.Forms.TextBox();
+            // this.label3 = new System.Windows.Forms.Label();
             this.chkCoKhacDau = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtKhacDauMatSau = new System.Windows.Forms.TextBox();
@@ -159,7 +159,7 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnAddImage);
+            // this.panel1.Controls.Add(this.btnAddImage);
             this.panel1.Controls.Add(this.textBoxKichThuoc);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label12);
@@ -171,8 +171,8 @@
             this.panel1.Controls.Add(this.cboLoaiViThuoc);
             this.panel1.Controls.Add(this.cboDangThuoc);
             this.panel1.Controls.Add(this.cboHinhDang);
-            this.panel1.Controls.Add(this.txtMaHinh);
-            this.panel1.Controls.Add(this.label3);
+            // this.panel1.Controls.Add(this.txtMaHinh);
+            // this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.chkCoKhacDau);
             this.panel1.Controls.Add(this.label10);
             this.panel1.Controls.Add(this.txtKhacDauMatSau);
@@ -195,13 +195,13 @@
             // 
             // btnAddImage
             // 
-            this.btnAddImage.Location = new System.Drawing.Point(677, 171);
-            this.btnAddImage.Name = "btnAddImage";
-            this.btnAddImage.Size = new System.Drawing.Size(81, 24);
-            this.btnAddImage.TabIndex = 34;
-            this.btnAddImage.Text = "Chọn hình";
-            this.btnAddImage.UseVisualStyleBackColor = true;
-            this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
+            // this.btnAddImage.Location = new System.Drawing.Point(677, 171);
+            // this.btnAddImage.Name = "btnAddImage";
+            // this.btnAddImage.Size = new System.Drawing.Size(81, 24);
+            // this.btnAddImage.TabIndex = 34;
+            // this.btnAddImage.Text = "Chọn hình";
+            // this.btnAddImage.UseVisualStyleBackColor = true;
+            // this.btnAddImage.Click += new System.EventHandler(this.btnAddImage_Click);
             // 
             // textBoxKichThuoc
             // 
@@ -314,19 +314,19 @@
             // 
             // txtMaHinh
             // 
-            this.txtMaHinh.Location = new System.Drawing.Point(473, 171);
-            this.txtMaHinh.Name = "txtMaHinh";
-            this.txtMaHinh.Size = new System.Drawing.Size(198, 22);
-            this.txtMaHinh.TabIndex = 23;
+            // this.txtMaHinh.Location = new System.Drawing.Point(473, 171);
+            // this.txtMaHinh.Name = "txtMaHinh";
+            // this.txtMaHinh.Size = new System.Drawing.Size(198, 22);
+            // this.txtMaHinh.TabIndex = 23;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(470, 153);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(120, 17);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "Mã hình minh họa";
+            // this.label3.AutoSize = true;
+            // this.label3.Location = new System.Drawing.Point(470, 153);
+            // this.label3.Name = "label3";
+            // this.label3.Size = new System.Drawing.Size(120, 17);
+            // this.label3.TabIndex = 22;
+            // this.label3.Text = "Mã hình minh họa";
             // 
             // chkCoKhacDau
             // 
@@ -543,8 +543,8 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtKhacDauMatSau;
-        private System.Windows.Forms.TextBox txtMaHinh;
-        private System.Windows.Forms.Label label3;
+        // private System.Windows.Forms.TextBox txtMaHinh;
+        // private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox chkCoKhacDau;
         private System.Windows.Forms.ComboBox cboLoaiRanh;
         private System.Windows.Forms.ComboBox cboLoaiViThuoc;
@@ -558,6 +558,6 @@
         private System.Windows.Forms.ComboBox comboBoxFilterHoatChat;
         private System.Windows.Forms.TextBox textBoxKichThuoc;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button btnAddImage;
+        // private System.Windows.Forms.Button btnAddImage;
     }
 }

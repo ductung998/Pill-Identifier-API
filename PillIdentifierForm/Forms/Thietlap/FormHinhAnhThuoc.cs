@@ -76,6 +76,13 @@ namespace PillIdentifierForm.Forms
                 _listThuoc = getdata.GetDSThuoc();
                 dgvThuoc.DataSource = _listThuoc;
                 dgvThuoc.AutoResizeColumns();
+                dgvThuoc.Columns["IDThuoc"].HeaderText = "Mã Thuốc";
+                dgvThuoc.Columns["TenThuoc"].HeaderText = "Tên Thuốc";
+                dgvThuoc.Columns["IDHoatChat"].HeaderText = "Mã Hoạt chất";
+                dgvThuoc.Columns["HamLuong"].HeaderText = "Hàm lượng";
+                dgvThuoc.Columns["DangBaoChe"].HeaderText = "Dạng bào chế";
+                dgvThuoc.Columns["NhaSX"].HeaderText = "Nhà sản xuất";
+                dgvThuoc.Columns["GhiChu"].HeaderText = "Ghi chú";
             }
             catch (Exception ex)
             {

@@ -86,7 +86,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên thuốc!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên thương mại!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxThuoc.Focus();
                     return;
@@ -188,7 +188,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên thuốc!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên thương mại!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxThuoc.Focus();
                     return;
@@ -308,6 +308,10 @@ namespace PillIdentifierForm.Forms
                 grid1.DataSource = null;
                 grid1.DataSource = displayList;
                 dataGridView1.AutoResizeColumns();
+                dataGridView1.Columns[0].HeaderText = "Mã Thuốc";
+                dataGridView1.Columns[1].HeaderText = "Tên Thuốc";
+                dataGridView1.Columns["IDHoatChat"].HeaderText = "Mã Hoạt chất";
+                dataGridView1.Columns["TenHoatChat"].HeaderText = "Tên Hoạt chất";
             }
             catch (Exception ex)
             {

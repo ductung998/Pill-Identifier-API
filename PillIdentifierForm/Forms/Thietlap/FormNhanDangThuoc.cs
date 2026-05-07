@@ -131,7 +131,7 @@ namespace PillIdentifierForm.Forms
                 ? Convert.ToInt32(cboLoaiRanh.SelectedValue)
                 : 0;
 
-            entity.MaHinh = txtMaHinh.Text;
+            // entity.MaHinh = txtMaHinh.Text;
             entity.KichThuoc = textBoxKichThuoc.Text != "" ? Convert.ToDouble(textBoxKichThuoc.Text) : 0;
 
             return entity;
@@ -144,7 +144,7 @@ namespace PillIdentifierForm.Forms
             chkCoKhacDau.Checked = false;
             txtKhacDauMatTruoc.Clear();
             txtKhacDauMatSau.Clear();
-            txtMaHinh.Clear();
+            // txtMaHinh.Clear();
             cboHinhDang.SelectedIndex = -1;
             cboDangThuoc.SelectedIndex = -1;
             cboLoaiViThuoc.SelectedIndex = -1;
@@ -510,7 +510,7 @@ namespace PillIdentifierForm.Forms
                 chkCoKhacDau.Checked = row.Cells["CoKhacDau"].Value != null ? Convert.ToBoolean(row.Cells["CoKhacDau"].Value) : false;
                 txtKhacDauMatTruoc.Text = row.Cells["KhacDauMatTruoc"].Value != null ? row.Cells["KhacDauMatTruoc"].Value.ToString() : "";
                 txtKhacDauMatSau.Text = row.Cells["KhacDauMatSau"].Value != null ? row.Cells["KhacDauMatSau"].Value.ToString() : "";
-                txtMaHinh.Text = row.Cells["MaHinh"].Value != null ? row.Cells["MaHinh"].Value.ToString() : "";
+                // txtMaHinh.Text = row.Cells["MaHinh"].Value != null ? row.Cells["MaHinh"].Value.ToString() : "";
 
                 // Set combobox values
                 SetComboBoxValue(cboHinhDang, row.Cells["IDHinhDang"].Value);
@@ -585,7 +585,7 @@ namespace PillIdentifierForm.Forms
                         chkCoKhacDau.Checked = existing.CoKhacDau;
                         txtKhacDauMatTruoc.Text = existing.KhacDauMatTruoc;
                         txtKhacDauMatSau.Text = existing.KhacDauMatSau;
-                        txtMaHinh.Text = existing.MaHinh;
+                        // txtMaHinh.Text = existing.MaHinh;
                         textBoxKichThuoc.Text = existing.KichThuoc.ToString();
 
                         SetComboBoxValue(cboHinhDang, existing.IDHinhDang);
@@ -603,7 +603,7 @@ namespace PillIdentifierForm.Forms
                         chkCoKhacDau.Checked = false;
                         txtKhacDauMatTruoc.Clear();
                         txtKhacDauMatSau.Clear();
-                        txtMaHinh.Clear();
+                        // txtMaHinh.Clear();
                         cboHinhDang.SelectedIndex = -1;
                         cboDangThuoc.SelectedIndex = -1;
                         cboLoaiViThuoc.SelectedIndex = -1;
@@ -682,7 +682,7 @@ namespace PillIdentifierForm.Forms
                     File.Copy(openFileDialog.FileName, destinationPath, true);
 
                     // Update the textbox with the new filename
-                    txtMaHinh.Text = newFileName;
+                    // txtMaHinh.Text = newFileName;
 
                     MessageBox.Show("Đã lưu hình ảnh thành công!", "Thành công",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);

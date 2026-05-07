@@ -58,7 +58,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(86, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Tên chỉ định";
+            this.label2.Text = "Tên mục đích sử dụng";
             // 
             // textBoxChiDinh
             // 
@@ -95,7 +95,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(129, 17);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Danh sách chỉ định";
+            this.label4.Text = "Danh sách mục đích sử dụng";
             // 
             // buttonThoat
             // 
@@ -174,7 +174,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 17);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Mã chỉ định";
+            this.label1.Text = "Mã mục đích sử dụng";
             // 
             // textBoxIDChiDinh
             // 

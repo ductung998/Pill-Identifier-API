@@ -253,6 +253,8 @@ namespace PillIdentifierForm.Forms
         {
             grid1.DataSource = getdata.GetDSLoaiViThuoc();
             dataGridView1.AutoResizeColumns();
+            dataGridView1.Columns[0].HeaderText = "Mã Bao bì cấp 1";
+            dataGridView1.Columns[1].HeaderText = "Loại Bao bì cấp 1";
         }
 
         private void ClearTextBoxes()

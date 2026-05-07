@@ -259,6 +259,9 @@ namespace PillIdentifierForm.Forms
         {
             grid1.DataSource = getdata.GetDSChiDinh();
             dataGridView1.AutoResizeColumns();
+            dataGridView1.Columns[0].HeaderText = "Mã mục đích sử dụng";
+            dataGridView1.Columns[1].HeaderText = "Tên mục đích sử dụng";
+            dataGridView1.Columns[3].HeaderText = "Mô tả";
         }
 
         private void ClearTextBoxes()

@@ -56,7 +56,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(112, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Tên loại vỉ thuốc";
+            this.label2.Text = "Tên loại bao bì cấp 1";
             // 
             // textBoxLoaiViThuoc
             // 
@@ -152,7 +152,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(106, 17);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Mã loại vỉ thuốc";
+            this.label1.Text = "Mã loại bao bì cấp 1";
             // 
             // textBoxIDLoaiViThuoc
             // 
