@@ -59,6 +59,32 @@ namespace PillIdentifierMVC.Helpers
                     inner =
                         "<polygon points='11,2 17,5 20,11 17,17 11,20 5,17 2,11 5,5' fill='#e0e0e0' stroke='#666' stroke-width='1.5' stroke-linejoin='round'/>";
                     break;
+                case 17: // Hình trụ/trụ tròn (Cylinder)
+                    // Kết hợp 2 path: 1 path cho thân trụ, 1 path cho đường vòng cung tạo mặt đáy ở trên
+                    inner =
+                        "<path d='M6,5 C6,3 16,3 16,5 L16,17 C16,19 6,19 6,17 Z' fill='#e0e0e0' stroke='#666' stroke-width='1.5'/>" +
+                        "<path d='M6,5 C6,7 16,7 16,5' fill='none' stroke='#666' stroke-width='1.5'/>";
+                    break;
+                case 21: // Hình trụ dẹt (Flat cylinder / Disc)
+                    inner =
+                        "<path d='M3,9 C3,6 19,6 19,9 L19,13 C19,16 3,16 3,13 Z' fill='#e0e0e0' stroke='#666' stroke-width='1.5'/>" +
+                        "<path d='M3,9 C3,11 19,11 19,9' fill='none' stroke='#666' stroke-width='1.5'/>";
+                    break;
+
+                case 18: // Hình kim cương (Diamond - dạng cánh diều/viên thoi nhọn)
+                    inner =
+                        "<polygon points='11,2 19,9 11,20 3,9' fill='#e0e0e0' stroke='#666' stroke-width='1.5' stroke-linejoin='round'/>";
+                    break;
+
+                case 19: // Hình giọt nước (Teardrop)
+                    inner =
+                        "<path d='M11,2 C11,2 5,10 5,15 A6,6 0 0,0 17,15 C17,10 11,2 11,2 Z' fill='#e0e0e0' stroke='#666' stroke-width='1.5' stroke-linejoin='round'/>";
+                    break;
+
+                case 20: // Hình quả táo (Apple - bo tròn và có lõm ở hai đầu)
+                    inner =
+                        "<path d='M11,4 C16,0 21,8 18,15 C16,19 13,19 11,17 C9,19 6,19 4,15 C1,8 6,0 11,4 Z' fill='#e0e0e0' stroke='#666' stroke-width='1.5' stroke-linejoin='round'/>";
+                    break;
                 default:
                     return new HtmlString("");
             }
@@ -74,16 +100,19 @@ namespace PillIdentifierMVC.Helpers
         // =====================================================================
         private static readonly Dictionary<int, string> ColorHex = new Dictionary<int, string>
         {
-            { 1, "#E53935" },   // Đỏ
-            { 2, "#FB8C00" },   // Cam
-            { 4, "#FDD835" },   // Vàng
-            { 7, "#8E24AA" },   // Tím
-            { 8, "#F5F5F5" },   // Trắng
-            { 9, "#1E88E5" },   // Xanh dương
-            { 37, "#F06292" },  // Hồng
-            { 38, "#66BB6A" },  // Xanh lá
-            { 39, "#895129" },  // Nâu
-            { 36, "#9E9E9E" },  // Khác
+            { 1, "#E53935" }, // Đỏ
+            { 2, "#FB8C00" }, // Cam
+            { 4, "#FDD835" }, // Vàng
+            { 7, "#8E24AA" }, // Tím
+            { 8, "#F5F5F5" }, // Trắng
+            { 9, "#1E88E5" }, // Xanh dương
+            { 37, "#F06292" }, // Hồng
+            { 38, "#66BB6A" }, // Xanh lá
+            { 39, "#895129" }, // Nâu
+            { 40, "#FAF9F6" }, // Trắng ngà
+            { 42, "#FFFDD0" }, // Kem
+            { 43, "#F9B3A7" }, // Đào
+            { 36, "#9E9E9E" }, // Khác
         };
 
         public static IHtmlString ColorCircle(int id)

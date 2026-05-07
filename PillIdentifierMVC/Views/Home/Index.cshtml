@@ -14,12 +14,18 @@
                     <div class="imprint-radio-group">
                         <label>
                             <input type="radio" name="CoKhacDau" value="true"
-                                   @(Model.Filter.CoKhacDau ? "checked" : "")/> Có
+                                   @(Model.Filter.CoKhacDau == true ? "checked" : "")/> Có
                         </label>
-                        <label>
-                            <input type="radio" name="CoKhacDau" value="false"
-                                   @(!Model.Filter.CoKhacDau ? "checked" : "")/> Không
-                        </label>
+                        <div style="display: flex; gap: 15px;">
+                            <label>
+                                <input type="radio" name="CoKhacDau" value="false"
+                                       @(Model.Filter.CoKhacDau == false ? "checked" : "")/> Không
+                            </label>
+                            <label>
+                                <input type="radio" name="CoKhacDau" value=""
+                                       @(Model.Filter.CoKhacDau == null ? "checked" : "")/> Không rõ
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -267,7 +273,7 @@
                         <input type="number" name="KichThuoc" class="form-control"
                                step="0.1" min="0"
                                value="@(Model.Filter.KichThuoc.HasValue ? Model.Filter.KichThuoc.Value.ToString("0.#") : "")"
-                               placeholder="Nhập kích thước viên thuốc"/>
+                               placeholder="Nhập đường kính viên thuốc"/>
                         <button type="button" class="btn-clear-inline"
                                 onclick="clearField('KichThuoc')">XÓA
                         </button>
@@ -321,7 +327,7 @@
             const imprintBack = document.querySelector('input[name="ImprintBack"]');
 
             function toggleImprintFields() {
-                const isNo = document.querySelector('input[name="CoKhacDau"][value="false"]').checked;
+                const isNo = document.querySelector('input[name="CoKhacDau"][value="false"]').checked || document.querySelector('input[name="CoKhacDau"][value=""]').checked;
 
                 imprintFront.disabled = isNo;
                 imprintBack.disabled = isNo;
@@ -369,7 +375,7 @@
             {id: 'dd-chiDinh', multi: true, ph: 'Chọn mục đích sử dụng'},
             {id: 'dd-dangThuoc', multi: false, ph: 'Chọn dạng bào chế'},
             {id: 'dd-mauSac2', multi: false, ph: 'Chọn màu'},
-            {id: 'dd-loaiVi', multi: false, ph: 'Chọn loại vỉ'}
+            {id: 'dd-loaiVi', multi: false, ph: 'Chọn bao bì cấp 1'}
         ];
 
         ddConfig.forEach(function (cfg) {

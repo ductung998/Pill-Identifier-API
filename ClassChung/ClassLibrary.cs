@@ -1076,7 +1076,7 @@ namespace ClassChung
             }
 
             public List<Thuoc> GetNhanDangThuoc(
-                bool hasImprint = false,
+                bool? hasImprint = false,
                 string imprintFront = null,
                 string imprintBack = null,
                 int? idMausac1 = null,
