@@ -44,6 +44,7 @@
             this.danhMụcLoạiVỉToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpHoạtChấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -165,6 +166,7 @@
             // 
             this.thiếtLậpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.thiếtLậpHoạtChấtToolStripMenuItem,
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem,
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem,
             this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem,
             this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem});
@@ -178,6 +180,13 @@
             this.thiếtLậpHoạtChấtToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
             this.thiếtLậpHoạtChấtToolStripMenuItem.Text = "Thiết lập hoạt chất";
             this.thiếtLậpHoạtChấtToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHoạtChấtToolStripMenuItem_Click);
+            // 
+            // thiếtLậpHoạtChấtGốcToolStripMenuItem
+            // 
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Name = "thiếtLậpHoạtChấtGốcToolStripMenuItem";
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Text = "Thiết lập hoạt chất gốc";
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHoạtChấtGốcToolStripMenuItem_Click);
             // 
             // thiếtLậpNhậnDạngThuốcToolStripMenuItem
             // 
@@ -256,6 +265,7 @@
         private System.Windows.Forms.Panel panelContainer;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpHoạtChấtToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem thiếtLậpHoạtChấtGốcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpNhậnDạngThuốcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpHìnhẢnhThuốcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem;

@@ -213,6 +213,7 @@
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(1010, 365);
             this.dataGridView1.TabIndex = 8;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             // 
             // Form_HoatChatGoc_ChiDinh
             // 
@@ -229,6 +230,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "Form_HoatChatGoc_ChiDinh";
             this.Load += new System.EventHandler(this.Form_HoatChatGoc_ChiDinh_Load);
+            this.Shown += new System.EventHandler(this.Form_HoatChatGoc_ChiDinh_Shown);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

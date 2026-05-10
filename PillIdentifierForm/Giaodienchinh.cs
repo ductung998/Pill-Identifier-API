@@ -98,6 +98,12 @@ namespace PillIdentifierForm
             openChildForm(FormHoatChat_HoatChatGoc);
         }
 
+        private void thiếtLậpHoạtChấtGốcToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Forms.Form_HoatChatGoc_ChiDinh form_HoatChatGoc_ChiDinh = new Forms.Form_HoatChatGoc_ChiDinh();
+            openChildForm(form_HoatChatGoc_ChiDinh);
+        }
+
         private void thiếtLậpNhậnDạngThuốcToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Forms.FormNhanDangThuoc FormNhanDangThuoc = new Forms.FormNhanDangThuoc();

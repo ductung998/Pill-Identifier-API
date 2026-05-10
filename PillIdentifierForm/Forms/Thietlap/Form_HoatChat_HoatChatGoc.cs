@@ -35,7 +35,12 @@ namespace PillIdentifierForm.Forms
         private void FormHoatChat_HoatChatGoc_Load(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
+            comboBoxHC.Visible = false;
+            comboBoxHCG.Visible = false;
+        }
 
+        private void FormHoatChat_HoatChatGoc_Shown(object sender, EventArgs e)
+        {
             LoadHoatChat();
             LoadHoatChatGoc();
             LoadListLienKet();
@@ -44,6 +49,9 @@ namespace PillIdentifierForm.Forms
             comboBoxHCG.SelectedIndex = -1;
 
             LoadLinkedList();
+
+            comboBoxHC.Visible = true;
+            comboBoxHCG.Visible = true;
         }
 
         private void buttonThoat_Click(object sender, EventArgs e)
@@ -128,7 +136,7 @@ namespace PillIdentifierForm.Forms
         {
             _listHoatChatGoc = getdata.GetDSHoatChatGoc().OrderBy(h => h.TenHoatChatGoc).ToList();
             comboBoxHCG.DataSource = _listHoatChatGoc;
-            comboBoxHCG.DisplayMember = "TenHoatChat";
+            comboBoxHCG.DisplayMember = "TenHoatChatGoc";
             comboBoxHCG.ValueMember = "IDHoatChatGoc";
         }
 
@@ -256,6 +264,15 @@ namespace PillIdentifierForm.Forms
             });
 
             capnhat = true; // Mark as having unsaved changes
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count == 0) return;
+            var row = dataGridView1.SelectedRows[0];
+            if (row.Cells["IDHoatChatGoc"].Value == null) return;
+
+            comboBoxHCG.SelectedValue = (int)row.Cells["IDHoatChatGoc"].Value;
         }
 
         private void buttonXoaHCG_Click(object sender, EventArgs e)
