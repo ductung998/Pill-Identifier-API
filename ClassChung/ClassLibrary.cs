@@ -1188,7 +1188,8 @@ namespace ClassChung
                     }
                     else
                     {
-                        query2 = query2.Where(nhanDangThuoc => nhanDangThuoc.CoKhacDau == hasImprint);
+                        if (hasImprint != null)
+                            query2 = query2.Where(nhanDangThuoc => nhanDangThuoc.CoKhacDau == hasImprint);
                         foreach (w_NhanDangThuoc i in query2)
                         {
                             dsIDThuoc.Add(i.IDThuoc);
@@ -1880,6 +1881,21 @@ namespace ClassChung
                         return true;
                     }
                     return false;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+            }
+
+            public bool DeleteAllThuoc_MauSacByIDThuoc(int idThuoc)
+            {
+                try
+                {
+                    var links = db.r_Thuoc_MauSacs.Where(x => x.IDThuoc == idThuoc);
+                    db.r_Thuoc_MauSacs.DeleteAllOnSubmit(links);
+                    db.SubmitChanges();
+                    return true;
                 }
                 catch (Exception)
                 {

@@ -22,16 +22,13 @@ else
 
     foreach (var card in Model.Results)
     {
-        var firstImage = card.Thuoc.HinhAnhChiTiet != null && card.Thuoc.HinhAnhChiTiet.Count > 0
-            ? card.Thuoc.HinhAnhChiTiet[0].DuongDanHinh : null;
-
         <div class="result-card">
 
             @* Col 1: Image *@
             <div class="result-card-image">
-                @if (!string.IsNullOrEmpty(firstImage))
+                @if (!string.IsNullOrEmpty(card.FirstImageUrl))
                 {
-                    <img src="@firstImage" alt="@card.Thuoc.TenThuoc" />
+                    <img src="@card.FirstImageUrl" alt="@card.Thuoc.TenThuoc" />
                 }
                 else
                 {

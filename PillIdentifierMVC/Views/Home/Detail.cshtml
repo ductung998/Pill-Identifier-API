@@ -1,9 +1,8 @@
 @model PillIdentifierMVC.Models.PillDetailModel
 @{
     ViewBag.Title = Model.Thuoc != null ? Model.Thuoc.TenThuoc : "Chi Tiết Thuốc";
-    var firstImage = Model.Thuoc.HinhAnhChiTiet != null && Model.Thuoc.HinhAnhChiTiet.Count > 0
-        ? Model.Thuoc.HinhAnhChiTiet[0].DuongDanHinh
-        : null;
+    var images   = Model.HinhAnhList ?? new List<ClassChung.HinhAnhThuocChiTiet>();
+    var imgCount = images.Count;
 }
 
 <a href="@Url.Action("Index", "Home")" class="btn-back"
@@ -12,14 +11,82 @@
 
 <div class="detail-panel">
 
-    <div class="detail-image-placeholder">
-        @if (!string.IsNullOrEmpty(firstImage))
+    <div class="detail-carousel">
+        <div class="carousel-main">
+            @if (imgCount > 0)
+            {
+                for (int i = 0; i < imgCount; i++)
+                {
+                    <div class="carousel-slide @(i == 0 ? "active" : "")">
+                        <img src="@images[i].DuongDanHinh" alt="@Model.Thuoc.TenThuoc (@(i + 1))" @(i > 0 ? "loading=\"lazy\"" : "") />
+                    </div>
+                }
+                if (imgCount > 1)
+                {
+                    <button class="carousel-btn prev" onclick="carouselMove(-1)">&#8249;</button>
+                    <button class="carousel-btn next" onclick="carouselMove(1)">&#8250;</button>
+                    <div class="carousel-counter"><span id="carouselCurrent">1</span>/@imgCount</div>
+                }
+            }
+            else
+            {
+                <span class="carousel-placeholder-text">Chưa có<br />hình ảnh</span>
+            }
+        </div>
+        @if (imgCount > 1)
         {
-            <img src="@firstImage" alt="@Model.Thuoc.TenThuoc" style="width:100%;height:100%;object-fit:contain;"/>
-        }
-        else
-        {
-            <span>Chưa có<br/>hình ảnh</span>
+            <div class="carousel-thumbs-wrapper">
+                <button class="thumb-scroll-btn" id="thumbScrollLeft" onclick="thumbScroll(-1)">&#8249;</button>
+                <div class="carousel-thumbs" id="carouselThumbs" onscroll="updateThumbScrollBtns()">
+                    @for (int i = 0; i < imgCount; i++)
+                    {
+                        <div class="carousel-thumb @(i == 0 ? "active" : "")" data-index="@i" onclick="carouselGoTo(@i)">
+                            <img src="@images[i].DuongDanHinh" alt="@(i + 1)" />
+                        </div>
+                    }
+                </div>
+                <button class="thumb-scroll-btn" id="thumbScrollRight" onclick="thumbScroll(1)">&#8250;</button>
+            </div>
+            <script>
+                (function () {
+                    var idx = 0;
+                    var total = @imgCount;
+
+                    window.carouselMove = function (dir) {
+                        carouselGoTo((idx + dir + total) % total);
+                    };
+
+                    window.carouselGoTo = function (i) {
+                        var slides = document.querySelectorAll('.carousel-slide');
+                        var thumbs = document.querySelectorAll('.carousel-thumb');
+                        slides[idx].classList.remove('active');
+                        thumbs[idx].classList.remove('active');
+                        idx = i;
+                        slides[idx].classList.add('active');
+                        thumbs[idx].classList.add('active');
+                        document.getElementById('carouselCurrent').textContent = idx + 1;
+                        thumbs[idx].scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+                        updateThumbScrollBtns();
+                    };
+
+                    window.thumbScroll = function (dir) {
+                        document.getElementById('carouselThumbs').scrollLeft += dir * 110;
+                        setTimeout(updateThumbScrollBtns, 300);
+                    };
+
+                    window.updateThumbScrollBtns = function () {
+                        var el = document.getElementById('carouselThumbs');
+                        var l  = document.getElementById('thumbScrollLeft');
+                        var r  = document.getElementById('thumbScrollRight');
+                        if (!el) return;
+                        var overflows = el.scrollWidth > el.clientWidth;
+                        l.style.display = overflows && el.scrollLeft > 0 ? 'flex' : 'none';
+                        r.style.display = overflows && (el.scrollLeft + el.clientWidth < el.scrollWidth - 1) ? 'flex' : 'none';
+                    };
+
+                    document.addEventListener('DOMContentLoaded', updateThumbScrollBtns);
+                })();
+            </script>
         }
     </div>
 

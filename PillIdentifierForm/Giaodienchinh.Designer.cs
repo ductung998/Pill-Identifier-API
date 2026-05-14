@@ -46,7 +46,7 @@
             this.thiếtLậpHoạtChấtToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            // this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             // this.traCứuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelContainer = new System.Windows.Forms.Panel();
@@ -168,7 +168,6 @@
             this.thiếtLậpHoạtChấtToolStripMenuItem,
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem,
             this.thiếtLậpNhậnDạngThuốcToolStripMenuItem,
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem,
             this.thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem});
             this.thiếtLậpToolStripMenuItem.Name = "thiếtLậpToolStripMenuItem";
             this.thiếtLậpToolStripMenuItem.Size = new System.Drawing.Size(79, 24);
@@ -178,14 +177,14 @@
             // 
             this.thiếtLậpHoạtChấtToolStripMenuItem.Name = "thiếtLậpHoạtChấtToolStripMenuItem";
             this.thiếtLậpHoạtChấtToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
-            this.thiếtLậpHoạtChấtToolStripMenuItem.Text = "Thiết lập hoạt chất";
+            this.thiếtLậpHoạtChấtToolStripMenuItem.Text = "Thiết lập HC-HCG";
             this.thiếtLậpHoạtChấtToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHoạtChấtToolStripMenuItem_Click);
             // 
             // thiếtLậpHoạtChấtGốcToolStripMenuItem
             // 
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Name = "thiếtLậpHoạtChấtGốcToolStripMenuItem";
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
-            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Text = "Thiết lập hoạt chất gốc";
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Text = "Thiết lập MĐSD-HCG";
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHoạtChấtGốcToolStripMenuItem_Click);
             // 
             // thiếtLậpNhậnDạngThuốcToolStripMenuItem
@@ -197,10 +196,10 @@
             // 
             // thiếtLậpHìnhẢnhThuốcToolStripMenuItem
             // 
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Name = "thiếtLậpHìnhẢnhThuốcToolStripMenuItem";
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Text = "Thiết lập màu sắc";
-            this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem_Click);
+            // this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Name = "thiếtLậpHìnhẢnhThuốcToolStripMenuItem";
+            // this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
+            // this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Text = "Thiết lập màu sắc";
+            // this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHìnhẢnhThuốcToolStripMenuItem_Click);
             //
             // thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem
             //
@@ -267,7 +266,7 @@
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpHoạtChấtToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpHoạtChấtGốcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpNhậnDạngThuốcToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem thiếtLậpHìnhẢnhThuốcToolStripMenuItem;
+        // private System.Windows.Forms.ToolStripMenuItem thiếtLậpHìnhẢnhThuốcToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem thiếtLậpHìnhẢnhTheoThuốcToolStripMenuItem;
     }
 }

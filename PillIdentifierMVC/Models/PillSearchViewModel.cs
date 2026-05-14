@@ -28,6 +28,7 @@ namespace PillIdentifierMVC.Models
         public string TenLoaiRanh { get; set; }
         public string TenLoaiVi { get; set; }
         public string TenHoatChat { get; set; }
+        public string FirstImageUrl { get; set; }
     }
 
     public class PillSearchPageModel
@@ -53,5 +54,6 @@ namespace PillIdentifierMVC.Models
         public string TenLoaiRanh { get; set; }
         public string TenLoaiVi { get; set; }
         public string TenHoatChat { get; set; }
+        public List<HinhAnhThuocChiTiet> HinhAnhList { get; set; }
     }
 }

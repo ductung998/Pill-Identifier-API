@@ -17,6 +17,7 @@ namespace PillIdentifierForm.Forms
         private List<Thuoc> _listThuoc;
         private List<HoatChat> _listHoatChat;
         private List<NhanDangThuoc> _listNhanDang;
+        private List<MauSac> _listMauSac;
 
         BindingSource grid1 = new BindingSource();
         BindingSource gridThuoc = new BindingSource();
@@ -39,6 +40,47 @@ namespace PillIdentifierForm.Forms
         private void FormNhanDangThuoc_Load(object sender, EventArgs e)
         {
             ClearForm();
+            panel1_SizeChanged(this, EventArgs.Empty);
+            dataGridViewThuoc.Focus();
+        }
+
+        private void panel1_SizeChanged(object sender, EventArgs e)
+        {
+            const int margin = 12;
+            const int gap = 5;
+            int center = panel1.Width / 2;
+
+            // Block 1 row 1: two equal-width ID textboxes (label | box | label | box)
+            int idLeft = textBoxIDNhandang.Left;
+            int label2W = label2.PreferredWidth > 0 ? label2.PreferredWidth : 66;
+            int idW = Math.Max(30, (center - gap - idLeft - label2W - 2 * gap) / 2);
+            textBoxIDNhandang.Width = idW;
+            label2.Left = idLeft + idW + gap;
+            textBoxIDThuoc.Left = label2.Left + label2W + gap;
+            textBoxIDThuoc.Width = idW;
+
+            // Block 1 row 2: two equal-width imprint textboxes (label above each)
+            int imprintLeft = txtKhacDauMatTruoc.Left;
+            int imprintW = Math.Max(30, (center - gap - imprintLeft - gap) / 2);
+            txtKhacDauMatTruoc.Width = imprintW;
+            label10.Left = imprintLeft + imprintW + gap;
+            txtKhacDauMatSau.Left = imprintLeft + imprintW + gap;
+            txtKhacDauMatSau.Width = imprintW;
+
+            // Block 2 row 1: Hình dạng label + combo fill the right half
+            label5.Left = center;
+            cboHinhDang.Left = center + label5.Width + gap;
+            cboHinhDang.Width = Math.Max(50, panel1.Width - cboHinhDang.Left - margin);
+
+            // Block 2 row 2: two equal-width Màu sắc combos fill the right half
+            int mauSacTotal = panel1.Width - center - margin;
+            int comboW = Math.Max(50, (mauSacTotal - gap) / 2);
+            labelMauSac1.Left = center;
+            cboMauSac1.Left = center;
+            cboMauSac1.Width = comboW;
+            labelMauSac2.Left = center + comboW + gap;
+            cboMauSac2.Left = center + comboW + gap;
+            cboMauSac2.Width = Math.Max(50, panel1.Width - cboMauSac2.Left - margin);
         }
 
         #region helper
@@ -131,7 +173,6 @@ namespace PillIdentifierForm.Forms
                 ? Convert.ToInt32(cboLoaiRanh.SelectedValue)
                 : 0;
 
-            // entity.MaHinh = txtMaHinh.Text;
             entity.KichThuoc = textBoxKichThuoc.Text != "" ? Convert.ToDouble(textBoxKichThuoc.Text) : 0;
 
             return entity;
@@ -144,11 +185,12 @@ namespace PillIdentifierForm.Forms
             chkCoKhacDau.Checked = false;
             txtKhacDauMatTruoc.Clear();
             txtKhacDauMatSau.Clear();
-            // txtMaHinh.Clear();
             cboHinhDang.SelectedIndex = -1;
             cboDangThuoc.SelectedIndex = -1;
             cboLoaiViThuoc.SelectedIndex = -1;
             cboLoaiRanh.SelectedIndex = -1;
+            cboMauSac1.SelectedIndex = 0;
+            cboMauSac2.SelectedIndex = 0;
             comboBoxFilterHoatChat.SelectedIndex = -1;
 
             buttonXoa.Enabled = false;
@@ -162,6 +204,30 @@ namespace PillIdentifierForm.Forms
 
             HoatChat hc = _listHoatChat.FirstOrDefault(h => h.IDHoatChat == idHoatChat);
             return hc != null ? hc.TenHoatChat : "";
+        }
+
+        private void LoadMauSacForThuoc(int idThuoc)
+        {
+            List<MauSac> colors = getdata.GetMauSacbyIDThuoc(idThuoc);
+            cboMauSac1.SelectedIndex = 0;
+            cboMauSac2.SelectedIndex = 0;
+            if (colors.Count >= 1)
+                SetComboBoxValue(cboMauSac1, colors[0].IDMauSac);
+            if (colors.Count >= 2)
+                SetComboBoxValue(cboMauSac2, colors[1].IDMauSac);
+        }
+
+        private void SaveMauSacForThuoc(int idThuoc)
+        {
+            deletedata.DeleteAllThuoc_MauSacByIDThuoc(idThuoc);
+
+            int id1 = cboMauSac1.SelectedValue != null ? Convert.ToInt32(cboMauSac1.SelectedValue) : -1;
+            int id2 = cboMauSac2.SelectedValue != null ? Convert.ToInt32(cboMauSac2.SelectedValue) : -1;
+
+            if (id1 > 0)
+                insertdata.InsertThuoc_MauSac(new Thuoc_MauSac { IDThuoc = idThuoc, IDMauSac = id1 });
+            if (id2 > 0 && id2 != id1)
+                insertdata.InsertThuoc_MauSac(new Thuoc_MauSac { IDThuoc = idThuoc, IDMauSac = id2 });
         }
         #endregion
 
@@ -196,6 +262,22 @@ namespace PillIdentifierForm.Forms
                 cboLoaiRanh.DisplayMember = "TenLoaiRanh";
                 cboLoaiRanh.ValueMember = "IDLoaiRanh";
                 cboLoaiRanh.SelectedIndex = -1;
+
+                // Load MauSac — add a blank "Không" option at top
+                _listMauSac = getdata.GetDSMauSac().OrderBy(m => m.TenMauSac).ToList();
+                List<MauSac> mauSacList = new List<MauSac>();
+                mauSacList.Add(new MauSac { IDMauSac = -1, TenMauSac = "(Không)" });
+                mauSacList.AddRange(_listMauSac);
+
+                cboMauSac1.DataSource = new List<MauSac>(mauSacList);
+                cboMauSac1.DisplayMember = "TenMauSac";
+                cboMauSac1.ValueMember = "IDMauSac";
+                cboMauSac1.SelectedIndex = 0;
+
+                cboMauSac2.DataSource = new List<MauSac>(mauSacList);
+                cboMauSac2.DisplayMember = "TenMauSac";
+                cboMauSac2.ValueMember = "IDMauSac";
+                cboMauSac2.SelectedIndex = 0;
 
                 // Load HoatChat for filter - add "All" option at the beginning
                 _listHoatChat = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
@@ -319,6 +401,7 @@ namespace PillIdentifierForm.Forms
 
                 if (result)
                 {
+                    SaveMauSacForThuoc(entity.IDThuoc);
                     LoadData();
                     ClearForm();
                     MessageBox.Show("Thêm mới thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -389,6 +472,7 @@ namespace PillIdentifierForm.Forms
 
                 if (result)
                 {
+                    SaveMauSacForThuoc(entity.IDThuoc);
                     LoadData();
                     ClearForm();
                     MessageBox.Show("Cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -445,7 +529,7 @@ namespace PillIdentifierForm.Forms
                     {
                         string[] values = lines[i].Split(',');
 
-                        if (values.Length < 9)
+                        if (values.Length < 8)
                         {
                             errors.AppendLine("Dòng " + (i + 1).ToString() + ": Không đủ cột dữ liệu");
                             errorCount++;
@@ -461,7 +545,6 @@ namespace PillIdentifierForm.Forms
                         entity.IDDangThuoc = int.Parse(values[5].Trim());
                         entity.IDLoaiViThuoc = string.IsNullOrEmpty(values[6].Trim()) ? 0 : int.Parse(values[6].Trim());
                         entity.IDLoaiRanh = string.IsNullOrEmpty(values[7].Trim()) ? 0 : int.Parse(values[7].Trim());
-                        entity.MaHinh = values[8].Trim();
 
                         entities.Add(entity);
                         successCount++;
@@ -510,7 +593,6 @@ namespace PillIdentifierForm.Forms
                 chkCoKhacDau.Checked = row.Cells["CoKhacDau"].Value != null ? Convert.ToBoolean(row.Cells["CoKhacDau"].Value) : false;
                 txtKhacDauMatTruoc.Text = row.Cells["KhacDauMatTruoc"].Value != null ? row.Cells["KhacDauMatTruoc"].Value.ToString() : "";
                 txtKhacDauMatSau.Text = row.Cells["KhacDauMatSau"].Value != null ? row.Cells["KhacDauMatSau"].Value.ToString() : "";
-                // txtMaHinh.Text = row.Cells["MaHinh"].Value != null ? row.Cells["MaHinh"].Value.ToString() : "";
 
                 // Set combobox values
                 SetComboBoxValue(cboHinhDang, row.Cells["IDHinhDang"].Value);
@@ -518,8 +600,12 @@ namespace PillIdentifierForm.Forms
                 SetComboBoxValue(cboLoaiViThuoc, row.Cells["IDLoaiViThuoc"].Value);
                 SetComboBoxValue(cboLoaiRanh, row.Cells["IDLoaiRanh"].Value);
 
+                if (row.Cells["IDThuoc"].Value != null)
+                    LoadMauSacForThuoc(Convert.ToInt32(row.Cells["IDThuoc"].Value));
+
                 buttonXoa.Enabled = true;
                 buttonSua.Enabled = true;
+                dgvData.Focus();
             }
         }
 
@@ -546,8 +632,8 @@ namespace PillIdentifierForm.Forms
             {
                 try
                 {
-                    string header = "IDThuoc,CoKhacDau,KhacDauMatTruoc,KhacDauMatSau,IDHinhDang,IDDangThuoc,IDLoaiViThuoc,IDLoaiRanh,MaHinh";
-                    string example = "1,true,ABC123,XYZ456,1,1,1,1,MH001";
+                    string header = "IDThuoc,CoKhacDau,KhacDauMatTruoc,KhacDauMatSau,IDHinhDang,IDDangThuoc,IDLoaiViThuoc,IDLoaiRanh";
+                    string example = "1,true,ABC123,XYZ456,1,1,1,1";
 
                     File.WriteAllText(sfd.FileName, header + "\n" + example, Encoding.UTF8);
 
@@ -585,13 +671,13 @@ namespace PillIdentifierForm.Forms
                         chkCoKhacDau.Checked = existing.CoKhacDau;
                         txtKhacDauMatTruoc.Text = existing.KhacDauMatTruoc;
                         txtKhacDauMatSau.Text = existing.KhacDauMatSau;
-                        // txtMaHinh.Text = existing.MaHinh;
                         textBoxKichThuoc.Text = existing.KichThuoc.ToString();
 
                         SetComboBoxValue(cboHinhDang, existing.IDHinhDang);
                         SetComboBoxValue(cboDangThuoc, existing.IDDangThuoc);
                         SetComboBoxValue(cboLoaiViThuoc, existing.IDLoaiViThuoc);
                         SetComboBoxValue(cboLoaiRanh, existing.IDLoaiRanh);
+                        LoadMauSacForThuoc(idThuoc);
 
                         buttonXoa.Enabled = true;
                         buttonSua.Enabled = true;
@@ -603,15 +689,17 @@ namespace PillIdentifierForm.Forms
                         chkCoKhacDau.Checked = false;
                         txtKhacDauMatTruoc.Clear();
                         txtKhacDauMatSau.Clear();
-                        // txtMaHinh.Clear();
                         cboHinhDang.SelectedIndex = -1;
                         cboDangThuoc.SelectedIndex = -1;
                         cboLoaiViThuoc.SelectedIndex = -1;
                         cboLoaiRanh.SelectedIndex = -1;
+                        cboMauSac1.SelectedIndex = 0;
+                        cboMauSac2.SelectedIndex = 0;
 
                         buttonXoa.Enabled = false;
                         buttonSua.Enabled = false;
                     }
+                    dataGridViewThuoc.Focus();
                 }
             }
             catch (Exception ex)
@@ -629,70 +717,6 @@ namespace PillIdentifierForm.Forms
         private void comboBoxFilterHoatChat_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadThuoc();
-        }
-
-        private void btnAddImage_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // Check if a record is selected
-                if (dgvData.CurrentRow == null)
-                {
-                    MessageBox.Show("Vui lòng chọn một dòng trước khi thêm hình ảnh.", "Thông báo",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Get the IDNhanDang from the selected row
-                int idNhanDang = Convert.ToInt32(dgvData.CurrentRow.Cells["IDNhanDang"].Value);
-
-                // Open file dialog to select image
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png";
-                openFileDialog.Title = "Chọn hình ảnh thuốc";
-
-                if (openFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    // Get the file extension
-                    string fileExtension = Path.GetExtension(openFileDialog.FileName);
-
-                    // Get the drugs folder using the new method
-                    string drugsFolder = getdata.GetDrugImagesFolder();
-
-                    // Create the new filename using IDNhanDang
-                    string newFileName = idNhanDang.ToString() + fileExtension;
-                    string destinationPath = Path.Combine(drugsFolder, newFileName);
-
-                    // Check if file already exists
-                    if (File.Exists(destinationPath))
-                    {
-                        DialogResult result = MessageBox.Show(
-                            "Hình ảnh cho ID này đã tồn tại. Bạn có muốn ghi đè?",
-                            "Xác nhận",
-                            MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Question);
-
-                        if (result == DialogResult.No)
-                        {
-                            return;
-                        }
-                    }
-
-                    // Copy the file to the destination
-                    File.Copy(openFileDialog.FileName, destinationPath, true);
-
-                    // Update the textbox with the new filename
-                    // txtMaHinh.Text = newFileName;
-
-                    MessageBox.Show("Đã lưu hình ảnh thành công!", "Thành công",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Lỗi khi lưu hình ảnh: " + ex.Message, "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
 
     }

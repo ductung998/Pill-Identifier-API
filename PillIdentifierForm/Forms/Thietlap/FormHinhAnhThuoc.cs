@@ -141,10 +141,8 @@ namespace PillIdentifierForm.Forms
                     int.TryParse(group.First().MoTa, out order);
 
                     string url  = group.Key ?? "";
-                    // string name = string.IsNullOrEmpty(url)
-                    //     ? "(không có URL)"
-                    //     : Path.GetFileName(url.Split('?')[0]);
                     string name = "(không có URL)";
+                    
                     if (!string.IsNullOrEmpty(url))
                     {
                         // Dùng Regex để tìm phần text nằm sau chữ ?name= hoặc &name=

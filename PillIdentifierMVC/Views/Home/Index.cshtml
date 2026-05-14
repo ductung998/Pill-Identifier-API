@@ -332,6 +332,10 @@
                 imprintFront.disabled = isNo;
                 imprintBack.disabled = isNo;
 
+                if (isNo) {
+                    imprintFront.value = '';
+                    imprintBack.value = '';
+                }
             }
 
             radios.forEach(radio => {

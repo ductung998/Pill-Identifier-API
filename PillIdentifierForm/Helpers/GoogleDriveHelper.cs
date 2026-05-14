@@ -13,29 +13,7 @@ namespace PillIdentifierForm.Helpers
 {
     public static class GoogleDriveHelper
     {
-        // private static readonly string[] Scopes = { DriveService.Scope.Drive };
-        //
-        // private static readonly string ServiceAccountJsonPath =
-        //     Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "google_credential.json");
-        //
-        // private static DriveService GetDriveService()
-        // {
-        //     if (!System.IO.File.Exists(ServiceAccountJsonPath))
-        //         throw new FileNotFoundException(
-        //             "Không tìm thấy file xác thực Google:\n" + ServiceAccountJsonPath);
-        //
-        //     GoogleCredential credential;
-        //     using (var stream = new FileStream(ServiceAccountJsonPath, FileMode.Open, FileAccess.Read))
-        //     {
-        //         credential = GoogleCredential.FromStream(stream).CreateScoped(Scopes);
-        //     }
-        //     return new DriveService(new BaseClientService.Initializer
-        //     {
-        //         HttpClientInitializer = credential,
-        //         ApplicationName = "PillIdentifierForm"
-        //     });
-        // }
-        
+      
         private static readonly string[] Scopes = { DriveService.Scope.Drive };
 
         // Trỏ tới file JSON mới
@@ -43,8 +21,11 @@ namespace PillIdentifierForm.Helpers
             Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "client_secret.json");
 
         // Thư mục để app tự động lưu Token sau khi đăng nhập lần đầu
-        private static readonly string TokenFolder = 
-            Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DriveTokens");
+        private static readonly string TokenFolder =
+            Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+                "PillIdentifierForm",
+                "DriveTokens");
 
         private static DriveService GetDriveService()
         {
