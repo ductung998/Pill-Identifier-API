@@ -210,7 +210,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(74, 17);
             this.label13.TabIndex = 32;
-            this.label13.Text = "Kích thước";
+            this.label13.Text = "Đường kính";
             // 
             // label12
             // 
@@ -351,7 +351,7 @@
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(122, 17);
             this.label10.TabIndex = 20;
-            this.label10.Text = "Khắc dấu mặt sau";
+            this.label10.Text = "Khắc dấu mặt 2";
             // 
             // txtKhacDauMatSau
             // 
@@ -367,7 +367,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(131, 17);
             this.label9.TabIndex = 18;
-            this.label9.Text = "Khắc dấu mặt trước";
+            this.label9.Text = "Khắc dấu mặt 1";
             // 
             // label8
             // 
@@ -385,7 +385,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(49, 17);
             this.label7.TabIndex = 14;
-            this.label7.Text = "Loại vỉ";
+            this.label7.Text = "Bao bì cấp 1";
             // 
             // label6
             // 
@@ -394,7 +394,7 @@
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(81, 17);
             this.label6.TabIndex = 12;
-            this.label6.Text = "Dạng thuốc";
+            this.label6.Text = "Dạng bào chế";
             // 
             // label5
             // 

@@ -85,6 +85,11 @@ namespace PillIdentifierMVC.Helpers
                     inner =
                         "<path d='M11,4 C16,0 21,8 18,15 C16,19 13,19 11,17 C9,19 6,19 4,15 C1,8 6,0 11,4 Z' fill='#e0e0e0' stroke='#666' stroke-width='1.5' stroke-linejoin='round'/>";
                     break;
+                case 22: // Hình nang (Capsule - 2-part pharmaceutical capsule)
+                    inner =
+                        "<rect x='1' y='6' width='20' height='10' rx='5' fill='#e0e0e0' stroke='#666' stroke-width='1.5'/>" +
+                        "<line x1='11' y1='6' x2='11' y2='16' stroke='#666' stroke-width='1.2'/>";
+                    break;
                 default:
                     return new HtmlString("");
             }
@@ -113,13 +118,19 @@ namespace PillIdentifierMVC.Helpers
             { 42, "#FFFDD0" }, // Kem
             { 43, "#F9B3A7" }, // Đào
             { 36, "#9E9E9E" }, // Khác
+            { 44, "#212121" }, // Đen
+            { 45, "#6D6D6D" }, // Xám
         };
 
         public static IHtmlString ColorCircle(int id)
         {
             string hex;
             if (!ColorHex.TryGetValue(id, out hex)) return new HtmlString("");
-            string border = id == 8 ? "border:1px solid #ccc;" : "border:1px solid rgba(0,0,0,0.1);";
+            string border = (id == 8 || id == 40 || id == 42 || id == 43)
+                ? "border:1px solid #ccc;"
+                : id == 44
+                    ? "border:1px solid #555;"
+                    : "border:1px solid rgba(0,0,0,0.1);";
             return new HtmlString(
                 $"<span style='display:inline-block;width:16px;height:16px;border-radius:50%;" +
                 $"background:{hex};{border}vertical-align:middle;margin-right:6px;flex-shrink:0;'></span>");

@@ -44,15 +44,20 @@ namespace PillIdentifierMVC.Models
         public bool HasSearched { get; set; }
     }
 
-    public class PillDetailModel
+    public class NhanDangDetail
     {
-        public Thuoc Thuoc { get; set; }
         public NhanDangThuoc NhanDang { get; set; }
-        public List<MauSac> Mausac { get; set; }
         public string TenHinhDang { get; set; }
         public string TenDangThuoc { get; set; }
         public string TenLoaiRanh { get; set; }
         public string TenLoaiVi { get; set; }
+    }
+
+    public class PillDetailModel
+    {
+        public Thuoc Thuoc { get; set; }
+        public List<NhanDangDetail> NhanDangs { get; set; }
+        public List<MauSac> Mausac { get; set; }
         public string TenHoatChat { get; set; }
         public List<HinhAnhThuocChiTiet> HinhAnhList { get; set; }
     }

@@ -127,11 +127,5 @@ namespace PillIdentifierForm
             Forms.FormHinhAnhThuoc FormHinhAnhThuoc = new Forms.FormHinhAnhThuoc();
             openChildForm(FormHinhAnhThuoc);
         }
-
-        private void traCứuToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Forms.Tracuu Tracuu = new Forms.Tracuu();
-            openChildForm(Tracuu);
-        }
     }
 }

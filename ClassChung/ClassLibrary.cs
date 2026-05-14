@@ -1075,22 +1075,21 @@ namespace ClassChung
                 }
             }
 
-            public List<Thuoc> GetNhanDangThuoc(
+            public List<NhanDangThuoc> GetNhanDangThuoc(
                 bool? hasImprint = false,
                 string imprintFront = null,
                 string imprintBack = null,
                 int? idMausac1 = null,
                 int? idMausac2 = null,
-                int? idHinhdang = null,
+                List<int> idHinhdangs = null,
                 int? idDangthuoc = null,
                 int? idLoaiVi = null,
                 int? idLoaiRanh = null,
                 double? kichThuoc = null)
             {
-                List<Thuoc> kq = new List<Thuoc>();
+                List<NhanDangThuoc> kq = new List<NhanDangThuoc>();
                 try
                 {
-                    List<int> dsIDThuoc = new List<int>();
                     IQueryable<w_NhanDangThuoc> query2 = from data in db.w_NhanDangThuocs
                         select data;
 
@@ -1120,8 +1119,8 @@ namespace ClassChung
                     }
 
                     // ===== MAIN ATTRIBUTES FILTERING =====
-                    if (idHinhdang != null)
-                        query2 = query2.Where(x => x.IDHinhDang == idHinhdang);
+                    if (idHinhdangs != null && idHinhdangs.Count > 0)
+                        query2 = query2.Where(x => idHinhdangs.Contains(x.IDHinhDang));
 
                     if (idDangthuoc != null)
                         query2 = query2.Where(x => x.IDDangThuoc == idDangthuoc);
@@ -1183,7 +1182,7 @@ namespace ClassChung
 
                         foreach (w_NhanDangThuoc i in matchedByImprint)
                         {
-                            dsIDThuoc.Add(i.IDThuoc);
+                            kq.Add(NhanDangThuoc.fromNhanDangThuocDB(i));
                         }
                     }
                     else
@@ -1192,13 +1191,9 @@ namespace ClassChung
                             query2 = query2.Where(nhanDangThuoc => nhanDangThuoc.CoKhacDau == hasImprint);
                         foreach (w_NhanDangThuoc i in query2)
                         {
-                            dsIDThuoc.Add(i.IDThuoc);
+                            kq.Add(NhanDangThuoc.fromNhanDangThuocDB(i));
                         }
                     }
-
-                    dsIDThuoc = dsIDThuoc.Distinct().ToList();
-
-                    kq = GetDSThuoc().Where(x => dsIDThuoc.Contains(x.IDThuoc)).ToList();
 
                     return kq;
                 }
@@ -1225,6 +1220,24 @@ namespace ClassChung
                     return kq;
                 }
             }
+            public List<NhanDangThuoc> GetDSNhanDangByThuoc(int idThuoc)
+            {
+                List<NhanDangThuoc> kq = new List<NhanDangThuoc>();
+                try
+                {
+                    List<w_NhanDangThuoc> ds = (from data in db.w_NhanDangThuocs
+                                                where data.IDThuoc == idThuoc
+                                                select data).ToList();
+                    foreach (w_NhanDangThuoc i in ds)
+                        kq.Add(NhanDangThuoc.fromNhanDangThuocDB(i));
+                    return kq;
+                }
+                catch
+                {
+                    return kq;
+                }
+            }
+
             public List<int> GetDSNhanDangIDsByThuoc(int idThuoc)
             {
                 List<int> kq = new List<int>();

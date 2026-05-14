@@ -38,64 +38,58 @@ namespace PillIdentifierMVC.Controllers
 
             var db = new KetnoiDB.GetData();
 
-            // Bulk load — fixed DB call count regardless of result size
-            var allNhanDang   = db.GetDSNhanDangThuoc();
             var allThuocMauSac = db.GetDSThuoc_MauSac();
-            var allHoatChat   = db.GetDSHoatChat();
+            var allHoatChat    = db.GetDSHoatChat();
 
-            // Only pass imprint text when user indicated the pill HAS an imprint
             string imprintFront = filter.CoKhacDau == true ? filter.ImprintFront : null;
             string imprintBack  = filter.CoKhacDau == true ? filter.ImprintBack  : null;
 
-            // Multi-select shape: OR logic — one call per selected shape, union results
             var shapeIds = filter.SelectedHinhDangIds != null && filter.SelectedHinhDangIds.Count > 0
                 ? filter.SelectedHinhDangIds
-                : new List<int> { 0 }; // 0 = sentinel for "no shape filter"
+                : null;
 
-            var searchResults = new List<Thuoc>();
-            foreach (var shapeId in shapeIds)
+            // Returns one NhanDangThuoc per matched packaging variant
+            var matchedNhanDangs = db.GetNhanDangThuoc(
+                hasImprint:   filter.CoKhacDau,
+                imprintFront: imprintFront,
+                imprintBack:  imprintBack,
+                idMausac1:    filter.IdMauSac1,
+                idMausac2:    filter.IdMauSac2,
+                idHinhdangs:  shapeIds,
+                idDangthuoc:  filter.IdDangThuoc,
+                idLoaiVi:     filter.IdLoaiVi,
+                idLoaiRanh:   filter.IdLoaiRanh,
+                kichThuoc:    filter.KichThuoc
+            );
+
+            // One result card per drug — use the first matched NhanDang for each drug
+            var distinctMatches = matchedNhanDangs
+                .GroupBy(x => x.IDThuoc)
+                .Select(g => g.First())
+                .ToList();
+
+            var drugIds      = distinctMatches.Select(x => x.IDThuoc).ToList();
+            var allThuocList = db.GetDSThuoc().Where(x => drugIds.Contains(x.IDThuoc)).ToList();
+
+            model.Results = distinctMatches.Select(nhanDang =>
             {
-                var partial = db.GetNhanDangThuoc(
-                    hasImprint: filter.CoKhacDau,
-                    imprintFront: imprintFront,
-                    imprintBack:  imprintBack,
-                    idMausac1:    filter.IdMauSac1,
-                    idMausac2:    filter.IdMauSac2,
-                    idHinhdang:   shapeId > 0 ? (int?)shapeId : null,
-                    idDangthuoc:  filter.IdDangThuoc,
-                    idLoaiVi:     filter.IdLoaiVi,
-                    idLoaiRanh:   filter.IdLoaiRanh,
-                    kichThuoc:    filter.KichThuoc
-                );
-                searchResults.AddRange(partial);
-            }
-
-            // Deduplicate by IDThuoc
-            searchResults = searchResults.GroupBy(x => x.IDThuoc).Select(g => g.First()).ToList();
-
-            // Join in memory — build result cards
-            var drugIds      = searchResults.Select(x => x.IDThuoc).ToList();
-            var nhanDangMap  = allNhanDang.Where(x => drugIds.Contains(x.IDThuoc)).ToList();
-
-            model.Results = searchResults.Select(thuoc =>
-            {
-                var nhanDang   = nhanDangMap.FirstOrDefault(x => x.IDThuoc == thuoc.IDThuoc);
-                var mauSacIds  = allThuocMauSac.Where(x => x.IDThuoc == thuoc.IDThuoc).Select(x => x.IDMauSac).ToList();
-                var mauSacs    = model.MauSacs.Where(x => mauSacIds.Contains(x.IDMauSac)).ToList();
-                var hoatChat   = allHoatChat.FirstOrDefault(x => x.IDHoatChat == thuoc.IDHoatChat);
+                var thuoc     = allThuocList.FirstOrDefault(x => x.IDThuoc == nhanDang.IDThuoc);
+                var mauSacIds = allThuocMauSac.Where(x => x.IDThuoc == nhanDang.IDThuoc).Select(x => x.IDMauSac).ToList();
+                var mauSacs   = model.MauSacs.Where(x => mauSacIds.Contains(x.IDMauSac)).ToList();
+                var hoatChat  = thuoc != null ? allHoatChat.FirstOrDefault(x => x.IDHoatChat == thuoc.IDHoatChat) : null;
 
                 return new PillResultCard
                 {
                     Thuoc        = thuoc,
                     NhanDang     = nhanDang,
                     Mausac       = mauSacs,
-                    TenHinhDang  = nhanDang != null ? model.HinhDangs.FirstOrDefault(x => x.IDHinhDang == nhanDang.IDHinhDang)?.TenHinhDang : null,
-                    TenDangThuoc = nhanDang != null ? model.DangThuocs.FirstOrDefault(x => x.IDDangThuoc == nhanDang.IDDangThuoc)?.TenDangThuoc : null,
-                    TenLoaiRanh  = nhanDang != null && nhanDang.IDLoaiRanh > 0 ? model.LoaiRanhs.FirstOrDefault(x => x.IDLoaiRanh == nhanDang.IDLoaiRanh)?.TenLoaiRanh : null,
-                    TenLoaiVi    = nhanDang != null && nhanDang.IDLoaiViThuoc > 0 ? model.LoaiViThuocs.FirstOrDefault(x => x.IDLoaiViThuoc == nhanDang.IDLoaiViThuoc)?.TenLoaiVi : null,
+                    TenHinhDang  = model.HinhDangs.FirstOrDefault(x => x.IDHinhDang == nhanDang.IDHinhDang)?.TenHinhDang,
+                    TenDangThuoc = model.DangThuocs.FirstOrDefault(x => x.IDDangThuoc == nhanDang.IDDangThuoc)?.TenDangThuoc,
+                    TenLoaiRanh  = nhanDang.IDLoaiRanh > 0 ? model.LoaiRanhs.FirstOrDefault(x => x.IDLoaiRanh == nhanDang.IDLoaiRanh)?.TenLoaiRanh : null,
+                    TenLoaiVi    = nhanDang.IDLoaiViThuoc > 0 ? model.LoaiViThuocs.FirstOrDefault(x => x.IDLoaiViThuoc == nhanDang.IDLoaiViThuoc)?.TenLoaiVi : null,
                     TenHoatChat  = hoatChat?.TenHoatChat
                 };
-            }).ToList();
+            }).Where(c => c.Thuoc != null).ToList();
 
             foreach (var card in model.Results)
             {
@@ -115,34 +109,42 @@ namespace PillIdentifierMVC.Controllers
 
         public ActionResult Detail(int id)
         {
-            var db      = new KetnoiDB.GetData();
-            var thuoc   = db.GetThuoc(id);
+            var db           = new KetnoiDB.GetData();
+            var thuoc        = db.GetThuoc(id);
             if (thuoc == null) return HttpNotFound();
 
-            var nhanDang     = db.GetNhanDangByThuoc(id);
+            var allNhanDangs = db.GetDSNhanDangByThuoc(id);
             var hinhDangs    = db.GetDSHinhDang();
             var dangThuocs   = db.GetDSDangThuoc();
             var loaiRanhs    = db.GetDSLoaiRanh();
             var loaiViThuocs = db.GetDSLoaiViThuoc();
             var allHoatChat  = db.GetDSHoatChat();
-            var hinhAnhList  = db.GetDSHinhAnhbyThuoc(id)
-                                 .Where(x => x.IDNhanDang == nhanDang.IDNhanDang)
-                                 .OrderBy(x => { int n; return int.TryParse(x.MoTa, out n) ? n : int.MaxValue; })
-                                 .ToList();
+
+            // Images are drug-level (fanned out to each NhanDang) — load once via first NhanDang to avoid duplicates
+            var firstNhanDangId = allNhanDangs.Select(x => x.IDNhanDang).FirstOrDefault();
+            var hinhAnhList = db.GetDSHinhAnhbyThuoc(id)
+                                .Where(x => x.IDNhanDang == firstNhanDangId)
+                                .OrderBy(x => { int n; return int.TryParse(x.MoTa, out n) ? n : int.MaxValue; })
+                                .ToList();
             foreach (var img in hinhAnhList)
                 img.DuongDanHinh = ToDriveDirectUrl(img.DuongDanHinh);
 
+            var nhanDangDetails = allNhanDangs.Select(nd => new NhanDangDetail
+            {
+                NhanDang     = nd,
+                TenHinhDang  = hinhDangs.FirstOrDefault(x => x.IDHinhDang == nd.IDHinhDang)?.TenHinhDang,
+                TenDangThuoc = dangThuocs.FirstOrDefault(x => x.IDDangThuoc == nd.IDDangThuoc)?.TenDangThuoc,
+                TenLoaiRanh  = nd.IDLoaiRanh > 0 ? loaiRanhs.FirstOrDefault(x => x.IDLoaiRanh == nd.IDLoaiRanh)?.TenLoaiRanh : null,
+                TenLoaiVi    = nd.IDLoaiViThuoc > 0 ? loaiViThuocs.FirstOrDefault(x => x.IDLoaiViThuoc == nd.IDLoaiViThuoc)?.TenLoaiVi : null,
+            }).ToList();
+
             var model = new PillDetailModel
             {
-                Thuoc        = thuoc,
-                NhanDang     = nhanDang,
-                Mausac       = thuoc.Mausac ?? new List<MauSac>(),
-                TenHinhDang  = nhanDang != null ? hinhDangs.FirstOrDefault(x => x.IDHinhDang == nhanDang.IDHinhDang)?.TenHinhDang : null,
-                TenDangThuoc = nhanDang != null ? dangThuocs.FirstOrDefault(x => x.IDDangThuoc == nhanDang.IDDangThuoc)?.TenDangThuoc : null,
-                TenLoaiRanh  = nhanDang != null && nhanDang.IDLoaiRanh > 0 ? loaiRanhs.FirstOrDefault(x => x.IDLoaiRanh == nhanDang.IDLoaiRanh)?.TenLoaiRanh : null,
-                TenLoaiVi    = nhanDang != null && nhanDang.IDLoaiViThuoc > 0 ? loaiViThuocs.FirstOrDefault(x => x.IDLoaiViThuoc == nhanDang.IDLoaiViThuoc)?.TenLoaiVi : null,
-                TenHoatChat  = allHoatChat.FirstOrDefault(x => x.IDHoatChat == thuoc.IDHoatChat)?.TenHoatChat,
-                HinhAnhList  = hinhAnhList
+                Thuoc       = thuoc,
+                NhanDangs   = nhanDangDetails,
+                Mausac      = thuoc.Mausac ?? new List<MauSac>(),
+                TenHoatChat = allHoatChat.FirstOrDefault(x => x.IDHoatChat == thuoc.IDHoatChat)?.TenHoatChat,
+                HinhAnhList = hinhAnhList
             };
 
             return View(model);
