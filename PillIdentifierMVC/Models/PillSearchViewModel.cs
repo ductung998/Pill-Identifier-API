@@ -5,7 +5,7 @@ namespace PillIdentifierMVC.Models
 {
     public class PillSearchFilter
     {
-        public bool? CoKhacDau { get; set; }
+        public bool CoKhacDau { get; set; } = true;
         public string ImprintFront { get; set; }
         public string ImprintBack { get; set; }
         public List<int> SelectedHinhDangIds { get; set; }
@@ -15,7 +15,7 @@ namespace PillIdentifierMVC.Models
         public int? IdLoaiVi { get; set; }
         public int? IdLoaiRanh { get; set; }
         public double? KichThuoc { get; set; }
-        public int? IdChiDinh { get; set; } // placeholder — not wired to search yet
+        public List<int> IdsChiDinh { get; set; } // placeholder — not wired to search yet
     }
 
     public class PillResultCard

@@ -6,25 +6,33 @@
 
 <div class="instructions-panel">
     <p class="intro">
-        Phần mềm nhận dạng thuốc viên giúp bạn tra cứu thông tin thuốc dựa trên các đặc điểm bên ngoài của viên thuốc.
-        Điền vào các trường bạn biết — càng nhiều thông tin càng cho kết quả chính xác hơn.
+        Phần mềm hỗ trợ nhận diện thuốc viên giúp bạn tìm kiếm và cung cấp thông tin thuốc dựa trên các đặc điểm vật lý, các thông tin cơ bản và mục đích sử dụng của thuốc.
+        Điền vào các trường dữ liệu nếu bạn biết - càng nhiều thông tin chi tiết càng cho kết quả chính xác hơn.
     </p>
 
     <div class="instruction-item">
         <div class="instruction-icon">1</div>
         <div class="instruction-body">
             <div class="field-name">Có khắc dấu trên viên thuốc không?</div>
-            <div class="field-desc">Chọn "Có" nếu viên thuốc có chữ, số hoặc ký hiệu được khắc hoặc in trên bề mặt. Chọn "Không" nếu bề mặt trơn. Chọn "Không rõ" nếu bạn không chắc chắn.</div>
-            <div class="field-tip">Khi chọn "Có", bạn có thể nhập nội dung khắc dấu ở mặt trước và mặt sau.</div>
+            <div class="field-desc">Chọn "Có" nếu viên thuốc được khắc dấu (chữ số, ký tự hoặc ký hiệu) trên bề mặt.</div>
+            <div class="field-desc">Chọn "Không" nếu bề mặt trơn.</div>
+            <div class="field-desc">Chọn "Không rõ" nếu bạn không chắc chắn.</div>
+            <div class="field-tip">Khi chọn "Có", bạn có thể nhập nội dung ở trường khắc dấu mặt 1 và mặt 2. Khi chọn "Không" hoặc "Không rõ", bạn không thể nhập nội dung ở trường khắc dấu mặt 1 và mặt 2</div>
         </div>
     </div>
 
     <div class="instruction-item">
         <div class="instruction-icon">2</div>
         <div class="instruction-body">
-            <div class="field-name">Khắc dấu mặt trước / mặt sau</div>
-            <div class="field-desc">Nhập các chữ, số hoặc ký hiệu được in trên mỗi mặt của viên thuốc. Ví dụ: "500", "TYLENOL", "M 32".</div>
-            <div class="field-tip">Có thể nhập một phần ký hiệu — hệ thống sẽ tìm kiếm gần đúng.</div>
+            <div class="field-name">Khắc dấu mặt 1 và mặt 2</div>
+            <div class="field-desc">Nhập các chữ số, ký tự hoặc ký hiệu được khắc trên mỗi mặt của viên thuốc hoặc trên nắp/thân (đối với thuốc nang). Ví dụ: "500", "TYLENOL".</div>
+            <div class="field-desc">
+                Nếu viên thuốc được khắc logo hoặc nhãn hiệu công ty, thì nhập "logo".
+            </div>
+            <div class="field-desc">
+                Nếu viên thuốc được khắc những ký tự riêng lẻ trên một mặt hoặc một bộ phận, thì hãy nhập các ký tự liền nhau không ký tự trắng. Ví dụ: "M 32" sẽ thành "M32".
+            </div>
+            <div class="field-tip">Có thể nhập một phần ký hiệu - hệ thống sẽ tìm kiếm gần đúng.</div>
         </div>
     </div>
 
@@ -33,7 +41,7 @@
         <div class="instruction-body">
             <div class="field-name">Hình dạng</div>
             <div class="field-desc">Chọn hình dạng của viên thuốc. Có thể chọn nhiều hình dạng cùng lúc — hệ thống sẽ trả về kết quả khớp với bất kỳ hình dạng nào đã chọn.</div>
-            <div class="field-tip">Ví dụ: tròn, bầu dục, hình chữ nhật, hình tam giác...</div>
+            <div class="field-tip">Bỏ trống nếu không rõ hình dạng.</div>
         </div>
     </div>
 
@@ -41,7 +49,7 @@
         <div class="instruction-icon">4</div>
         <div class="instruction-body">
             <div class="field-name">Màu sắc 1 và Màu sắc 2</div>
-            <div class="field-desc">Chọn màu chính của viên thuốc. Nếu viên thuốc có hai màu (ví dụ nửa trên một màu, nửa dưới màu khác), hãy chọn cả hai màu.</div>
+            <div class="field-desc">Chọn màu chính của viên thuốc. Nếu viên thuốc có hai màu riêng biệt, hãy chọn cả hai ô Màu sắc 1 và Màu sắc 2.</div>
             <div class="field-tip">Bỏ trống nếu không rõ màu sắc.</div>
         </div>
     </div>
@@ -50,35 +58,44 @@
         <div class="instruction-icon">5</div>
         <div class="instruction-body">
             <div class="field-name">Loại rãnh</div>
-            <div class="field-desc">Rãnh là đường kẻ trên viên thuốc dùng để bẻ đôi. Chọn loại rãnh phù hợp (không có rãnh, một rãnh, rãnh chéo, v.v.).</div>
-            <div class="field-tip">Để trống nếu bạn không chú ý đến rãnh.</div>
+            <div class="field-desc">Rãnh là đường kẻ trên viên thuốc dùng để chia nhỏ. Chọn loại rãnh phù hợp. Nếu viên thuốc không có rãnh thì chọn "Không có rãnh"</div>
+            <div class="field-tip">Bỏ trống nếu không rõ loại rãnh.</div>
         </div>
     </div>
 
     <div class="instruction-item">
         <div class="instruction-icon">6</div>
         <div class="instruction-body">
-            <div class="field-name">Loại vỉ thuốc</div>
-            <div class="field-desc">Chọn loại vỉ (bao bì) mà thuốc được đóng gói trong đó. Ví dụ: vỉ nhôm, hộp nhựa, lọ, v.v.</div>
-            <div class="field-tip">Thông tin này có thể bỏ trống nếu bạn không có vỉ thuốc bên cạnh.</div>
+            <div class="field-name">Bao bì cấp 1</div>
+            <div class="field-desc">Chọn loại bao bì tiếp xúc trực tiếp với thuốc.</div>
+            <div class="field-tip">Bỏ trống nếu không rõ bao bì.</div>
         </div>
     </div>
 
     <div class="instruction-item">
         <div class="instruction-icon">7</div>
         <div class="instruction-body">
-            <div class="field-name">Đường kính (cm)</div>
-            <div class="field-desc">Nhập đường kính lớn nhất của viên thuốc tính bằng centimét. Ví dụ: 1.2 (nghĩa là 12 mm).</div>
-            <div class="field-tip">Dùng thước để đo chính xác hơn. Bỏ trống nếu không đo được.</div>
+            <div class="field-name">Đường kính (mm)</div>
+            <div class="field-desc">Nhập đường kính, chiều dài hoặc đường chéo (thông số lớn nhất) của viên thuốc tính bằng milimet. Ví dụ: 1.2</div>
+            <div class="field-tip">Bỏ trống nếu không rõ thông số.</div>
         </div>
     </div>
 
     <div class="instruction-item">
         <div class="instruction-icon">8</div>
         <div class="instruction-body">
-            <div class="field-name">Dạng thuốc</div>
-            <div class="field-desc">Chọn dạng bào chế của thuốc: viên nén, viên nang cứng, viên nang mềm, viên bao phim, v.v.</div>
-            <div class="field-tip">Bỏ trống nếu bạn không xác định được dạng bào chế.</div>
+            <div class="field-name">Dạng bào chế</div>
+            <div class="field-desc">Chọn dạng bào chế của thuốc phù hợp với đường dùng. Ví dụ, viên nén dùng để uống -> chọn "viên nén", viên nén dùng đặt âm đạo -> chọn "viên nén đặt âm đạo".</div>
+            <div class="field-tip">Bỏ trống nếu không rõ dạng bào chế.</div>
+        </div>
+    </div>
+    
+    <div class="instruction-item">
+        <div class="instruction-icon">9</div>
+        <div class="instruction-body">
+            <div class="field-name">Mục đích sử dụng</div>
+            <div class="field-desc">Nhập mục đích sử dụng thuốc vào ô tìm kiếm và chọn những kết quả phù hợp trong danh sách gợi ý. Có thể nhập và chọn nhiều mục đích sử dụng cùng lúc — hệ thống sẽ trả về kết quả khớp với bất kỳ mục đích sử dụng nào đã chọn.</div>
+            <div class="field-tip">Bỏ trống nếu không rõ mục đích sử dụng.</div>
         </div>
     </div>
 

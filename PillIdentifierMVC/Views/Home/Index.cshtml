@@ -6,51 +6,105 @@
 @using (Html.BeginForm("Search", "Home", FormMethod.Post, new { id = "searchForm" }))
 {
     <div class="search-panel">
+        @* ===== ROW 1: Có khắc dấu | (empty) ===== *@
         <div class="row">
-
-            @* ===== LEFT COLUMN ===== *@
             <div class="col-md-6">
-
-                @* Có khắc dấu *@
                 <div class="form-group">
                     <label>Có khắc dấu</label>
                     <div class="imprint-radio-group">
                         <label>
                             <input type="radio" name="CoKhacDau" value="true"
-                                @(Model.Filter.CoKhacDau == true ? "checked" : "") /> Có
+                                   @(Model.Filter.CoKhacDau ? "checked" : "")/> Có
                         </label>
                         <label>
                             <input type="radio" name="CoKhacDau" value="false"
-                                @(Model.Filter.CoKhacDau == false ? "checked" : "") /> Không
+                                   @(!Model.Filter.CoKhacDau ? "checked" : "")/> Không
                         </label>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
 
-                @* Khắc dấu mặt trước *@
+        @* ===== ROW 2: Khắc dấu mặt 1 | (empty) ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label>Khắc dấu mặt trước</label>
+                    <label>Khắc dấu mặt 1</label>
                     <div class="input-with-clear">
                         <input type="text" name="ImprintFront" class="form-control"
                                value="@Model.Filter.ImprintFront"
-                               placeholder="Nhập ký hiệu khắc trên viên thuốc" />
+                               placeholder="Nhập ký hiệu khắc trên viên thuốc"
+                               @(Model.Filter.CoKhacDau == true ? "" : "disable")/>
                         <button type="button" class="btn-clear-inline"
-                                onclick="clearField('ImprintFront')">XÓA</button>
+                                onclick="clearField('ImprintFront')">XÓA
+                        </button>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6"></div>
+        </div>
 
-                @* Khắc dấu mặt sau *@
+        @* ===== ROW 3: Khắc dấu mặt 2 | Mục đích sử dụng ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label>Khắc dầu mặt sau</label>
+                    <label>Khắc dấu mặt 2</label>
                     <div class="input-with-clear">
                         <input type="text" name="ImprintBack" class="form-control"
                                value="@Model.Filter.ImprintBack"
-                               placeholder="Nhập ký hiệu khắc trên viên thuốc" />
+                               placeholder="Nhập ký hiệu khắc trên viên thuốc"
+                               @(Model.Filter.CoKhacDau == true ? "" : "disable")/>
                         <button type="button" class="btn-clear-inline"
-                                onclick="clearField('ImprintBack')">XÓA</button>
+                                onclick="clearField('ImprintBack')">XÓA
+                        </button>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Mục đích sử dụng</label>
+                    <div class="custom-dropdown" id="dd-chiDinh">
 
-                @* Hình dạng — multi-select, 2-col grid *@
+                        <button type="button" class="dropdown-toggle-btn"
+                                onclick="toggleDropdown('dd-chiDinh')">
+                            <span class="dd-label">Chọn mục đích sử dụng</span>
+                        </button>
+
+                        <div class="dropdown-menu-custom"
+                             style="max-height: none; overflow: visible; padding: 10px 0px 10px 10px; position: absolute; top: 100%; left: 0; right: 0; background: #fff; border: 1px solid #ccc; border-radius: 4px; padding: 10px; z-index: 1000; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+
+                            <div style="margin-bottom: 10px; padding-right: 10px; position: relative;">
+                                <input type="text" id="searchInputChiDinh" class="form-control" placeholder="Tìm kiếm chỉ định..." onkeyup="filterChiDinh()" style="padding-right: 30px;" />
+                                <span id="clearSearchChiDinh" style="position: absolute; right: 20px; top: 50%; transform: translateY(-50%); cursor: pointer; display: none; color: #999; font-size: 18px; font-weight: bold; z-index: 10;" title="Xóa tìm kiếm">&times;</span>
+                            </div>
+
+                            <div
+                                style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; max-height: 210px; overflow-y: auto;">
+                                @foreach (var cd in Model.ChiDinhs)
+                                {
+                                    // Check if item is already selected from the backend
+                                    bool isChecked = Model.Filter.IdsChiDinh != null &&
+                                                         Model.Filter.IdsChiDinh.Contains(cd.IDChiDinh);
+
+                                    <label class="chiDinh-item"
+                                           style="display: flex; align-items: center; cursor: pointer; font-weight: normal; margin: 0;">
+                                        <input type="checkbox" name="IdsChiDinh" value="@cd.IDChiDinh"
+                                               @(isChecked ? "checked" : "")
+                                               style="margin-right: 8px;"/>
+                                        <span class="item-name">@cd.TenChiDinh</span>
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @* ===== ROW 4: Hình dạng | Dạng thuốc ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Hình dạng</label>
                     <div class="custom-dropdown" id="dd-hinhDang">
@@ -63,10 +117,10 @@
                                 @foreach (var hd in Model.HinhDangs)
                                 {
                                     var isChecked = Model.Filter.SelectedHinhDangIds != null
-                                        && Model.Filter.SelectedHinhDangIds.Contains(hd.IDHinhDang);
+                                                        && Model.Filter.SelectedHinhDangIds.Contains(hd.IDHinhDang);
                                     <label class="dropdown-item-label">
                                         <input type="checkbox" name="SelectedHinhDangIds"
-                                               value="@hd.IDHinhDang" @(isChecked ? "checked" : "") />
+                                               value="@hd.IDHinhDang" @(isChecked ? "checked" : "")/>
                                         @IconHelper.ShapeIcon(hd.IDHinhDang)
                                         @hd.TenHinhDang
                                     </label>
@@ -75,8 +129,35 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Dạng bào chế</label>
+                    <div class="custom-dropdown" id="dd-dangThuoc">
+                        <button type="button" class="dropdown-toggle-btn"
+                                onclick="toggleDropdown('dd-dangThuoc')">
+                            <span class="dd-label">Chọn dạng bào chế</span>
+                        </button>
+                        <div class="dropdown-menu-custom">
+                            <div class="dropdown-items-grid">
+                                @foreach (var dt in Model.DangThuocs)
+                                {
+                                    <label class="dropdown-item-label">
+                                        <input type="radio" name="IdDangThuoc" value="@dt.IDDangThuoc"
+                                               @(Model.Filter.IdDangThuoc == dt.IDDangThuoc ? "checked" : "")/>
+                                        @dt.TenDangThuoc
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-                @* Màu sắc 1 — single-select, 2-col grid *@
+        @* ===== ROW 5: Màu sắc 1 | Màu sắc 2 ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Màu sắc 1</label>
                     <div class="custom-dropdown" id="dd-mauSac1">
@@ -90,7 +171,7 @@
                                 {
                                     <label class="dropdown-item-label">
                                         <input type="radio" name="IdMauSac1" value="@ms.IDMauSac"
-                                               @(Model.Filter.IdMauSac1 == ms.IDMauSac ? "checked" : "") />
+                                               @(Model.Filter.IdMauSac1 == ms.IDMauSac ? "checked" : "")/>
                                         @IconHelper.ColorCircle(ms.IDMauSac)
                                         @ms.TenMauSac
                                     </label>
@@ -99,96 +180,8 @@
                         </div>
                     </div>
                 </div>
-
-                @* Loại rãnh — single-select, 2-col grid *@
-                <div class="form-group">
-                    <label>Loại rãnh</label>
-                    <div class="custom-dropdown" id="dd-loaiRanh">
-                        <button type="button" class="dropdown-toggle-btn"
-                                onclick="toggleDropdown('dd-loaiRanh')">
-                            <span class="dd-label">Chọn loại rãnh</span>
-                        </button>
-                        <div class="dropdown-menu-custom">
-                            <div class="dropdown-items-grid">
-                                @foreach (var lr in Model.LoaiRanhs)
-                                {
-                                    <label class="dropdown-item-label">
-                                        <input type="radio" name="IdLoaiRanh" value="@lr.IDLoaiRanh"
-                                               @(Model.Filter.IdLoaiRanh == lr.IDLoaiRanh ? "checked" : "") />
-                                        @IconHelper.GrooveIcon(lr.IDLoaiRanh)
-                                        @lr.TenLoaiRanh
-                                    </label>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @* Đường kính *@
-                <div class="form-group">
-                    <label>Đường kính (cm)</label>
-                    <div class="input-with-clear">
-                        <input type="number" name="KichThuoc" class="form-control"
-                               step="0.1" min="0"
-                               value="@(Model.Filter.KichThuoc.HasValue ? Model.Filter.KichThuoc.Value.ToString("0.#") : "")"
-                               placeholder="Nhập kích thước viên thuốc" />
-                        <button type="button" class="btn-clear-inline"
-                                onclick="clearField('KichThuoc')">XÓA</button>
-                    </div>
-                </div>
-
             </div>
-
-            @* ===== RIGHT COLUMN ===== *@
             <div class="col-md-6">
-
-                @* Mục đích sử dụng — multi-select, 2-col grid *@
-                <div class="form-group">
-                    <label>Mục đích sử dụng</label>
-                    <div class="custom-dropdown" id="dd-chiDinh">
-                        <button type="button" class="dropdown-toggle-btn"
-                                onclick="toggleDropdown('dd-chiDinh')">
-                            <span class="dd-label">Chọn mục đích sử dụng</span>
-                        </button>
-                        <div class="dropdown-menu-custom">
-                            <div class="dropdown-items-grid">
-                                @foreach (var cd in Model.ChiDinhs)
-                                {
-                                    <label class="dropdown-item-label">
-                                        <input type="radio" name="IdChiDinh" value="@cd.IDChiDinh"
-                                               @(Model.Filter.IdChiDinh == cd.IDChiDinh ? "checked" : "") />
-                                        @cd.TenChiDinh
-                                    </label>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @* Dạng thuốc — single-select, 2-col grid *@
-                <div class="form-group">
-                    <label>Dạng thuốc</label>
-                    <div class="custom-dropdown" id="dd-dangThuoc">
-                        <button type="button" class="dropdown-toggle-btn"
-                                onclick="toggleDropdown('dd-dangThuoc')">
-                            <span class="dd-label">Chọn dạng bào chế</span>
-                        </button>
-                        <div class="dropdown-menu-custom">
-                            <div class="dropdown-items-grid">
-                                @foreach (var dt in Model.DangThuocs)
-                                {
-                                    <label class="dropdown-item-label">
-                                        <input type="radio" name="IdDangThuoc" value="@dt.IDDangThuoc"
-                                               @(Model.Filter.IdDangThuoc == dt.IDDangThuoc ? "checked" : "") />
-                                        @dt.TenDangThuoc
-                                    </label>
-                                }
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                @* Màu sắc 2 — single-select, 2-col grid *@
                 <div class="form-group">
                     <label>Màu sắc 2</label>
                     <div class="custom-dropdown" id="dd-mauSac2">
@@ -202,7 +195,7 @@
                                 {
                                     <label class="dropdown-item-label">
                                         <input type="radio" name="IdMauSac2" value="@ms.IDMauSac"
-                                               @(Model.Filter.IdMauSac2 == ms.IDMauSac ? "checked" : "") />
+                                               @(Model.Filter.IdMauSac2 == ms.IDMauSac ? "checked" : "")/>
                                         @IconHelper.ColorCircle(ms.IDMauSac)
                                         @ms.TenMauSac
                                     </label>
@@ -211,14 +204,42 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                @* Loại vỉ — single-select, 2-col grid *@
+        @* ===== ROW 6: Loại rãnh | Loại vỉ ===== *@
+        <div class="row">
+            <div class="col-md-6">
                 <div class="form-group">
-                    <label>Loại vỉ</label>
+                    <label>Loại rãnh</label>
+                    <div class="custom-dropdown" id="dd-loaiRanh">
+                        <button type="button" class="dropdown-toggle-btn"
+                                onclick="toggleDropdown('dd-loaiRanh')">
+                            <span class="dd-label">Chọn loại rãnh</span>
+                        </button>
+                        <div class="dropdown-menu-custom">
+                            <div class="dropdown-items-grid">
+                                @foreach (var lr in Model.LoaiRanhs)
+                                {
+                                    <label class="dropdown-item-label">
+                                        <input type="radio" name="IdLoaiRanh" value="@lr.IDLoaiRanh"
+                                               @(Model.Filter.IdLoaiRanh == lr.IDLoaiRanh ? "checked" : "")/>
+                                        @IconHelper.GrooveIcon(lr.IDLoaiRanh)
+                                        @lr.TenLoaiRanh
+                                    </label>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Bao bì cấp 1</label>
                     <div class="custom-dropdown" id="dd-loaiVi">
                         <button type="button" class="dropdown-toggle-btn"
                                 onclick="toggleDropdown('dd-loaiVi')">
-                            <span class="dd-label">Chọn loại vỉ</span>
+                            <span class="dd-label">Chọn bao bì cấp 1</span>
                         </button>
                         <div class="dropdown-menu-custom">
                             <div class="dropdown-items-grid">
@@ -226,7 +247,7 @@
                                 {
                                     <label class="dropdown-item-label">
                                         <input type="radio" name="IdLoaiVi" value="@lv.IDLoaiViThuoc"
-                                               @(Model.Filter.IdLoaiVi == lv.IDLoaiViThuoc ? "checked" : "") />
+                                               @(Model.Filter.IdLoaiVi == lv.IDLoaiViThuoc ? "checked" : "")/>
                                         @lv.TenLoaiVi
                                     </label>
                                 }
@@ -234,8 +255,26 @@
                         </div>
                     </div>
                 </div>
-
             </div>
+        </div>
+
+        @* ===== ROW 7: Đường kính | (empty) ===== *@
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Đường kính (mm)</label>
+                    <div class="input-with-clear">
+                        <input type="number" name="KichThuoc" class="form-control"
+                               step="0.1" min="0"
+                               value="@(Model.Filter.KichThuoc.HasValue ? Model.Filter.KichThuoc.Value.ToString("0.#") : "")"
+                               placeholder="Nhập kích thước viên thuốc"/>
+                        <button type="button" class="btn-clear-inline"
+                                onclick="clearField('KichThuoc')">XÓA
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6"></div>
         </div>
 
         <div class="search-actions">
@@ -246,78 +285,175 @@
 }
 
 @section scripts {
-<script>
-    function toggleDropdown(id) {
-        var dd = document.getElementById(id);
-        var btn = dd.querySelector('.dropdown-toggle-btn');
-        var menu = dd.querySelector('.dropdown-menu-custom');
-        var isOpen = menu.classList.contains('open');
-        document.querySelectorAll('.dropdown-menu-custom.open').forEach(function (m) { m.classList.remove('open'); });
-        document.querySelectorAll('.dropdown-toggle-btn.open').forEach(function (b) { b.classList.remove('open'); });
-        if (!isOpen) {
-            menu.classList.add('open');
-            btn.classList.add('open');
+    <script>
+        function toggleDropdown(id) {
+            var dd = document.getElementById(id);
+            var btn = dd.querySelector('.dropdown-toggle-btn');
+            var menu = dd.querySelector('.dropdown-menu-custom');
+            var isOpen = menu.classList.contains('open');
+            document.querySelectorAll('.dropdown-menu-custom.open').forEach(function (m) {
+                m.classList.remove('open');
+            });
+            document.querySelectorAll('.dropdown-toggle-btn.open').forEach(function (b) {
+                b.classList.remove('open');
+            });
+            if (!isOpen) {
+                menu.classList.add('open');
+                btn.classList.add('open');
+            }
         }
-    }
 
-    document.addEventListener('click', function (e) {
-        if (!e.target.closest('.custom-dropdown')) {
-            document.querySelectorAll('.dropdown-menu-custom.open').forEach(function (m) { m.classList.remove('open'); });
-            document.querySelectorAll('.dropdown-toggle-btn.open').forEach(function (b) { b.classList.remove('open'); });
+        document.addEventListener('click', function (e) {
+            if (!e.target.closest('.custom-dropdown')) {
+                document.querySelectorAll('.dropdown-menu-custom.open').forEach(function (m) {
+                    m.classList.remove('open');
+                });
+                document.querySelectorAll('.dropdown-toggle-btn.open').forEach(function (b) {
+                    b.classList.remove('open');
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the radio buttons and input fields
+            const radios = document.querySelectorAll('input[name="CoKhacDau"]');
+            const imprintFront = document.querySelector('input[name="ImprintFront"]');
+            const imprintBack = document.querySelector('input[name="ImprintBack"]');
+
+            function toggleImprintFields() {
+                const isNo = document.querySelector('input[name="CoKhacDau"][value="false"]').checked;
+
+                imprintFront.disabled = isNo;
+                imprintBack.disabled = isNo;
+
+            }
+
+            radios.forEach(radio => {
+                radio.addEventListener('change', toggleImprintFields);
+            });
+
+            // Call it once on load to ensure the UI matches the initial model state
+            toggleImprintFields();
+        });
+
+        function getItemHtml(labelEl) {
+            var icon = labelEl.querySelector('svg, span[style]');
+            var text = labelEl.textContent.trim();
+            return (icon ? icon.outerHTML : '') + text;
         }
-    });
 
-    function getItemHtml(labelEl) {
-        var icon = labelEl.querySelector('svg, span[style]');
-        var text = labelEl.textContent.trim();
-        return (icon ? icon.outerHTML : '') + text;
-    }
+        function updateLabel(ddId, isMulti, placeholder) {
+            var dd = document.getElementById(ddId);
+            var checked = dd.querySelectorAll('input:checked');
+            var label = dd.querySelector('.dd-label');
+            if (checked.length === 0) {
+                label.innerHTML = placeholder;
+            } else if (isMulti) {
+                if (checked.length === 1) {
+                    label.innerHTML = getItemHtml(checked[0].closest('label'));
+                } else if (ddId === 'dd-chiDinh'){
+                    updateChiDinhLabel(checked, label);
+                }
+                else {
+                    label.innerHTML = checked.length + ' hình dạng đã chọn';
+                }
+            } else {
+                label.innerHTML = getItemHtml(checked[0].closest('label'));
+            }
+        }
 
-    function updateLabel(ddId, isMulti, placeholder) {
-        var dd = document.getElementById(ddId);
-        var checked = dd.querySelectorAll('input:checked');
-        var label = dd.querySelector('.dd-label');
-        if (checked.length === 0) {
-            label.innerHTML = placeholder;
-        } else if (isMulti) {
-            if (checked.length === 1) {
+        var ddConfig = [
+            {id: 'dd-hinhDang', multi: true, ph: 'Chọn hình dạng'},
+            {id: 'dd-mauSac1', multi: false, ph: 'Chọn màu'},
+            {id: 'dd-loaiRanh', multi: false, ph: 'Chọn loại rãnh'},
+            {id: 'dd-chiDinh', multi: true, ph: 'Chọn mục đích sử dụng'},
+            {id: 'dd-dangThuoc', multi: false, ph: 'Chọn dạng bào chế'},
+            {id: 'dd-mauSac2', multi: false, ph: 'Chọn màu'},
+            {id: 'dd-loaiVi', multi: false, ph: 'Chọn loại vỉ'}
+        ];
+
+        ddConfig.forEach(function (cfg) {
+            var el = document.getElementById(cfg.id);
+            if (el) {
+                el.addEventListener('change', function () {
+                    updateLabel(cfg.id, cfg.multi, cfg.ph);
+                });
+                updateLabel(cfg.id, cfg.multi, cfg.ph);
+            }
+        });
+
+        function clearField(name) {
+            document.querySelectorAll('[name="' + name + '"]').forEach(function (inp) {
+                if (inp.type === 'checkbox' || inp.type === 'radio') inp.checked = false;
+                else inp.value = '';
+            });
+        }
+
+        function resetForm() {
+            document.getElementById('searchForm').reset();
+            ddConfig.forEach(function (cfg) {
+                updateLabel(cfg.id, cfg.multi, cfg.ph);
+            });
+        }
+
+        function removeVietnameseTones(str) {
+            if (!str) return "";
+            str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            str = str.replace(/đ/g, 'd').replace(/Đ/g, 'D');
+            return str;
+        }
+        
+        // Filter the checkboxes based on the search input
+        function filterChiDinh() {
+            var searchValue = removeVietnameseTones($('#searchInputChiDinh').val().toLowerCase());
+
+            if (searchValue.length > 0) {
+                $('#clearSearchChiDinh').show();
+            } else {
+                $('#clearSearchChiDinh').hide();
+            }
+            
+            // Loop through each label in the grid
+            $('.chiDinh-item').each(function () {
+                var itemName = removeVietnameseTones($(this).find('.item-name').text().toLowerCase());
+
+                // If the text matches the search, show it. Otherwise, hide it.
+                if (itemName.indexOf(searchValue) > -1) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+
+        // Update the button text to show what is selected
+        function updateChiDinhLabel(selectedCheckboxes, label) {
+            if (selectedCheckboxes.length === 1) {
                 label.innerHTML = getItemHtml(checked[0].closest('label'));
             } else {
-                label.innerHTML = checked.length + ' hình dạng đã chọn';
+                var labelText = '';
+                selectedCheckboxes.forEach(function (checkbox) {labelText += getItemHtml(checkbox.closest('label')); labelText += ', ';})
+                label.innerHTML = labelText.substring(0, labelText.length - 2);
             }
-        } else {
-            label.innerHTML = getItemHtml(checked[0].closest('label'));
         }
-    }
 
-    var ddConfig = [
-        { id: 'dd-hinhDang',  multi: true,  ph: 'Chọn hình dạng' },
-        { id: 'dd-mauSac1',   multi: false, ph: 'Chọn màu' },
-        { id: 'dd-loaiRanh',  multi: false, ph: 'Chọn loại rãnh' },
-        { id: 'dd-chiDinh',   multi: false, ph: 'Chọn mục đích sử dụng' },
-        { id: 'dd-dangThuoc', multi: false, ph: 'Chọn dạng bào chế' },
-        { id: 'dd-mauSac2',   multi: false, ph: 'Chọn màu' },
-        { id: 'dd-loaiVi',    multi: false, ph: 'Chọn loại vỉ' }
-    ];
+        // Close the dropdown if the user clicks anywhere outside of it
+        // TODO: assess if this is used anywhere
+        $(document).ready(function () {
+            $('#clearSearchChiDinh').on('click', function() {
+                $('#searchInputChiDinh').val(''); // Clear the input box
+                $(this).hide();                   // Hide the 'x' button
+                filterChiDinh();                  // Run filter again to show all items
+                $('#searchInputChiDinh').focus(); // Put the cursor back in the box
+            });
 
-    ddConfig.forEach(function (cfg) {
-        var el = document.getElementById(cfg.id);
-        if (el) {
-            el.addEventListener('change', function () { updateLabel(cfg.id, cfg.multi, cfg.ph); });
-            updateLabel(cfg.id, cfg.multi, cfg.ph);
-        }
-    });
-
-    function clearField(name) {
-        document.querySelectorAll('[name="' + name + '"]').forEach(function (inp) {
-            if (inp.type === 'checkbox' || inp.type === 'radio') inp.checked = false;
-            else inp.value = '';
+            $(document).on('click', function (event) {
+                var $container = $('#dd-chiDinh-container');
+                // If the click is not inside the container, hide the menu
+                if ($container.length && !$container.is(event.target) && $container.has(event.target).length === 0) {
+                    $('#dd-chiDinh-menu').hide();
+                }
+            });
         });
-    }
-
-    function resetForm() {
-        document.getElementById('searchForm').reset();
-        ddConfig.forEach(function (cfg) { updateLabel(cfg.id, cfg.multi, cfg.ph); });
-    }
-</script>
+    </script>
 }
