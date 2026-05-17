@@ -61,6 +61,7 @@ namespace PillIdentifierForm.Forms
                 textBoxNSX.Text = row.Cells["NhaSX"].Value != null ? row.Cells["NhaSX"].Value.ToString() : "";
                 textBoxSDK.Text = row.Cells["SDK"].Value != null ? row.Cells["SDK"].Value.ToString() : "";
                 textBoxGhichu.Text = row.Cells["GhiChu"].Value != null ? row.Cells["GhiChu"].Value.ToString() : "";
+                textBoxURL.Text = row.Cells["URL"].Value != null ? row.Cells["URL"].Value.ToString() : "";
 
                 // Set combobox by IDHoatChat value
                 if (row.Cells["IDHoatChat"].Value != null && row.Cells["IDHoatChat"].Value != DBNull.Value)
@@ -302,16 +303,22 @@ namespace PillIdentifierForm.Forms
                     HamLuong = t.HamLuong,
                     DangBaoChe = t.DangBaoChe,
                     NhaSX = t.NhaSX,
-                    GhiChu = t.GhiChu
+                    GhiChu = t.GhiChu,
+                    URL = t.URL
                 }).ToList();
 
                 grid1.DataSource = null;
                 grid1.DataSource = displayList;
                 dataGridView1.AutoResizeColumns();
-                dataGridView1.Columns[0].HeaderText = "Mã Thuốc";
-                dataGridView1.Columns[1].HeaderText = "Tên thương mại";
+                dataGridView1.Columns["IDThuoc"].HeaderText = "Mã Thuốc";
+                dataGridView1.Columns["TenThuoc"].HeaderText = "Tên thương mại";
                 dataGridView1.Columns["IDHoatChat"].HeaderText = "Mã Hoạt chất";
                 dataGridView1.Columns["TenHoatChat"].HeaderText = "Tên Hoạt chất";
+                dataGridView1.Columns["HamLuong"].HeaderText = "Hàm lượng";
+                dataGridView1.Columns["DangBaoChe"].HeaderText = "Dạng bào chế";
+                dataGridView1.Columns["NhaSX"].HeaderText = "Nhà sản xuất";
+                dataGridView1.Columns["GhiChu"].HeaderText = "Ghi chú";
+                dataGridView1.Columns["URL"].Width = 50;
             }
             catch (Exception ex)
             {

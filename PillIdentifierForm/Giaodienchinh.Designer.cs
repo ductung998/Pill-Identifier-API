@@ -235,7 +235,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Giaodienchinh";
-            this.Text = "Phần mềm tra cứu dạng thuốc viên";
+            this.Text = "Phần mềm hỗ trợ nhận diện thuốc viên";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Shown += new System.EventHandler(this.Giaodienchinh_Shown);
             this.menuStrip1.ResumeLayout(false);

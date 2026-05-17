@@ -363,12 +363,23 @@ namespace PillIdentifierForm.Forms
                 grid1.DataSource = _listNhanDang;
                 dgvData.DataSource = grid1;
                 dgvData.AutoResizeColumns();
+                dgvData.Columns["IDNhanDang"].HeaderText = "Mã Nhận dạng";
+                dgvData.Columns["IDThuoc"].HeaderText = "Mã Thuốc";
+                dgvData.Columns["CoKhacDau"].HeaderText = "Có khắc dấu";
+                dgvData.Columns["KhacDauMatTruoc"].HeaderText = "Khắc dấu mặt 1";
+                dgvData.Columns["KhacDauMatSau"].HeaderText = "Khắc dấu mặt 2";
+                dgvData.Columns["TenHinhDang"].HeaderText = "Tên Hình dạng";
+                dgvData.Columns["TenDangThuoc"].HeaderText = "Tên Dạng thuốc";
+                dgvData.Columns["TenLoaiVi"].HeaderText = "Tên Loại vỉ";
+                dgvData.Columns["TenLoaiRanh"].HeaderText = "Tên Loại rãnh";
+                dgvData.Columns["KichThuoc"].HeaderText = "Kích thước";
 
                 // Hide ID columns or configure them
                 dgvData.Columns["IDHinhDang"].Visible = false;
                 dgvData.Columns["IDDangThuoc"].Visible = false;
                 dgvData.Columns["IDLoaiViThuoc"].Visible = false;
                 dgvData.Columns["IDLoaiRanh"].Visible = false;
+                dgvData.Columns["MaHinh"].Visible = false;
 
                 // Load Thuoc list
                 LoadThuoc();

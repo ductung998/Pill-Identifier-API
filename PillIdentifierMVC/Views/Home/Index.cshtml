@@ -264,16 +264,16 @@
             </div>
         </div>
 
-        @* ===== ROW 7: Đường kính | (empty) ===== *@
+        @* ===== ROW 7: Kích thước | (empty) ===== *@
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group">
-                    <label>Đường kính (mm)</label>
+                    <label>Kích thước (mm)</label>
                     <div class="input-with-clear">
                         <input type="number" name="KichThuoc" class="form-control"
                                step="0.1" min="0"
                                value="@(Model.Filter.KichThuoc.HasValue ? Model.Filter.KichThuoc.Value.ToString("0.#") : "")"
-                               placeholder="Nhập đường kính viên thuốc"/>
+                               placeholder="Nhập kích thước viên thuốc"/>
                         <button type="button" class="btn-clear-inline"
                                 onclick="clearField('KichThuoc')">XÓA
                         </button>

@@ -210,7 +210,7 @@
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(74, 17);
             this.label13.TabIndex = 32;
-            this.label13.Text = "Đường kính";
+            this.label13.Text = "Kích thước";
             // 
             // label12
             // 

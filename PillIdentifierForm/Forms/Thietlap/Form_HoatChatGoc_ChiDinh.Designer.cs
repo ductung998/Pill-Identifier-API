@@ -152,7 +152,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(59, 17);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Chỉ định";
+            this.label5.Text = "Mục đích sử dụng";
             // 
             // comboBoxHCG
             // 
