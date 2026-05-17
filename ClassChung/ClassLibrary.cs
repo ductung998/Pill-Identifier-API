@@ -1085,7 +1085,8 @@ namespace ClassChung
                 int? idDangthuoc = null,
                 int? idLoaiVi = null,
                 int? idLoaiRanh = null,
-                double? kichThuoc = null)
+                double? kichThuoc = null,
+                List<int> idChiDinhs = null)
             {
                 List<NhanDangThuoc> kq = new List<NhanDangThuoc>();
                 try
@@ -1095,7 +1096,7 @@ namespace ClassChung
 
                     // ===== COLOR FILTERING =====
                     IQueryable<r_Thuoc_MauSac> query1 = db.r_Thuoc_MauSacs;
-                    List<int> validColorIDs = new List<int>();
+                    List<int> validPillIdsWithColor = new List<int>();
                     
                     if (idMausac1 != null || idMausac2 != null)
                     {
@@ -1105,17 +1106,31 @@ namespace ClassChung
                                 .Select(x => x.IDThuoc).ToList();
                             List<int> thuocWithColor2 = query1.Where(x => x.IDMauSac == idMausac2)
                                 .Select(x => x.IDThuoc).ToList();
-                            validColorIDs = thuocWithColor1.Intersect(thuocWithColor2).ToList();
+                            validPillIdsWithColor = thuocWithColor1.Intersect(thuocWithColor2).ToList();
                         }
                         else if (idMausac1 != null)
                         {
-                            validColorIDs = query1.Where(x => x.IDMauSac == idMausac1).Select(x => x.IDThuoc).ToList();
+                            validPillIdsWithColor = query1.Where(x => x.IDMauSac == idMausac1).Select(x => x.IDThuoc).ToList();
                         }
                         else if (idMausac2 != null)
                         {
-                            validColorIDs = query1.Where(x => x.IDMauSac == idMausac2).Select(x => x.IDThuoc).ToList();
+                            validPillIdsWithColor = query1.Where(x => x.IDMauSac == idMausac2).Select(x => x.IDThuoc).ToList();
                         }
-                        query2 = query2.Where(x => validColorIDs.Contains(x.IDThuoc));
+                        query2 = query2.Where(x => validPillIdsWithColor.Contains(x.IDThuoc));
+                    }
+                    
+                    // ===== INDICATION FILTERING =====
+                    if (idChiDinhs != null && idChiDinhs.Any())
+                    {
+                        List<int> validThuocIds = (
+                            from hcgcd in db.r_HoatChatGoc_ChiDinhs
+                            join hchcg in db.r_HoatChat_HoatChatGocs on hcgcd.IDHoatChatGoc equals hchcg.IDHoatChatGoc
+                            join t in db.d_Thuocs on hchcg.IDHoatChat equals t.IDHoatChat
+                            where idChiDinhs.Contains(hcgcd.IDChiDinh)
+                            select t.IDThuoc
+                        ).Distinct().ToList();
+
+                        query2 = query2.Where(ndt => validThuocIds.Contains(ndt.IDThuoc));
                     }
 
                     // ===== MAIN ATTRIBUTES FILTERING =====
@@ -1197,9 +1212,23 @@ namespace ClassChung
 
                     return kq;
                 }
-                catch
+                catch (Exception ex)
                 {
-                    return kq;
+                    // 1. The main error message
+                    string errorMessage = ex.Message;
+
+                    // 2. The stack trace (tells you exactly which line of code triggered it)
+                    string stackTrace = ex.StackTrace;
+
+                    // 3. The Inner Exception (CRITICAL FOR ENTITY FRAMEWORK)
+                    // EF often wraps the real SQL error inside an inner exception.
+                    string innerError = ex.InnerException != null ? ex.InnerException.Message : "No inner exception";
+
+                    Console.WriteLine(errorMessage);
+                    Console.WriteLine(stackTrace);
+                    Console.WriteLine(innerError);
+
+                    return kq; // Still safely return the empty list so the app doesn't crash
                 }
             }
             public NhanDangThuoc GetNhanDangByThuoc(int IDThuoc)

@@ -59,7 +59,8 @@ namespace PillIdentifierMVC.Controllers
                 idDangthuoc:  filter.IdDangThuoc,
                 idLoaiVi:     filter.IdLoaiVi,
                 idLoaiRanh:   filter.IdLoaiRanh,
-                kichThuoc:    filter.KichThuoc
+                kichThuoc:    filter.KichThuoc,
+                idChiDinhs:   filter.IdsChiDinh
             );
 
             // One result card per drug — use the first matched NhanDang for each drug
