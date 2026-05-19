@@ -309,16 +309,24 @@ namespace PillIdentifierForm.Forms
 
                 grid1.DataSource = null;
                 grid1.DataSource = displayList;
-                dataGridView1.AutoResizeColumns();
-                dataGridView1.Columns["IDThuoc"].HeaderText = "Mã Thuốc";
+                dataGridView1.Columns["IDThuoc"].HeaderText = "Mã thuốc";
+                dataGridView1.Columns["IDThuoc"].Width = 60;
                 dataGridView1.Columns["TenThuoc"].HeaderText = "Tên thương mại";
-                dataGridView1.Columns["IDHoatChat"].HeaderText = "Mã Hoạt chất";
-                dataGridView1.Columns["TenHoatChat"].HeaderText = "Tên Hoạt chất";
+                dataGridView1.Columns["TenThuoc"].Width = 220;
+                dataGridView1.Columns["SDK"].Width = 130;
+                dataGridView1.Columns["IDHoatChat"].HeaderText = "Mã hoạt chất";
+                dataGridView1.Columns["IDHoatChat"].Width = 85;
+                dataGridView1.Columns["TenHoatChat"].HeaderText = "Tên hoạt chất";
+                dataGridView1.Columns["TenHoatChat"].Width = 180;
                 dataGridView1.Columns["HamLuong"].HeaderText = "Hàm lượng";
+                dataGridView1.Columns["HamLuong"].Width = 100;
                 dataGridView1.Columns["DangBaoChe"].HeaderText = "Dạng bào chế";
+                dataGridView1.Columns["DangBaoChe"].Width = 120;
                 dataGridView1.Columns["NhaSX"].HeaderText = "Nhà sản xuất";
+                dataGridView1.Columns["NhaSX"].Width = 150;
                 dataGridView1.Columns["GhiChu"].HeaderText = "Ghi chú";
-                dataGridView1.Columns["URL"].Width = 50;
+                dataGridView1.Columns["GhiChu"].Width = 120;
+                dataGridView1.Columns["URL"].Width = 60;
             }
             catch (Exception ex)
             {

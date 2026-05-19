@@ -189,8 +189,8 @@ namespace PillIdentifierForm.Forms
             cboDangThuoc.SelectedIndex = -1;
             cboLoaiViThuoc.SelectedIndex = -1;
             cboLoaiRanh.SelectedIndex = -1;
-            cboMauSac1.SelectedIndex = 0;
-            cboMauSac2.SelectedIndex = 0;
+            cboMauSac1.SelectedIndex = -1;
+            cboMauSac2.SelectedIndex = -1;
             comboBoxFilterHoatChat.SelectedIndex = -1;
 
             buttonXoa.Enabled = false;
@@ -209,8 +209,8 @@ namespace PillIdentifierForm.Forms
         private void LoadMauSacForThuoc(int idThuoc)
         {
             List<MauSac> colors = getdata.GetMauSacbyIDThuoc(idThuoc);
-            cboMauSac1.SelectedIndex = 0;
-            cboMauSac2.SelectedIndex = 0;
+            cboMauSac1.SelectedIndex = -1;
+            cboMauSac2.SelectedIndex = -1;
             if (colors.Count >= 1)
                 SetComboBoxValue(cboMauSac1, colors[0].IDMauSac);
             if (colors.Count >= 2)
@@ -272,12 +272,12 @@ namespace PillIdentifierForm.Forms
                 cboMauSac1.DataSource = new List<MauSac>(mauSacList);
                 cboMauSac1.DisplayMember = "TenMauSac";
                 cboMauSac1.ValueMember = "IDMauSac";
-                cboMauSac1.SelectedIndex = 0;
+                cboMauSac1.SelectedIndex = -1;
 
                 cboMauSac2.DataSource = new List<MauSac>(mauSacList);
                 cboMauSac2.DisplayMember = "TenMauSac";
                 cboMauSac2.ValueMember = "IDMauSac";
-                cboMauSac2.SelectedIndex = 0;
+                cboMauSac2.SelectedIndex = -1;
 
                 // Load HoatChat for filter - add "All" option at the beginning
                 _listHoatChat = getdata.GetDSHoatChat().OrderBy(h => h.TenHoatChat).ToList();
@@ -344,8 +344,23 @@ namespace PillIdentifierForm.Forms
 
                 gridThuoc.DataSource = null;
                 gridThuoc.DataSource = displayData;
+                dataGridViewThuoc.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.None;
                 dataGridViewThuoc.DataSource = gridThuoc;
-                dataGridViewThuoc.AutoResizeColumns();
+                dataGridViewThuoc.Columns["IDThuoc"].HeaderText = "Mã thuốc";
+                dataGridViewThuoc.Columns["IDThuoc"].Width = 60;
+                dataGridViewThuoc.Columns["TenThuoc"].HeaderText = "Tên thương mại";
+                dataGridViewThuoc.Columns["TenThuoc"].Width = 220;
+                dataGridViewThuoc.Columns["SDK"].Width = 130;
+                dataGridViewThuoc.Columns["IDHoatChat"].HeaderText = "Mã hoạt chất";
+                dataGridViewThuoc.Columns["IDHoatChat"].Width = 85;
+                dataGridViewThuoc.Columns["TenHoatChat"].HeaderText = "Tên hoạt chất";
+                dataGridViewThuoc.Columns["TenHoatChat"].Width = 180;
+                dataGridViewThuoc.Columns["HamLuong"].HeaderText = "Hàm lượng";
+                dataGridViewThuoc.Columns["HamLuong"].Width = 100;
+                dataGridViewThuoc.Columns["DangBaoChe"].HeaderText = "Dạng bào chế";
+                dataGridViewThuoc.Columns["DangBaoChe"].Width = 120;
+                dataGridViewThuoc.Columns["NhaSX"].HeaderText = "Nhà sản xuất";
+                dataGridViewThuoc.Columns["NhaSX"].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             }
             catch (Exception ex)
             {
@@ -360,19 +375,64 @@ namespace PillIdentifierForm.Forms
             {
                 // Load NhanDang data
                 _listNhanDang = getdata.GetDSNhanDangThuoc();
-                grid1.DataSource = _listNhanDang;
+
+                // Bulk-load all drug-color links, resolve names in-memory (no N+1)
+                List<Thuoc_MauSac> allLinks = getdata.GetDSThuoc_MauSac();
+                var colorByThuoc = allLinks
+                    .GroupBy(l => l.IDThuoc)
+                    .ToDictionary(
+                        g => g.Key,
+                        g => g.Select(l =>
+                        {
+                            MauSac ms = _listMauSac != null ? _listMauSac.FirstOrDefault(m => m.IDMauSac == l.IDMauSac) : null;
+                            return ms != null ? ms.TenMauSac : string.Empty;
+                        }).Where(n => !string.IsNullOrEmpty(n)).ToList()
+                    );
+
+                var displayData = _listNhanDang.Select(n =>
+                {
+                    List<string> colors;
+                    if (!colorByThuoc.TryGetValue(n.IDThuoc, out colors))
+                        colors = new List<string>();
+                    return new
+                    {
+                        n.IDNhanDang,
+                        n.IDThuoc,
+                        n.CoKhacDau,
+                        n.KhacDauMatTruoc,
+                        n.KhacDauMatSau,
+                        n.IDHinhDang,
+                        n.TenHinhDang,
+                        n.IDDangThuoc,
+                        n.TenDangThuoc,
+                        n.IDLoaiViThuoc,
+                        n.TenLoaiVi,
+                        n.IDLoaiRanh,
+                        n.TenLoaiRanh,
+                        n.KichThuoc,
+                        n.MaHinh,
+                        TenMauSac1 = colors.Count >= 1 ? colors[0] : string.Empty,
+                        TenMauSac2 = colors.Count >= 2 ? colors[1] : string.Empty
+                    };
+                }).ToList();
+
+                grid1.DataSource = null;
+                grid1.DataSource = displayData;
                 dgvData.DataSource = grid1;
                 dgvData.AutoResizeColumns();
-                dgvData.Columns["IDNhanDang"].HeaderText = "Mã Nhận dạng";
-                dgvData.Columns["IDThuoc"].HeaderText = "Mã Thuốc";
+
+                dgvData.Columns["IDNhanDang"].HeaderText = "Mã nhận dạng";
+                dgvData.Columns["IDThuoc"].HeaderText = "Mã thuốc";
                 dgvData.Columns["CoKhacDau"].HeaderText = "Có khắc dấu";
                 dgvData.Columns["KhacDauMatTruoc"].HeaderText = "Khắc dấu mặt 1";
                 dgvData.Columns["KhacDauMatSau"].HeaderText = "Khắc dấu mặt 2";
-                dgvData.Columns["TenHinhDang"].HeaderText = "Tên Hình dạng";
-                dgvData.Columns["TenDangThuoc"].HeaderText = "Tên Dạng thuốc";
-                dgvData.Columns["TenLoaiVi"].HeaderText = "Tên Loại vỉ";
-                dgvData.Columns["TenLoaiRanh"].HeaderText = "Tên Loại rãnh";
+                dgvData.Columns["TenHinhDang"].HeaderText = "Tên hình dạng";
+                dgvData.Columns["TenDangThuoc"].HeaderText = "Tên dạng thuốc";
+                dgvData.Columns["TenLoaiVi"].HeaderText = "Tên loại vỉ";
+                dgvData.Columns["TenLoaiRanh"].HeaderText = "Tên loại rãnh";
                 dgvData.Columns["KichThuoc"].HeaderText = "Kích thước";
+                dgvData.Columns["TenMauSac1"].HeaderText = "Màu sắc 1";
+                dgvData.Columns["TenMauSac2"].HeaderText = "Màu sắc 2";
 
                 // Hide ID columns or configure them
                 dgvData.Columns["IDHinhDang"].Visible = false;
@@ -605,6 +665,8 @@ namespace PillIdentifierForm.Forms
                 txtKhacDauMatTruoc.Text = row.Cells["KhacDauMatTruoc"].Value != null ? row.Cells["KhacDauMatTruoc"].Value.ToString() : "";
                 txtKhacDauMatSau.Text = row.Cells["KhacDauMatSau"].Value != null ? row.Cells["KhacDauMatSau"].Value.ToString() : "";
 
+                textBoxKichThuoc.Text = row.Cells["KichThuoc"].Value != null ? row.Cells["KichThuoc"].Value.ToString() : "";
+
                 // Set combobox values
                 SetComboBoxValue(cboHinhDang, row.Cells["IDHinhDang"].Value);
                 SetComboBoxValue(cboDangThuoc, row.Cells["IDDangThuoc"].Value);
@@ -704,8 +766,8 @@ namespace PillIdentifierForm.Forms
                         cboDangThuoc.SelectedIndex = -1;
                         cboLoaiViThuoc.SelectedIndex = -1;
                         cboLoaiRanh.SelectedIndex = -1;
-                        cboMauSac1.SelectedIndex = 0;
-                        cboMauSac2.SelectedIndex = 0;
+                        cboMauSac1.SelectedIndex = -1;
+                        cboMauSac2.SelectedIndex = -1;
 
                         buttonXoa.Enabled = false;
                         buttonSua.Enabled = false;

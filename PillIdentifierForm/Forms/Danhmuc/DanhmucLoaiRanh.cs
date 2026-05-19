@@ -254,9 +254,10 @@ namespace PillIdentifierForm.Forms
         private void refreshDatagrid()
         {
             grid1.DataSource = getdata.GetDSLoaiRanh();
-            dataGridView1.AutoResizeColumns();
-            dataGridView1.Columns[0].HeaderText = "Mã Loại rãnh";
-            dataGridView1.Columns[1].HeaderText = "Tên Loại rãnh";
+            dataGridView1.Columns[0].HeaderText = "Mã loại rãnh";
+            dataGridView1.Columns[0].Width = 80;
+            dataGridView1.Columns[1].HeaderText = "Tên loại rãnh";
+            dataGridView1.Columns[1].Width = 300;
         }
 
         private void ClearTextBoxes()

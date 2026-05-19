@@ -254,9 +254,9 @@ namespace PillIdentifierForm.Forms
         {
             grid1.DataSource = getdata.GetDSHoatChat();
             dataGridView1.AutoResizeColumns();
-            dataGridView1.Columns[0].HeaderText = "Mã Hoạt chất";
-            dataGridView1.Columns[1].HeaderText = "Tên Hoạt chất";
-            dataGridView1.Columns[2].HeaderText = "Loại Hoạt chất";
+            dataGridView1.Columns[0].HeaderText = "Mã hoạt chất";
+            dataGridView1.Columns[1].HeaderText = "Tên hoạt chất";
+            dataGridView1.Columns[2].HeaderText = "Loại hoạt chất";
             
         }
 
