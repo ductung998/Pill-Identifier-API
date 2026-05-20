@@ -81,6 +81,7 @@ namespace PillIdentifierForm.Forms
                 dgvThuoc.Columns["IDHoatChat"].HeaderText = "Mã hoạt chất";
                 dgvThuoc.Columns["HamLuong"].HeaderText = "Hàm lượng";
                 dgvThuoc.Columns["DangBaoChe"].HeaderText = "Dạng bào chế";
+                dgvThuoc.Columns["SDK"].HeaderText = "SĐK";
                 dgvThuoc.Columns["NhaSX"].HeaderText = "Nhà sản xuất";
                 dgvThuoc.Columns["GhiChu"].HeaderText = "Ghi chú";
             }

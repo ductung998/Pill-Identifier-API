@@ -350,6 +350,7 @@ namespace PillIdentifierForm.Forms
                 dataGridViewThuoc.Columns["IDThuoc"].Width = 60;
                 dataGridViewThuoc.Columns["TenThuoc"].HeaderText = "Tên thương mại";
                 dataGridViewThuoc.Columns["TenThuoc"].Width = 220;
+                dataGridViewThuoc.Columns["SDK"].HeaderText = "SĐK";
                 dataGridViewThuoc.Columns["SDK"].Width = 130;
                 dataGridViewThuoc.Columns["IDHoatChat"].HeaderText = "Mã hoạt chất";
                 dataGridViewThuoc.Columns["IDHoatChat"].Width = 85;

@@ -56,7 +56,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(139, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Tên hình dạng thuốc";
+            this.label2.Text = "Tên hình dạng";
             // 
             // textBoxHinhDang
             // 
@@ -152,7 +152,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(133, 17);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Mã hình dạng thuốc";
+            this.label1.Text = "Mã hình dạng";
             // 
             // textBoxIDHinhDang
             // 
