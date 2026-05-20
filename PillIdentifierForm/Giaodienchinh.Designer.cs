@@ -177,14 +177,14 @@
             // 
             this.thiếtLậpHoạtChấtToolStripMenuItem.Name = "thiếtLậpHoạtChấtToolStripMenuItem";
             this.thiếtLậpHoạtChấtToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
-            this.thiếtLậpHoạtChấtToolStripMenuItem.Text = "Thiết lập HC-ĐC";
+            this.thiếtLậpHoạtChấtToolStripMenuItem.Text = "Thiết lập hoạt chất";
             this.thiếtLậpHoạtChấtToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHoạtChấtToolStripMenuItem_Click);
             // 
             // thiếtLậpHoạtChấtGốcToolStripMenuItem
             // 
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Name = "thiếtLậpHoạtChấtGốcToolStripMenuItem";
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
-            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Text = "Thiết lập MĐSD-ĐC";
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Text = "Thiết lập mục đích sử dụng";
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHoạtChấtGốcToolStripMenuItem_Click);
             // 
             // thiếtLậpNhậnDạngThuốcToolStripMenuItem
