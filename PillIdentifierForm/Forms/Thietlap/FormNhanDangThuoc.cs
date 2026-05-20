@@ -429,7 +429,7 @@ namespace PillIdentifierForm.Forms
                 dgvData.Columns["KhacDauMatSau"].HeaderText = "Khắc dấu mặt 2";
                 dgvData.Columns["TenHinhDang"].HeaderText = "Tên hình dạng";
                 dgvData.Columns["TenDangThuoc"].HeaderText = "Tên dạng thuốc";
-                dgvData.Columns["TenLoaiVi"].HeaderText = "Tên loại vỉ";
+                dgvData.Columns["TenLoaiVi"].HeaderText = "Tên bao bì cấp 1";
                 dgvData.Columns["TenLoaiRanh"].HeaderText = "Tên loại rãnh";
                 dgvData.Columns["KichThuoc"].HeaderText = "Kích thước";
                 dgvData.Columns["TenMauSac1"].HeaderText = "Màu sắc 1";

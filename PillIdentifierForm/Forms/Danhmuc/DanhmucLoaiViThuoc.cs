@@ -64,7 +64,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxLoaiViThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên loại vỉ thuốc!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên bao bì cấp 1!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxLoaiViThuoc.Focus();
                     return;
@@ -101,14 +101,14 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDLoaiViThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn loại vỉ thuốc cần xóa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn bao bì cấp 1 cần xóa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Confirm deletion
                 DialogResult result = MessageBox.Show(
-                    "Bạn có chắc chắn muốn xóa loại vỉ thuốc này?",
+                    "Bạn có chắc chắn muốn xóa bao bì cấp 1 này?",
                     "Xác nhận xóa",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -147,7 +147,7 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDLoaiViThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn loại vỉ thuốc cần sửa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn bao bì cấp 1 cần sửa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -155,7 +155,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxLoaiViThuoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên loại vỉ thuốc!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên bao bì cấp 1!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxLoaiViThuoc.Focus();
                     return;
