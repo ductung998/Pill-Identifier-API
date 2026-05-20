@@ -242,7 +242,7 @@ namespace PillIdentifierForm.Forms
         {
             if (comboBoxHC.SelectedValue == null || comboBoxHCG.SelectedValue == null)
             {
-                MessageBox.Show("Vui lòng chọn cả Hoạt Chất và Hoạt Chất Gốc.", "Thông báo",
+                MessageBox.Show("Vui lòng chọn cả Hoạt Chất và Đơn Chất.", "Thông báo",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }

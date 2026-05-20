@@ -254,7 +254,7 @@ namespace PillIdentifierForm.Forms
             grid1.DataSource = getdata.GetDSLoaiViThuoc();
             dataGridView1.Columns[0].HeaderText = "Mã bao bì cấp 1";
             dataGridView1.Columns[0].Width = 80;
-            dataGridView1.Columns[1].HeaderText = "Loại bao bì cấp 1";
+            dataGridView1.Columns[1].HeaderText = "Tên bao bì cấp 1";
             dataGridView1.Columns[1].Width = 300;
         }
 

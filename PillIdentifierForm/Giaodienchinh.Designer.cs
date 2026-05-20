@@ -98,7 +98,7 @@
             // 
             this.danhMụcHoạtChấtGốcToolStripMenuItem.Name = "danhMụcHoạtChấtGốcToolStripMenuItem";
             this.danhMụcHoạtChấtGốcToolStripMenuItem.Size = new System.Drawing.Size(246, 26);
-            this.danhMụcHoạtChấtGốcToolStripMenuItem.Text = "Danh mục hoạt chất gốc";
+            this.danhMụcHoạtChấtGốcToolStripMenuItem.Text = "Danh mục đơn chất";
             this.danhMụcHoạtChấtGốcToolStripMenuItem.Click += new System.EventHandler(this.danhMụcHoạtChấtGốcToolStripMenuItem_Click);
             // 
             // danhMụcHoạtChấtToolStripMenuItem
@@ -177,14 +177,14 @@
             // 
             this.thiếtLậpHoạtChấtToolStripMenuItem.Name = "thiếtLậpHoạtChấtToolStripMenuItem";
             this.thiếtLậpHoạtChấtToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
-            this.thiếtLậpHoạtChấtToolStripMenuItem.Text = "Thiết lập HC-HCG";
+            this.thiếtLậpHoạtChấtToolStripMenuItem.Text = "Thiết lập HC-ĐC";
             this.thiếtLậpHoạtChấtToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHoạtChấtToolStripMenuItem_Click);
             // 
             // thiếtLậpHoạtChấtGốcToolStripMenuItem
             // 
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Name = "thiếtLậpHoạtChấtGốcToolStripMenuItem";
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Size = new System.Drawing.Size(257, 26);
-            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Text = "Thiết lập MĐSD-HCG";
+            this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Text = "Thiết lập MĐSD-ĐC";
             this.thiếtLậpHoạtChấtGốcToolStripMenuItem.Click += new System.EventHandler(this.thiếtLậpHoạtChấtGốcToolStripMenuItem_Click);
             // 
             // thiếtLậpNhậnDạngThuốcToolStripMenuItem

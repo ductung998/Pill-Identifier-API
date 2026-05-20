@@ -65,7 +65,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxHoatChatGoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên hoạt chất gốc!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên đơn chất!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxHoatChatGoc.Focus();
                     return;
@@ -105,14 +105,14 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDHoatChatGoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn hoạt chất gốc cần xóa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn đơn chất cần xóa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
                 // Confirm deletion
                 DialogResult result = MessageBox.Show(
-                    "Bạn có chắc chắn muốn xóa hoạt chất gốc này?",
+                    "Bạn có chắc chắn muốn xóa đơn chất này?",
                     "Xác nhận xóa",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
@@ -151,7 +151,7 @@ namespace PillIdentifierForm.Forms
                 // Validate ID
                 if (string.IsNullOrWhiteSpace(textBoxIDHoatChatGoc.Text))
                 {
-                    MessageBox.Show("Vui lòng chọn hoạt chất gốc cần sửa!", "Thông báo",
+                    MessageBox.Show("Vui lòng chọn đơn chất cần sửa!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
@@ -159,7 +159,7 @@ namespace PillIdentifierForm.Forms
                 // Validate input
                 if (string.IsNullOrWhiteSpace(textBoxHoatChatGoc.Text))
                 {
-                    MessageBox.Show("Vui lòng nhập tên hoạt chất gốc!", "Thông báo",
+                    MessageBox.Show("Vui lòng nhập tên đơn chất!", "Thông báo",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     textBoxHoatChatGoc.Focus();
                     return;
@@ -257,8 +257,8 @@ namespace PillIdentifierForm.Forms
         {
             grid1.DataSource = getdata.GetDSHoatChatGoc();
             dataGridView1.AutoResizeColumns();
-            dataGridView1.Columns[0].HeaderText = "Mã hoạt chất gốc";
-            dataGridView1.Columns[1].HeaderText = "Tên hoạt chất gốc";
+            dataGridView1.Columns[0].HeaderText = "Mã đơn chất";
+            dataGridView1.Columns[1].HeaderText = "Tên đơn chất";
             dataGridView1.Columns[2].HeaderText = "Ghi chú";
         }
 

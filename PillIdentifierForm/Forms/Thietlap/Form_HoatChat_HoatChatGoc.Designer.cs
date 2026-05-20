@@ -56,7 +56,7 @@
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(104, 17);
             this.label2.TabIndex = 1;
-            this.label2.Text = "Chọn hoạt chất";
+            this.label2.Text = "Hoạt chất";
             // 
             // label4
             // 
@@ -152,7 +152,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(96, 17);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Hoạt chất gốc";
+            this.label5.Text = "Đơn chất";
             // 
             // comboBoxHC
             // 
