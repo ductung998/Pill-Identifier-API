@@ -189,7 +189,10 @@ namespace PillIdentifierMVC.Controllers
             int start  = idIdx + 3;
             int end    = url.IndexOf('&', start);
             string fileId = end < 0 ? url.Substring(start) : url.Substring(start, end - start);
-            return string.IsNullOrEmpty(fileId) ? url : "/Home/ImageProxy?fileId=" + fileId;
+            // Duck-tape fix
+            if (string.IsNullOrEmpty(fileId)) return url;
+            return "https://lh3.googleusercontent.com/d/" + fileId;
+            // return string.IsNullOrEmpty(fileId) ? url : "/Home/ImageProxy?fileId=" + fileId;
         }
     }
 }
